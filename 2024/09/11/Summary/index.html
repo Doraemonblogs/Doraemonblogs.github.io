@@ -1,0 +1,1185 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>知识图谱 | Doraemonblogs</title><meta name="author" content="Doraemon"><meta name="copyright" content="Doraemon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="知识图谱工作总结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="知识图谱">
+<meta property="og:url" content="https://doraemonblogs.github.io/2024/09/11/Summary/index.html">
+<meta property="og:site_name" content="Doraemonblogs">
+<meta property="og:description" content="知识图谱工作总结">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://doraemonblogs.github.io/img/top_img/5.jpg">
+<meta property="article:published_time" content="2024-09-11T04:00:00.000Z">
+<meta property="article:modified_time" content="2024-10-10T04:00:00.000Z">
+<meta property="article:author" content="Doraemon">
+<meta property="article:tag" content="GraphRAG">
+<meta property="article:tag" content="Neo4j">
+<meta property="article:tag" content="知识图谱">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://doraemonblogs.github.io/img/top_img/5.jpg"><link rel="shortcut icon" href="/img/favicon.jpg"><link rel="canonical" href="https://doraemonblogs.github.io/2024/09/11/Summary/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":230},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: true
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: Doraemon","link":"链接: ","source":"来源: Doraemonblogs","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体中文","cht_to_chs":"你已切换为简体中文","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"top-right"},
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '知识图谱',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-10-10 12:00:00'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/universe.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css"/>
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiperstyle.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="/css/runtime.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/profile.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><i class="fa-fw icon-home"></i><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-home"></use></svg><span> 首页</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/archives/"><i class="fa-fw icon-guidang"></i><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-guidang"></use></svg><span> 归档</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/tags/"><i class="fa-fw icon-icon_pricetag"></i><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-icon_pricetag"></use></svg><span> 标签</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/categories/"><i class="fa-fw icon-fenlei"></i><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-fenlei"></use></svg><span> 分类</span></a></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-liebiao"></use></svg><span> 列表</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-a-Sheetmusic">                   </use></svg><span> 音乐</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/movies/"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon--dianyingpiao-">                   </use></svg><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/comments/"><i class="fa-fw icon-liuyanban"></i><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-liuyanban"></use></svg><span> 留言板</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><i class="fa-fw icon-lianjie"></i><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-lianjie"></use></svg><span> 友链</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/about/"><i class="fa-fw icon-xinxingye"></i><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-xinxingye"></use></svg><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/top_img/5.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Doraemonblogs"><span class="site-name">Doraemonblogs</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i></a></div><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><i class="fa-fw icon-home"></i><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-home"></use></svg><span> 首页</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/archives/"><i class="fa-fw icon-guidang"></i><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-guidang"></use></svg><span> 归档</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/tags/"><i class="fa-fw icon-icon_pricetag"></i><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-icon_pricetag"></use></svg><span> 标签</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/categories/"><i class="fa-fw icon-fenlei"></i><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-fenlei"></use></svg><span> 分类</span></a></div><div class="menus_item"><a class="site-page group faa-parent animated-hover hide" href="javascript:void(0);"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-liebiao"></use></svg><span> 列表</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-a-Sheetmusic">                   </use></svg><span> 音乐</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/movies/"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon--dianyingpiao-">                   </use></svg><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/comments/"><i class="fa-fw icon-liuyanban"></i><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-liuyanban"></use></svg><span> 留言板</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/link/"><i class="fa-fw icon-lianjie"></i><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-lianjie"></use></svg><span> 友链</span></a></div><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/about/"><i class="fa-fw icon-xinxingye"></i><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-xinxingye"></use></svg><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">知识图谱</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-09-11T04:00:00.000Z" title="发表于 2024-09-11 12:00:00">2024-09-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-10-10T04:00:00.000Z" title="更新于 2024-10-10 12:00:00">2024-10-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%99%BA%E8%83%BD%E9%97%AE%E7%AD%94%E7%B3%BB%E7%BB%9F/">智能问答系统</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>37分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="知识图谱"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><div class="top-img gist" style="background-image: url(/img/top_img/5.jpg)"></div><article class="post-content" id="article-container"><h1 id="工作总结"><a href="#工作总结" class="headerlink" title="工作总结"></a>工作总结</h1><ul>
+<li><a href="#%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93">工作总结</a><ul>
+<li><a href="#1graphrag%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2">1.GraphRAG本地部署</a><ul>
+<li><a href="#11%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE">1.1基础配置</a></li>
+<li><a href="#12%E4%BD%BF%E7%94%A8ollamallama%E8%BF%9B%E8%A1%8C%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2">1.2使用Ollama+llama进行本地部署</a></li>
+<li><a href="#13%E4%BD%BF%E7%94%A8deepseek%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%BF%9B%E8%A1%8C%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2">1.3使用deepseek大模型进行本地部署</a></li>
+<li><a href="#14-%E5%AF%B9graphrag%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90">1.4 对GraphRAG的工作流程简单分析</a></li>
+</ul>
+</li>
+<li><a href="#2-neo4j%E5%8F%AF%E8%A7%86%E5%8C%96%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1">2. Neo4j可视化知识图谱</a><ul>
+<li><a href="#21-neo4j%E9%83%A8%E7%BD%B2">2.1 Neo4j部署</a></li>
+<li><a href="#22-%E5%B0%86graphrag%E8%BF%9B%E8%A1%8C%E5%8F%AF%E8%A7%86%E5%8C%96%E6%93%8D%E4%BD%9C">2.2 将GraphRAG进行可视化操作</a></li>
+<li><a href="#23-%E8%87%AA%E8%A1%8C%E5%88%9B%E5%BB%BA%E7%AE%80%E5%8D%95%E5%9B%BE%E8%B0%B1%E7%A4%BA%E4%BE%8B">2.3 自行创建简单图谱示例</a></li>
+<li><a href="#24-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%9E%84%E5%BB%BA%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90">2.4 知识图谱构建案例分析</a><ul>
+<li><a href="#241-%E7%BA%A2%E6%A5%BC%E6%A2%A6%E4%BA%BA%E7%89%A9%E5%85%B3%E7%B3%BB%E5%9B%BE%E8%B0%B1%E6%9E%84%E5%BB%BA">2.4.1 红楼梦人物关系图谱构建</a></li>
+<li><a href="#242-%E5%80%9F%E5%8A%A9ai%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%BF%9B%E8%A1%8C%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%9E%84%E5%BB%BA">2.4.2 借助AI大模型进行知识图谱构建</a></li>
+<li><a href="#243-%E5%8C%BB%E7%96%97%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%9E%84%E5%BB%BA">2.4.3 医疗知识图谱构建</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="1-GraphRAG本地部署"><a href="#1-GraphRAG本地部署" class="headerlink" title="1.GraphRAG本地部署"></a>1.GraphRAG本地部署</h2><p>若有OpenAI密钥可直接按照<a target="_blank" rel="noopener" href="https://microsoft.github.io/graphrag/posts/get_started/">graphrag官网</a>的步骤进行graphrag的本地部署和使用<br>一般用户没有OpenAI密钥可以考虑使用其他可获得的密钥或者用Ollama+llama进行本地大模型部署，需要注意的是本地大模型部署对电脑配置要求比较高，建议还是使用api接口  </p>
+<p>以下讲解GraphRAG在不用OpenAI密钥的情况下的部署</p>
+<h3 id="1-1基础配置"><a href="#1-1基础配置" class="headerlink" title="1.1基础配置"></a>1.1基础配置</h3><p>创建项目graphrag（也可以取其他名称，这里方便后续说明）及相应虚拟环境，注意python版本为<strong>3.10-3.12</strong><br>安装graphrag库:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install graphrag</span><br></pre></td></tr></table></figure>
+<p>创建目录test（也可以是其他名称，这里确定为test方便后续说明）<br>在test目录下创建目录input，在input目录下存放要进行索引构建的文本文件<br>完成后当前文件树结构为:  </p>
+<pre><code>graphrag
+    └─test
+        └─input
+            └─book.txt
+</code></pre>
+<p>初始化test目录</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m graphrag.index --init --root ./test</span><br></pre></td></tr></table></figure>
+<p>初始化时会生成其他文件夹和文件，完成后当前文件树结构为:  </p>
+<pre><code>graphrag
+    └─test
+        │  .env
+        │  settings.yaml
+        │
+        ├─input
+        │      book.txt
+        │
+        ├─output
+        │  └─20240914-170402
+        │      └─reports
+        │              indexing-engine.log
+        │
+        └─prompts
+                claim_extraction.txt
+                community_report.txt
+                entity_extraction.txt
+                summarize_descriptions.txt
+</code></pre>
+<p>至此，基本配置结束</p>
+<h3 id="1-2使用Ollama-llama进行本地部署"><a href="#1-2使用Ollama-llama进行本地部署" class="headerlink" title="1.2使用Ollama+llama进行本地部署"></a>1.2使用Ollama+llama进行本地部署</h3><p>可以参考<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV18HeFetELw/?spm_id_from=333.337.search-card.all.click&vd_source=4966528acd6540678eedd7b9e188a2d1">b站视频</a><br>笔者也是通过该视频完成了Ollama+llama本地部署graphrag<br>Ollama官网:<a target="_blank" rel="noopener" href="https://ollama.com/">https://ollama.com/</a>  </p>
+<p><strong>Ollama相关命令</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ollama pull llama3.1 <span class="comment"># 拉取模型</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ollama run llama3.1 <span class="comment"># 运行模型</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ollama serve <span class="comment"># 开启服务</span></span><br></pre></td></tr></table></figure>
+<p><em><strong>相关文件</strong></em><br>该视频已给出<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1li35HD80IulxJntWcI9DFw?pwd=s53j">文件百度网盘下载地址</a>，也可以直接复制粘贴此处已下好的文件内容</p>
+<p>settings.yaml:  </p>
+<details>
+<summary>#settings.yaml文件详细内容请点开查看</summary>
+
+<pre><code>encoding_model: cl100k_base
+skip_workflows: []
+llm:
+  api_key: sk-djdjsjdj
+  type: openai_chat # or azure_openai_chat
+  #model: glm4:9b-chat-q6_K
+  model: llama3.1
+  model_supports_json: true # recommended if this is available for your model.
+  # max_tokens: 4000
+  # request_timeout: 180.0
+  api_base: http://localhost:11434/v1
+  # api_version: 2024-02-15-preview
+  # organization: &lt;organization_id&gt;
+  # deployment_name: &lt;azure_model_deployment_name&gt;
+  # tokens_per_minute: 150_000 # set a leaky bucket throttle
+  # requests_per_minute: 10_000 # set a leaky bucket throttle
+  # max_retries: 10
+  # max_retry_wait: 10.0
+  # sleep_on_rate_limit_recommendation: true # whether to sleep when azure suggests wait-times
+  # concurrent_requests: 25 # the number of parallel inflight requests that may be made
+
+parallelization:
+  stagger: 0.3
+  # num_threads: 50 # the number of threads to use for parallel processing
+
+async_mode: threaded # or asyncio
+
+embeddings:
+  ## parallelization: override the global parallelization settings for embeddings
+  async_mode: threaded # or asyncio
+  llm:
+    api_key: sk-djdjsjdj
+    type: openai_embedding # or azure_openai_embedding
+    model: nomic-embed-text
+    #model: nomic_embed_text
+    api_base: http://localhost:11434/api
+    #api_base: http://localhost:11434/v1
+    # api_version: 2024-02-15-preview
+    # organization: &lt;organization_id&gt;
+    # deployment_name: &lt;azure_model_deployment_name&gt;
+    # tokens_per_minute: 150_000 # set a leaky bucket throttle
+    # requests_per_minute: 10_000 # set a leaky bucket throttle
+    # max_retries: 10
+    # max_retry_wait: 10.0
+    # sleep_on_rate_limit_recommendation: true # whether to sleep when azure suggests wait-times
+    # concurrent_requests: 25 # the number of parallel inflight requests that may be made
+    # batch_size: 16 # the number of documents to send in a single request
+    # batch_max_tokens: 8191 # the maximum number of tokens to send in a single request
+    # target: required # or optional
+  
+
+
+chunks:
+  size: 300
+  overlap: 100
+  group_by_columns: [id] # by default, we don&#39;t allow chunks to cross documents
+    
+input:
+  type: file # or blob
+  file_type: text # or csv
+  base_dir: &quot;input&quot;
+  file_encoding: utf-8
+  file_pattern: &quot;.*\\.txt$&quot;
+
+cache:
+  type: file # or blob
+  base_dir: &quot;cache&quot;
+  # connection_string: &lt;azure_blob_storage_connection_string&gt;
+  # container_name: &lt;azure_blob_storage_container_name&gt;
+
+storage:
+  type: file # or blob
+  base_dir: &quot;output/$&#123;timestamp&#125;/artifacts&quot;
+  # connection_string: &lt;azure_blob_storage_connection_string&gt;
+  # container_name: &lt;azure_blob_storage_container_name&gt;
+
+reporting:
+  type: file # or console, blob
+  base_dir: &quot;output/$&#123;timestamp&#125;/reports&quot;
+  # connection_string: &lt;azure_blob_storage_connection_string&gt;
+  # container_name: &lt;azure_blob_storage_container_name&gt;
+
+entity_extraction:
+  ## llm: override the global llm settings for this task
+  ## parallelization: override the global parallelization settings for this task
+  ## async_mode: override the global async_mode settings for this task
+  prompt: &quot;prompts/entity_extraction.txt&quot;
+  entity_types: [organization,person,geo,event]
+  max_gleanings: 0
+
+summarize_descriptions:
+  ## llm: override the global llm settings for this task
+  ## parallelization: override the global parallelization settings for this task
+  ## async_mode: override the global async_mode settings for this task
+  prompt: &quot;prompts/summarize_descriptions.txt&quot;
+  max_length: 500
+
+claim_extraction:
+  ## llm: override the global llm settings for this task
+  ## parallelization: override the global parallelization settings for this task
+  ## async_mode: override the global async_mode settings for this task
+  # enabled: true
+  prompt: &quot;prompts/claim_extraction.txt&quot;
+  description: &quot;Any claims or facts that could be relevant to information discovery.&quot;
+  max_gleanings: 0
+
+community_report:
+  ## llm: override the global llm settings for this task
+  ## parallelization: override the global parallelization settings for this task
+  ## async_mode: override the global async_mode settings for this task
+  prompt: &quot;prompts/community_report.txt&quot;
+  max_length: 2000
+  max_input_length: 8000
+
+cluster_graph:
+  max_cluster_size: 10
+
+embed_graph:
+  enabled: false # if true, will generate node2vec embeddings for nodes
+  # num_walks: 10
+  # walk_length: 40
+  # window_size: 2
+  # iterations: 3
+  # random_seed: 597832
+
+umap:
+  enabled: false # if true, will generate UMAP embeddings for nodes
+
+snapshots:
+  graphml: false
+  raw_entities: false
+  top_level_nodes: false
+
+local_search:
+  # text_unit_prop: 0.5
+  # community_prop: 0.1
+  # conversation_history_max_turns: 5
+  # top_k_mapped_entities: 10
+  # top_k_relationships: 10
+  # max_tokens: 12000
+
+global_search:
+  # max_tokens: 12000
+  # data_max_tokens: 12000
+  # map_max_tokens: 1000
+  # reduce_max_tokens: 2000
+  # concurrency: 32
+</code></pre>
+</details>
+community_report.txt:  
+<details>
+<summary>community_report.txt文件内容请点开查看</summary>
+
+<pre><code>You are an AI assistant that helps a human analyst to perform general information discovery. Information discovery is the process of identifying and assessing relevant information associated with certain entities (e.g., organizations and individuals) within a network.
+
+# Goal
+Write a comprehensive report of a community, given a list of entities that belong to the community as well as their relationships and optional associated claims. The report will be used to inform decision-makers about information associated with the community and their potential impact. The content of this report includes an overview of the community&#39;s key entities, their legal compliance, technical capabilities, reputation, and noteworthy claims.
+
+# Report Structure
+
+The report should include the following sections:
+
+- TITLE: community&#39;s name that represents its key entities - title should be short but specific. When possible, include representative named entities in the title.
+  - SUMMARY: An executive summary of the community&#39;s overall structure, how its entities are related to each other, and significant information associated with its entities.
+  - IMPACT SEVERITY RATING: a float score between 0-10 that represents the severity of IMPACT posed by entities within the community.  IMPACT is the scored importance of a community.
+  - RATING EXPLANATION: Give a single sentence explanation of the IMPACT severity rating.
+  - DETAILED FINDINGS: A list of 5-10 key insights about the community. Each insight should have a short summary followed by multiple paragraphs of explanatory text grounded according to the grounding rules below. Be comprehensive.
+
+Return output as a well-formed JSON-formatted string with the following format:
+    &#123;
+        &quot;title&quot;: &lt;report_title&gt;,
+        &quot;summary&quot;: &lt;executive_summary&gt;,
+        &quot;rating&quot;: &lt;impact_severity_rating&gt;,
+        &quot;rating_explanation&quot;: &lt;rating_explanation&gt;,
+        &quot;findings&quot;: [
+            &#123;
+                &quot;summary&quot;:&lt;insight_1_summary&gt;,
+                &quot;explanation&quot;: &lt;insight_1_explanation&gt;
+            &#125;,
+            &#123;
+                &quot;summary&quot;:&lt;insight_2_summary&gt;,
+                &quot;explanation&quot;: &lt;insight_2_explanation&gt;
+            &#125;
+        ]
+    &#125;
+
+# Grounding Rules
+
+Points supported by data should list their data references as follows:
+
+&quot;This is an example sentence supported by multiple data references [Data: &lt;dataset name&gt; (record ids); &lt;dataset name&gt; (record ids)].&quot;
+
+Do not list more than 5 record ids in a single reference. Instead, list the top 5 most relevant record ids and add &quot;+more&quot; to indicate that there are more.
+
+For example:
+&quot;Person X is the owner of Company Y and subject to many allegations of wrongdoing [Data: Reports (1), Entities (5, 7); Relationships (23); Claims (7, 2, 34, 64, 46, +more)].&quot;
+
+where 1, 5, 7, 23, 2, 34, 46, and 64 represent the id (not the index) of the relevant data record.
+
+Do not include information where the supporting evidence for it is not provided.
+
+
+# Example Input
+-----------
+Text:
+
+Entities
+
+id,entity,description
+5,VERDANT OASIS PLAZA,Verdant Oasis Plaza is the location of the Unity March
+6,HARMONY ASSEMBLY,Harmony Assembly is an organization that is holding a march at Verdant Oasis Plaza
+
+Relationships
+
+id,source,target,description
+37,VERDANT OASIS PLAZA,UNITY MARCH,Verdant Oasis Plaza is the location of the Unity March
+38,VERDANT OASIS PLAZA,HARMONY ASSEMBLY,Harmony Assembly is holding a march at Verdant Oasis Plaza
+39,VERDANT OASIS PLAZA,UNITY MARCH,The Unity March is taking place at Verdant Oasis Plaza
+40,VERDANT OASIS PLAZA,TRIBUNE SPOTLIGHT,Tribune Spotlight is reporting on the Unity march taking place at Verdant Oasis Plaza
+41,VERDANT OASIS PLAZA,BAILEY ASADI,Bailey Asadi is speaking at Verdant Oasis Plaza about the march
+43,HARMONY ASSEMBLY,UNITY MARCH,Harmony Assembly is organizing the Unity March
+
+Output:
+&#123;
+    &quot;title&quot;: &quot;Verdant Oasis Plaza and Unity March&quot;,
+    &quot;summary&quot;: &quot;The community revolves around the Verdant Oasis Plaza, which is the location of the Unity March. The plaza has relationships with the Harmony Assembly, Unity March, and Tribune Spotlight, all of which are associated with the march event.&quot;,
+    &quot;rating&quot;: 5.0,
+    &quot;rating_explanation&quot;: &quot;The impact severity rating is moderate due to the potential for unrest or conflict during the Unity March.&quot;,
+    &quot;findings&quot;: [
+        &#123;
+            &quot;summary&quot;: &quot;Verdant Oasis Plaza as the central location&quot;,
+            &quot;explanation&quot;: &quot;Verdant Oasis Plaza is the central entity in this community, serving as the location for the Unity March. This plaza is the common link between all other entities, suggesting its significance in the community. The plaza&#39;s association with the march could potentially lead to issues such as public disorder or conflict, depending on the nature of the march and the reactions it provokes. [Data: Entities (5), Relationships (37, 38, 39, 40, 41,+more)]&quot;
+        &#125;,
+        &#123;
+            &quot;summary&quot;: &quot;Harmony Assembly&#39;s role in the community&quot;,
+            &quot;explanation&quot;: &quot;Harmony Assembly is another key entity in this community, being the organizer of the march at Verdant Oasis Plaza. The nature of Harmony Assembly and its march could be a potential source of threat, depending on their objectives and the reactions they provoke. The relationship between Harmony Assembly and the plaza is crucial in understanding the dynamics of this community. [Data: Entities(6), Relationships (38, 43)]&quot;
+        &#125;,
+        &#123;
+            &quot;summary&quot;: &quot;Unity March as a significant event&quot;,
+            &quot;explanation&quot;: &quot;The Unity March is a significant event taking place at Verdant Oasis Plaza. This event is a key factor in the community&#39;s dynamics and could be a potential source of threat, depending on the nature of the march and the reactions it provokes. The relationship between the march and the plaza is crucial in understanding the dynamics of this community. [Data: Relationships (39)]&quot;
+        &#125;,
+        &#123;
+            &quot;summary&quot;: &quot;Role of Tribune Spotlight&quot;,
+            &quot;explanation&quot;: &quot;Tribune Spotlight is reporting on the Unity March taking place in Verdant Oasis Plaza. This suggests that the event has attracted media attention, which could amplify its impact on the community. The role of Tribune Spotlight could be significant in shaping public perception of the event and the entities involved. [Data: Relationships (40)]&quot;
+        &#125;
+    ]
+&#125;
+
+
+# Real Data
+
+Use the following text for your answer. Do not make anything up in your answer.
+
+Text:
+&#123;input_text&#125;
+
+The report should include the following sections:
+
+- TITLE: community&#39;s name that represents its key entities - title should be short but specific. When possible, include representative named entities in the title.
+  - SUMMARY: An executive summary of the community&#39;s overall structure, how its entities are related to each other, and significant information associated with its entities.
+  - IMPACT SEVERITY RATING: a float score between 0-10 that represents the severity of IMPACT posed by entities within the community.  IMPACT is the scored importance of a community.
+  - RATING EXPLANATION: Give a single sentence explanation of the IMPACT severity rating.
+  - DETAILED FINDINGS: A list of 5-10 key insights about the community. Each insight should have a short summary followed by multiple paragraphs of explanatory text grounded according to the grounding rules below. Be comprehensive.
+
+Return output as a well-formed JSON-formatted string with the following format:
+    &#123;
+        &quot;title&quot;: &lt;report_title&gt;,
+        &quot;summary&quot;: &lt;executive_summary&gt;,
+        &quot;rating&quot;: &lt;impact_severity_rating&gt;,
+        &quot;rating_explanation&quot;: &lt;rating_explanation&gt;,
+        &quot;findings&quot;: [
+            &#123;
+                &quot;summary&quot;:&lt;insight_1_summary&gt;,
+                &quot;explanation&quot;: &lt;insight_1_explanation&gt;
+            &#125;,
+            &#123;
+                &quot;summary&quot;:&lt;insight_2_summary&gt;,
+                &quot;explanation&quot;: &lt;insight_2_explanation&gt;
+            &#125;
+        ]
+    &#125;
+
+# Grounding Rules
+
+Points supported by data should list their data references as follows:
+
+&quot;This is an example sentence supported by multiple data references [Data: &lt;dataset name&gt; (record ids); &lt;dataset name&gt; (record ids)].&quot;
+
+Do not list more than 5 record ids in a single reference. Instead, list the top 5 most relevant record ids and add &quot;+more&quot; to indicate that there are more.
+
+For example:
+&quot;Person X is the owner of Company Y and subject to many allegations of wrongdoing [Data: Reports (1), Entities (5, 7); Relationships (23); Claims (7, 2, 34, 64, 46, +more)].&quot;
+
+where 1, 5, 7, 23, 2, 34, 46, and 64 represent the id (not the index) of the relevant data record.
+
+Do not include information where the supporting evidence for it is not provided.
+
+Output:
+</code></pre>
+</details>
+embedding.py:  
+<details>
+<summary>embedding.py文件内容请点开查看</summary>
+
+<pre><code># Copyright (c) 2024 Microsoft Corporation.
+# Licensed under the MIT License
+
+&quot;&quot;&quot;OpenAI Embedding model implementation.&quot;&quot;&quot;
+
+import asyncio
+from collections.abc import Callable
+from typing import Any
+import ollama
+import numpy as np
+import tiktoken
+from tenacity import (
+    AsyncRetrying,
+    RetryError,
+    Retrying,
+    retry_if_exception_type,
+    stop_after_attempt,
+    wait_exponential_jitter,
+)
+
+from graphrag.query.llm.base import BaseTextEmbedding
+from graphrag.query.llm.oai.base import OpenAILLMImpl
+from graphrag.query.llm.oai.typing import (
+    OPENAI_RETRY_ERROR_TYPES,
+    OpenaiApiType,
+)
+from graphrag.query.llm.text_utils import chunk_text
+from graphrag.query.progress import StatusReporter
+
+
+class OpenAIEmbedding(BaseTextEmbedding, OpenAILLMImpl):
+    &quot;&quot;&quot;Wrapper for OpenAI Embedding models.&quot;&quot;&quot;
+
+def __init__(
+    self,
+    api_key: str | None = None,
+    azure_ad_token_provider: Callable | None = None,
+    model: str = &quot;text-embedding-3-small&quot;,
+    deployment_name: str | None = None,
+    api_base: str | None = None,
+    api_version: str | None = None,
+    api_type: OpenaiApiType = OpenaiApiType.OpenAI,
+    organization: str | None = None,
+    encoding_name: str = &quot;cl100k_base&quot;,
+    max_tokens: int = 8191,
+    max_retries: int = 10,
+    request_timeout: float = 180.0,
+    retry_error_types: tuple[type[BaseException]] = OPENAI_RETRY_ERROR_TYPES,  # type: ignore
+    reporter: StatusReporter | None = None,
+):
+    OpenAILLMImpl.__init__(
+        self=self,
+        api_key=api_key,
+        azure_ad_token_provider=azure_ad_token_provider,
+        deployment_name=deployment_name,
+        api_base=api_base,
+        api_version=api_version,
+        api_type=api_type,  # type: ignore
+        organization=organization,
+        max_retries=max_retries,
+        request_timeout=request_timeout,
+        reporter=reporter,
+    )
+
+    self.model = model
+    self.encoding_name = encoding_name
+    self.max_tokens = max_tokens
+    self.token_encoder = tiktoken.get_encoding(self.encoding_name)
+    self.retry_error_types = retry_error_types
+    self.embedding_dim = 384  # Nomic-embed-text model dimension
+    self.ollama_client = ollama.Client()
+
+def embed(self, text: str, **kwargs: Any) -&gt; list[float]:
+    &quot;&quot;&quot;Embed text using Ollama&#39;s nomic-embed-text model.&quot;&quot;&quot;
+    try:
+        embedding = self.ollama_client.embeddings(model=&quot;nomic-embed-text&quot;, prompt=text)
+        return embedding[&quot;embedding&quot;]
+    except Exception as e:
+        self._reporter.error(
+            message=&quot;Error embedding text&quot;,
+            details=&#123;self.__class__.__name__: str(e)&#125;,
+        )
+        return np.zeros(self.embedding_dim).tolist()
+
+async def aembed(self, text: str, **kwargs: Any) -&gt; list[float]:
+    &quot;&quot;&quot;Embed text using Ollama&#39;s nomic-embed-text model asynchronously.&quot;&quot;&quot;
+    try:
+        embedding = await self.ollama_client.embeddings(model=&quot;nomic-embed-text&quot;, prompt=text)
+        return embedding[&quot;embedding&quot;]
+    except Exception as e:
+        self._reporter.error(
+            message=&quot;Error embedding text asynchronously&quot;,
+            details=&#123;self.__class__.__name__: str(e)&#125;,
+        )
+        return np.zeros(self.embedding_dim).tolist()
+
+def _embed_with_retry(
+    self, text: str | tuple, **kwargs: Any  #str | tuple
+) -&gt; tuple[list[float], int]:
+    try:
+        retryer = Retrying(
+            stop=stop_after_attempt(self.max_retries),
+            wait=wait_exponential_jitter(max=10),
+            reraise=True,
+            retry=retry_if_exception_type(self.retry_error_types),
+        )
+        for attempt in retryer:
+            with attempt:
+                embedding = (
+                    self.sync_client.embeddings.create(  # type: ignore
+                        input=text,
+                        model=self.model,
+                        **kwargs,  # type: ignore
+                    )
+                    .data[0]
+                    .embedding
+                    or []
+                )  
+                return (embedding[&quot;embedding&quot;], len(text))
+    except RetryError as e:
+        self._reporter.error(
+            message=&quot;Error at embed_with_retry()&quot;,
+            details=&#123;self.__class__.__name__: str(e)&#125;,
+        )
+        return ([], 0)
+    else:
+        # TODO: why not just throw in this case?
+        return ([], 0)
+
+async def _aembed_with_retry(
+    self, text: str | tuple, **kwargs: Any
+) -&gt; tuple[list[float], int]:
+    try:
+        retryer = AsyncRetrying(
+            stop=stop_after_attempt(self.max_retries),
+            wait=wait_exponential_jitter(max=10),
+            reraise=True,
+            retry=retry_if_exception_type(self.retry_error_types),
+        )
+        async for attempt in retryer:
+            with attempt:
+                embedding = (
+                    await self.async_client.embeddings.create(  # type: ignore
+                        input=text,
+                        model=self.model,
+                        **kwargs,  # type: ignore
+                    )
+                ).data[0].embedding or []
+                return (embedding, len(text))
+    except RetryError as e:
+        self._reporter.error(
+            message=&quot;Error at embed_with_retry()&quot;,
+            details=&#123;self.__class__.__name__: str(e)&#125;,
+        )
+        return ([], 0)
+    else:
+        # TODO: why not just throw in this case?
+        return ([], 0)
+</code></pre>
+</details>
+openai_embeddings_llm.py:  
+<details>
+<summary>openai_embeddings_llm.py文件内容请点开查看</summary>
+
+<pre><code># Copyright (c) 2024 Microsoft Corporation.
+# Licensed under the MIT License
+
+&quot;&quot;&quot;The EmbeddingsLLM class.&quot;&quot;&quot;
+
+from typing_extensions import Unpack
+
+from graphrag.llm.base import BaseLLM
+from graphrag.llm.types import (
+    EmbeddingInput,
+    EmbeddingOutput,
+    LLMInput,
+)
+
+from .openai_configuration import OpenAIConfiguration
+from .types import OpenAIClientTypes
+import ollama
+
+class OpenAIEmbeddingsLLM(BaseLLM[EmbeddingInput, EmbeddingOutput]):
+    &quot;&quot;&quot;A text-embedding generator LLM.&quot;&quot;&quot;
+
+_client: OpenAIClientTypes
+_configuration: OpenAIConfiguration
+
+def __init__(self, client: OpenAIClientTypes, configuration: OpenAIConfiguration):
+    self.client = client
+    self.configuration = configuration
+
+async def _execute_llm(
+    self, input: EmbeddingInput, **kwargs: Unpack[LLMInput]
+) -&gt; EmbeddingOutput | None:
+    args = &#123;
+        &quot;model&quot;: self.configuration.model,
+        **(kwargs.get(&quot;model_parameters&quot;) or &#123;&#125;),
+    &#125;
+    embedding_list = []
+    for inp in input:
+        embedding = ollama.embeddings(model=&quot;nomic-embed-text&quot;, prompt=inp)
+        embedding_list.append(embedding[&quot;embedding&quot;])
+    return embedding_list
+</code></pre>
+</details>
+
+<p>将相关文件替换后再打开Ollama服务<br>构建索引:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m graphrag.index --root ./test</span><br></pre></td></tr></table></figure>
+<p>这一步比较吃电脑配置，也是最耗时间的一步<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV18HeFetELw/?spm_id_from=333.337.search-card.all.click&vd_source=4966528acd6540678eedd7b9e188a2d1">b站视频</a>演示时用4090的显卡用时20分钟左右，笔者4050的显卡对同样的内容构建索引用时5个小时多<br>构建完成后会生成新的文件，文件树如下:  </p>
+<details>
+<summary>文件树信息</summary>
+
+<pre><code>graphrag
+    └─test
+    │  .env
+    │  settings.yaml
+    │
+    ├─cache
+    │  ├─community_reporting
+    │  │      create_community_report-chat-v2-05abb9bf64290c9593fdf820d26481cf
+    │  │      create_community_report-chat-v2-1d14150b78007a447e3fa0837dcffdaf
+    │  │      create_community_report-chat-v2-271f82c36ff44fbd67460a754c266913
+    │  │      create_community_report-chat-v2-3e3d3051081db242b891f5ae4ad67fcf
+    │  │      create_community_report-chat-v2-42e023a1562f8c66f13f5c777ac818ec
+    │  │      create_community_report-chat-v2-4c80f68a16e7f9be9f0a6b9cd1d3d34b
+    │  │      create_community_report-chat-v2-51395309fff3199ff962e02406cc197b
+    │  │      create_community_report-chat-v2-5462d20ae65c7eac3aab71d89ffd03ae
+    │  │      create_community_report-chat-v2-554bff36ee06e5296942b2ebb5cd703e
+    │  │      create_community_report-chat-v2-594610a39f5182e73c12713784231567
+    │  │      create_community_report-chat-v2-5fb041980124144a5187671d5f9ef7c1
+    │  │      create_community_report-chat-v2-604dc46d0b608c1fb2a0a88e1c26c18f
+    │  │      create_community_report-chat-v2-6233741ed71795443e0963984eede331
+    │  │      create_community_report-chat-v2-6baccacf0c8af460442670b043ebc58a
+    │  │      create_community_report-chat-v2-9830304cddab1938d93309cd87dca984
+    │  │      create_community_report-chat-v2-ad70d90f5ad8ba5724a5bea6ff8068fe
+    │  │      create_community_report-chat-v2-c122141aa4fce67d3d8fa4e0912f5cd9
+    │  │      create_community_report-chat-v2-c6b3fa698d6f9bb13839b4b5f2de6a09
+    │  │      create_community_report-chat-v2-ca4edabf6cc676f6871692266746c334
+    │  │      create_community_report-chat-v2-ca567d9b1ca158c168050f79c3a537b9
+    │  │      create_community_report-chat-v2-d60f9dcc73210deda01c184fc596798f
+    │  │      create_community_report-chat-v2-dd1e70b6bedeb1b789210ffaf49850ef
+    │  │      create_community_report-chat-v2-e89427b5d9b62f26a4f8512b659381c6
+    │  │      create_community_report-chat-v2-edfc839d3ad587d0526a09a1c0edb576
+    │  │      create_community_report-chat-v2-f5fbd1774628a941881852f16a9db1c6
+    │  │
+    │  ├─entity_extraction
+    │  │      chat-032f9152180cb73aa6361b9d7a4c5f4f
+    │  │      chat-0724634f1bbc9ad130bcbc74b925d790
+    │  │      chat-073e6a86870be1dac8d98235cbce53cf
+    │  │      chat-09953ce8ff455e119a86efef7cb9db4e
+    │  │      chat-0a9b5f904984bde0d5903afe4c5660c0
+    │  │      chat-10bb9702786e793e90708d4c4d83ddbe
+    │  │      chat-1254787c5c59a04910be58886e22423b
+    │  │      chat-13f71b7cde778647b08b04473239ebee
+    │  │      chat-145157a268a088f09517b9fe18184664
+    │  │      chat-16439cb18f3d84f0464a7bef8c673e46
+    │  │      chat-1cc3028b53ebff886f53ee54c1cf85b4
+    │  │      chat-1e46cd715eba33b8ad196dce7fb856dd
+    │  │      chat-2263c946e34afdcfb4fba9b74102ae39
+    │  │      chat-27503eac54753b5b416147afd6fe0b9a
+    │  │      chat-28cc4e416c64c09c127847e258fffa28
+    │  │      chat-2b71daba59b14cff548ef0a1b9fe3f58
+    │  │      chat-31352d85282ab0e8064c84c9ec7e6926
+    │  │      chat-37d57b96e0cea19e879895821587b0ce
+    │  │      chat-390ebbcd0c49c9f23b371f15264af3ab
+    │  │      chat-40b0c066be7658ef38edcfb4fe66bcdb
+    │  │      chat-45cbb5220a3c2fff3bc43483d69bcde9
+    │  │      chat-49ad7b53b38f51530c35271f8c14445f
+    │  │      chat-4aeb85961e2208e789009836b18ff4dd
+    │  │      chat-4ee46f56ac68a8e57c7474d5695a48c6
+    │  │      chat-516e2c87253f6bd1732ed3503e42dd5f
+    │  │      chat-51ac8f2ff87118bff9b5217be10cfc34
+    │  │      chat-63fce99631cfa2665f7edc4fa33f7910
+    │  │      chat-64f0f91e1293274dc4fcf8e8b42855e3
+    │  │      chat-66ce70bf6a5575997b9b2d8fa3500e61
+    │  │      chat-6fd6b29f5df7a7388c817d3d1d1e975d
+    │  │      chat-71ba19681e8c39400ca0be94852ee810
+    │  │      chat-75accb8c949fce7000f99cbe9b93affa
+    │  │      chat-78ccd2fccbbc6ec781a8ec0760139088
+    │  │      chat-7c0b98404e66a871053a90c24f87fad6
+    │  │      chat-7d3d70997c76c4bd512a3020538ca806
+    │  │      chat-7e4005e318f45c32a29dcbfa13351ac2
+    │  │      chat-7e4bd47083ec5aa34338012c137d2ba2
+    │  │      chat-876e73405558a9c5680459c7822dd711
+    │  │      chat-998f13aa561e5793aaeed2bd4bd8fe68
+    │  │      chat-9ab3ed5b7281c24a90757032d5951e60
+    │  │      chat-9c9c6f9c8a587a71969d8b4d9ca2908a
+    │  │      chat-9e9abf4e0d55b9ae227f297d9b5f5215
+    │  │      chat-a0b28adbb1e8f8525d7a850c15496fbb
+    │  │      chat-a336f847197574dc0a40fa378a589480
+    │  │      chat-a56e7ce13268d9f7e8e12e1c5e4c6e26
+    │  │      chat-a9f877a576849dd8f4fcfc1dce7ab0c5
+    │  │      chat-aa0464f36359ee401ed913208d53d5c2
+    │  │      chat-ab478973d5a34a8a59a199008fc206b8
+    │  │      chat-afbb1be3681850f2a9ef44a006244733
+    │  │      chat-bce13bc9ef500314e22ad6355b42f50e
+    │  │      chat-bfc78eefcdc0965215d68653b30c083f
+    │  │      chat-c0836b6a8f97567516efa45f7a94277c
+    │  │      chat-c2ae9aea64b9d86e4415e5aa8316abd6
+    │  │      chat-cd2b1488110c968a8f53a896f6c1a32f
+    │  │      chat-cdabd00dd0498d453190672c654477bb
+    │  │      chat-d70fd65b636c8f57145ab78771f6fbd8
+    │  │      chat-d82832bb48c027b7c19304cc6b527e4e
+    │  │      chat-d8e2de0bc5255b04f8e473bfbface9ed
+    │  │      chat-df6b5ec0f944076f71de96cd65424d7a
+    │  │      chat-e98922775b9cf30f8f7dbe0eb5fbac28
+    │  │      chat-eb56da4f497786d8396a1eb58f1dde2e
+    │  │      chat-ec6bd8525b63dfda444ede9beaf9f6f7
+    │  │      chat-ecb8dc4edafdaba16e46061f70b8e355
+    │  │      chat-ee379d70ac019c01d85e3bb5087049c2
+    │  │      chat-ef7a067fd3ea712a77592afbe4f6de47
+    │  │      chat-efffe90bffc9bcd92b514faed2d9489e
+    │  │      chat-f0a7e1fed922a4365bd8f630f5261a24
+    │  │      chat-f1ca6b11b3308cde9e09db38fc63cbbd
+    │  │      chat-f48bcac29f5576927d7ae3bea9aa4c98
+    │  │      chat-f5acc5a055d74f1740d3d58201377339
+    │  │      chat-f945d689383c8a56cbbe9e574f24d2c2
+    │  │      chat-f975271f56fd59cb1465f91e07df687d
+    │  │      chat-fb483c3b2473ce5785cb0146eb5e9c9a
+    │  │      chat-ff6ef2319f9165f08e545d0767ff924d
+    │  │
+    │  ├─summarize_descriptions
+    │  │      summarize-chat-v2-003e6f17c44fa9f7241ee1527423e43c
+    │  │      summarize-chat-v2-0111309938aab181470b89060ec24442
+    │  │      summarize-chat-v2-016bad277a717d5da37080ed5e70b90b
+    │  │      summarize-chat-v2-024106b87667a5582f378b91f1fdb02a
+    │  │      summarize-chat-v2-030edb5cfcdbba4e00392de7f6978d6f
+    │  │      summarize-chat-v2-0b6f437082c883d402fe03096cc5a921
+    │  │      summarize-chat-v2-0de73858ec7e1d451d7a56fd537fffd8
+    │  │      summarize-chat-v2-0eed95ca68821a57424c7451f0c6bc06
+    │  │      summarize-chat-v2-0fe96c5d141c2a059846d92761cef405
+    │  │      summarize-chat-v2-10f62aea52a0f47f88eb400ed1bddb70
+    │  │      summarize-chat-v2-110cf5d7261219ff5e391371e9664252
+    │  │      summarize-chat-v2-13425352b9bfecb77de6565555e9b095
+    │  │      summarize-chat-v2-138001166023225fcc78359871935641
+    │  │      summarize-chat-v2-14a34a041a8d88fb6ad6c62d49c817b1
+    │  │      summarize-chat-v2-15c6b29e3b14c601cf1bb9376e36c18a
+    │  │      summarize-chat-v2-161910c230526bd72a7567f30eca1908
+    │  │      summarize-chat-v2-1632daf868840e3cf8a37e9dd0bc9882
+    │  │      summarize-chat-v2-16548c5df2692c73a9a940dcca94d880
+    │  │      summarize-chat-v2-16cc1b478baa5458ef16ece91f3f9ae0
+    │  │      summarize-chat-v2-16e9ea0dfb88d6a405211c09dafaf50b
+    │  │      summarize-chat-v2-1c15d0040fb14b976fe5404d30d0b83d
+    │  │      summarize-chat-v2-24aded28ce97c451a60d22b374d6e8c6
+    │  │      summarize-chat-v2-25fdc49681ec1fc30a1f4a49fa95daf0
+    │  │      summarize-chat-v2-2a82c53dbb12f5aee6569c0cde068e0e
+    │  │      summarize-chat-v2-2de4ef3a6f7b35a63189d1a13bbc6829
+    │  │      summarize-chat-v2-351298e5a217e01311146ab5bda9e104
+    │  │      summarize-chat-v2-36941f96761fe8e5d947545c9ebc60e9
+    │  │      summarize-chat-v2-37652d39a35352f3a3f62aa5de0665dd
+    │  │      summarize-chat-v2-3a77846de17b12ae2181964641e9121f
+    │  │      summarize-chat-v2-41330bc0bcc627cc476b4e3ffa41262f
+    │  │      summarize-chat-v2-443fae61b422b9f0f33b393e26eb0911
+    │  │      summarize-chat-v2-4a16ff9a55ecd9cace1b53388f95ef87
+    │  │      summarize-chat-v2-4b2c952b232684f2d482ed56d25df57f
+    │  │      summarize-chat-v2-4d8877e6189fbcaa71306e30a412af8e
+    │  │      summarize-chat-v2-4e51874a785a49a7680d4e7a381f9892
+    │  │      summarize-chat-v2-52bcbd68d841d4040ef0d293f45e1433
+    │  │      summarize-chat-v2-53f8eacd17eac1ec5472a6b24b5087f8
+    │  │      summarize-chat-v2-548627422eb8ebe543c02f6e669d3234
+    │  │      summarize-chat-v2-597ba70e28259763ab8ceb945df7b5c5
+    │  │      summarize-chat-v2-5c945e57b2b8ceb6d6108d7c94240d2c
+    │  │      summarize-chat-v2-66e9870edc5aeecaac81e064bd0eb6da
+    │  │      summarize-chat-v2-6dbf79ac2d8fffc26e3fc6adab6b4756
+    │  │      summarize-chat-v2-6fa0877ac2fbc977860a35bec4a3e0e5
+    │  │      summarize-chat-v2-7826fa70e94561f6a7860aeb7c9f680c
+    │  │      summarize-chat-v2-7d9204a8a01163d206642ed445c1aaad
+    │  │      summarize-chat-v2-82abcd27b01c562c837c158438288460
+    │  │      summarize-chat-v2-87709b069217dfc06cbe6924c69daf31
+    │  │      summarize-chat-v2-8a9a5de5f342691e7dbc9a5393770733
+    │  │      summarize-chat-v2-8ea4dcf284103040937122c641e23c1e
+    │  │      summarize-chat-v2-90cbce2a26bf49b80231d0c21f1eb029
+    │  │      summarize-chat-v2-9866dff0c1cdd20dcc7db277b6a0b1b9
+    │  │      summarize-chat-v2-9beed2e64b45eb4e08d41770053bf516
+    │  │      summarize-chat-v2-9deffa7a07d9cf882485e488cab07303
+    │  │      summarize-chat-v2-a51568b0be6075215eee21e542504a8c
+    │  │      summarize-chat-v2-aa9c47fcafab2db504d500f0a2866061
+    │  │      summarize-chat-v2-ad24ebb5edc9e698b09b423bfbc90c00
+    │  │      summarize-chat-v2-af7f06fdbd5ee952541ce212ee70f88e
+    │  │      summarize-chat-v2-b05dee3e1b76c1f4c185598a2a007e75
+    │  │      summarize-chat-v2-b0865b2b95d7b6b68e71a7212d5678b5
+    │  │      summarize-chat-v2-b0e3ba0b0148b262cb7daf5ab3c39fdd
+    │  │      summarize-chat-v2-b3026421439fce8149f12dedb11dd1a6
+    │  │      summarize-chat-v2-b46137131e6df3b6b9e7a02298941b8b
+    │  │      summarize-chat-v2-b8decc33711671985a62f54a51d8f237
+    │  │      summarize-chat-v2-ba689229a075298f86efb17a66ea1825
+    │  │      summarize-chat-v2-bd242600da735741d4828fee4ec0bf76
+    │  │      summarize-chat-v2-bd78c8df3c2165c20664d28755b4dc20
+    │  │      summarize-chat-v2-d285f69cdaf28421c6e1c41905fea14d
+    │  │      summarize-chat-v2-d74f4b71256d0864621c05d2b6d62e12
+    │  │      summarize-chat-v2-d7fbfff54e8e1a93cc5b044c8378a295
+    │  │      summarize-chat-v2-d935666422858760baa4aed4ba679b96
+    │  │      summarize-chat-v2-e18e32ec57028de6014746ae6757baea
+    │  │      summarize-chat-v2-e4a25834ee69b75748928a26fa3fc027
+    │  │      summarize-chat-v2-e811fe09014b24b60867835f28d61bdb
+    │  │      summarize-chat-v2-ec0b9ff923f8340777e0d12299acf89e
+    │  │      summarize-chat-v2-ecfdeeaca201c64a9fe074f7f93f63ba
+    │  │      summarize-chat-v2-f07a87ad14a82c1aab91d449341810c0
+    │  │      summarize-chat-v2-f88aad56197e5a6b0fe0065431fd46b3
+    │  │      summarize-chat-v2-f8c0918e1dfd851196599de97b3198c0
+    │  │      summarize-chat-v2-f8f8a0a88c9a162e274888a79a81e5e7
+    │  │
+    │  └─text_embedding
+    │          embedding-0609f21a0bdf6154b03521b48c8af1ca
+    │          embedding-097d6b5d89865a9762d8b7cc4fd8ee6a
+    │          embedding-19c35e988be1a687105874580195806e
+    │          embedding-614b486ac95aaa1cbc4a2446afdac601
+    │          embedding-7c5eef2cb4b2d0fa93f052a4a759be3b
+    │          embedding-9aaa300ba484af06e980a31dd0b418bb
+    │          embedding-a367fcefe3261ded72b5661a121a711f
+    │          embedding-a81e03fdd29a9a6cc98e6e29ebab6095
+    │
+    ├─input
+    │      book.txt
+    │
+    ├─output
+    │  ├─20240820-100343
+    │  │  └─reports
+    │  │          indexing-engine.log
+    │  │
+    │  └─20240820-100459
+    │      ├─artifacts
+    │      │      create_base_documents.parquet
+    │      │      create_base_entity_graph.parquet
+    │      │      create_base_extracted_entities.parquet
+    │      │      create_base_text_units.parquet
+    │      │      create_final_communities.parquet
+    │      │      create_final_community_reports.parquet
+    │      │      create_final_documents.parquet
+    │      │      create_final_entities.parquet
+    │      │      create_final_nodes.parquet
+    │      │      create_final_relationships.parquet
+    │      │      create_final_text_units.parquet
+    │      │      create_summarized_entities.parquet
+    │      │      join_text_units_to_entity_ids.parquet
+    │      │      join_text_units_to_relationship_ids.parquet
+    │      │      stats.json
+    │      │
+    │      └─reports
+    │              indexing-engine.log
+    │              logs.json
+    │
+    └─prompts
+            claim_extraction.txt
+            community_report.txt
+            entity_extraction.txt
+            summarize_descriptions.txt
+</code></pre>
+</details>
+查询指令  
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m graphrag.query --root ./test --method global <span class="string">&quot;你要问的问题&quot;</span></span><br></pre></td></tr></table></figure>
+<p>–method可以有global和local两种方式</p>
+<p>目前好像对中文文本的支持不是很好，在进行中文文本的索引构建时总报错。</p>
+<h3 id="1-3使用deepseek大模型进行本地部署"><a href="#1-3使用deepseek大模型进行本地部署" class="headerlink" title="1.3使用deepseek大模型进行本地部署"></a>1.3使用deepseek大模型进行本地部署</h3><p>使用国内大模型api接口<br>官网:<a target="_blank" rel="noopener" href="https://agicto.com/">https://agicto.com/</a><br>只需要更改初始化后产生的.env和settings.yaml文件<br>获取api密钥后将.env和settings.yaml文件更改成如下内容:<br>.env文件:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRAPHRAG_API_KEY=你的密钥</span><br></pre></td></tr></table></figure>
+<p>setting.yaml文件</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br></pre></td><td class="code"><pre><span class="line">encoding_model: cl100k_base</span><br><span class="line">skip_workflows: []</span><br><span class="line">llm:</span><br><span class="line">  api_key: $&#123;GRAPHRAG_API_KEY&#125;</span><br><span class="line">  type: openai_chat # or azure_openai_chat</span><br><span class="line">  model: deepseek-chat</span><br><span class="line">  model_supports_json: false # recommended if this is available for your model.</span><br><span class="line">  # max_tokens: 4000</span><br><span class="line">  # request_timeout: 180.0</span><br><span class="line">  api_base: https://api.agicto.cn/v1</span><br><span class="line">  # api_version: 2024-02-15-preview</span><br><span class="line">  # organization: &lt;organization_id&gt;</span><br><span class="line">  # deployment_name: &lt;azure_model_deployment_name&gt;</span><br><span class="line">  # tokens_per_minute: 150_000 # set a leaky bucket throttle</span><br><span class="line">  # requests_per_minute: 10_000 # set a leaky bucket throttle</span><br><span class="line">  # max_retries: 10</span><br><span class="line">  # max_retry_wait: 10.0</span><br><span class="line">  # sleep_on_rate_limit_recommendation: true # whether to sleep when azure suggests wait-times</span><br><span class="line">  # concurrent_requests: 25 # the number of parallel inflight requests that may be made</span><br><span class="line">  # temperature: 0 # temperature for sampling</span><br><span class="line">  # top_p: 1 # top-p sampling</span><br><span class="line">  # n: 1 # Number of completions to generate</span><br><span class="line"></span><br><span class="line">parallelization:</span><br><span class="line">  stagger: 0.3</span><br><span class="line">  # num_threads: 50 # the number of threads to use for parallel processing</span><br><span class="line"></span><br><span class="line">async_mode: threaded # or asyncio</span><br><span class="line"></span><br><span class="line">embeddings:</span><br><span class="line">  ## parallelization: override the global parallelization settings for embeddings</span><br><span class="line">  async_mode: threaded # or asyncio</span><br><span class="line">  llm:</span><br><span class="line">    api_key: $&#123;GRAPHRAG_API_KEY&#125;</span><br><span class="line">    type: openai_embedding # or azure_openai_embedding</span><br><span class="line">    model: text-embedding-3-small</span><br><span class="line">    api_base: https://api.agicto.cn/v1</span><br><span class="line">    # api_version: 2024-02-15-preview</span><br><span class="line">    # organization: &lt;organization_id&gt;</span><br><span class="line">    # deployment_name: &lt;azure_model_deployment_name&gt;</span><br><span class="line">    # tokens_per_minute: 150_000 # set a leaky bucket throttle</span><br><span class="line">    # requests_per_minute: 10_000 # set a leaky bucket throttle</span><br><span class="line">    # max_retries: 10</span><br><span class="line">    # max_retry_wait: 10.0</span><br><span class="line">    # sleep_on_rate_limit_recommendation: true # whether to sleep when azure suggests wait-times</span><br><span class="line">    # concurrent_requests: 25 # the number of parallel inflight requests that may be made</span><br><span class="line">    # batch_size: 16 # the number of documents to send in a single request</span><br><span class="line">    # batch_max_tokens: 8191 # the maximum number of tokens to send in a single request</span><br><span class="line">    # target: required # or optional</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">chunks:</span><br><span class="line">  size: 300</span><br><span class="line">  overlap: 100</span><br><span class="line">  group_by_columns: [id] # by default, we don&#x27;t allow chunks to cross documents</span><br><span class="line">    </span><br><span class="line">input:</span><br><span class="line">  type: file # or blob</span><br><span class="line">  file_type: text # or csv</span><br><span class="line">  base_dir: &quot;input&quot;</span><br><span class="line">  file_encoding: utf-8</span><br><span class="line">  file_pattern: &quot;.*\\.txt$&quot;</span><br><span class="line"></span><br><span class="line">cache:</span><br><span class="line">  type: file # or blob</span><br><span class="line">  base_dir: &quot;cache&quot;</span><br><span class="line">  # connection_string: &lt;azure_blob_storage_connection_string&gt;</span><br><span class="line">  # container_name: &lt;azure_blob_storage_container_name&gt;</span><br><span class="line"></span><br><span class="line">storage:</span><br><span class="line">  type: file # or blob</span><br><span class="line">  base_dir: &quot;output/$&#123;timestamp&#125;/artifacts&quot;</span><br><span class="line">  # connection_string: &lt;azure_blob_storage_connection_string&gt;</span><br><span class="line">  # container_name: &lt;azure_blob_storage_container_name&gt;</span><br><span class="line"></span><br><span class="line">reporting:</span><br><span class="line">  type: file # or console, blob</span><br><span class="line">  base_dir: &quot;output/$&#123;timestamp&#125;/reports&quot;</span><br><span class="line">  # connection_string: &lt;azure_blob_storage_connection_string&gt;</span><br><span class="line">  # container_name: &lt;azure_blob_storage_container_name&gt;</span><br><span class="line"></span><br><span class="line">entity_extraction:</span><br><span class="line">  ## llm: override the global llm settings for this task</span><br><span class="line">  ## parallelization: override the global parallelization settings for this task</span><br><span class="line">  ## async_mode: override the global async_mode settings for this task</span><br><span class="line">  prompt: &quot;prompts/entity_extraction.txt&quot;</span><br><span class="line">  entity_types: [organization,person,geo,event]</span><br><span class="line">  max_gleanings: 0</span><br><span class="line"></span><br><span class="line">summarize_descriptions:</span><br><span class="line">  ## llm: override the global llm settings for this task</span><br><span class="line">  ## parallelization: override the global parallelization settings for this task</span><br><span class="line">  ## async_mode: override the global async_mode settings for this task</span><br><span class="line">  prompt: &quot;prompts/summarize_descriptions.txt&quot;</span><br><span class="line">  max_length: 500</span><br><span class="line"></span><br><span class="line">claim_extraction:</span><br><span class="line">  ## llm: override the global llm settings for this task</span><br><span class="line">  ## parallelization: override the global parallelization settings for this task</span><br><span class="line">  ## async_mode: override the global async_mode settings for this task</span><br><span class="line">  # enabled: true</span><br><span class="line">  prompt: &quot;prompts/claim_extraction.txt&quot;</span><br><span class="line">  description: &quot;Any claims or facts that could be relevant to information discovery.&quot;</span><br><span class="line">  max_gleanings: 0</span><br><span class="line"></span><br><span class="line">community_reports:</span><br><span class="line">  ## llm: override the global llm settings for this task</span><br><span class="line">  ## parallelization: override the global parallelization settings for this task</span><br><span class="line">  ## async_mode: override the global async_mode settings for this task</span><br><span class="line">  prompt: &quot;prompts/community_report.txt&quot;</span><br><span class="line">  max_length: 2000</span><br><span class="line">  max_input_length: 8000</span><br><span class="line"></span><br><span class="line">cluster_graph:</span><br><span class="line">  max_cluster_size: 10</span><br><span class="line"></span><br><span class="line">embed_graph:</span><br><span class="line">  enabled: false # if true, will generate node2vec embeddings for nodes</span><br><span class="line">  # num_walks: 10</span><br><span class="line">  # walk_length: 40</span><br><span class="line">  # window_size: 2</span><br><span class="line">  # iterations: 3</span><br><span class="line">  # random_seed: 597832</span><br><span class="line"></span><br><span class="line">umap:</span><br><span class="line">  enabled: false # if true, will generate UMAP embeddings for nodes</span><br><span class="line"></span><br><span class="line">snapshots:</span><br><span class="line">  graphml: false</span><br><span class="line">  raw_entities: false</span><br><span class="line">  top_level_nodes: false</span><br><span class="line"></span><br><span class="line">local_search:</span><br><span class="line">  # text_unit_prop: 0.5</span><br><span class="line">  # community_prop: 0.1</span><br><span class="line">  # conversation_history_max_turns: 5</span><br><span class="line">  # top_k_mapped_entities: 10</span><br><span class="line">  # top_k_relationships: 10</span><br><span class="line">  # llm_temperature: 0 # temperature for sampling</span><br><span class="line">  # llm_top_p: 1 # top-p sampling</span><br><span class="line">  # llm_n: 1 # Number of completions to generate</span><br><span class="line">  # max_tokens: 12000</span><br><span class="line"></span><br><span class="line">global_search:</span><br><span class="line">  # llm_temperature: 0 # temperature for sampling</span><br><span class="line">  # llm_top_p: 1 # top-p sampling</span><br><span class="line">  # llm_n: 1 # Number of completions to generate</span><br><span class="line">  # max_tokens: 12000</span><br><span class="line">  # data_max_tokens: 12000</span><br><span class="line">  # map_max_tokens: 1000</span><br><span class="line">  # reduce_max_tokens: 2000</span><br><span class="line">  # concurrency: 32</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>然后继续构建索引:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m graphrag.index --root ./test</span><br></pre></td></tr></table></figure>
+<p>采用api接口后，这一步骤时间将缩短至10分钟以内</p>
+<h3 id="1-4-对GraphRAG的工作流程简单分析"><a href="#1-4-对GraphRAG的工作流程简单分析" class="headerlink" title="1.4 对GraphRAG的工作流程简单分析"></a>1.4 对GraphRAG的工作流程简单分析</h3><p>GraphRAG工作流程输出结果:<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/AI_project/KnowledgeGraph/index.png" alt="image"><br>大致工作原理:<br>构建索引阶段:<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/AI_project/KnowledgeGraph/2.png" alt="image"><br>问答阶段:<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/AI_project/KnowledgeGraph/3.png" alt="image"><br>简述:<br>GraphRAG会对给定的文本文件进行分块处理，每块文段进行命名实体识别，抽取其中的相互关系，再将实体进行分类，形成社区，然后形成社区报告，完成索引的构建。<br>其中大部分工作是由给定的api接口完成的。在graphrag&#x2F;test&#x2F;prompts目录下的文本文件就展示了graphrag向大模型输入的一些工作指令，将具体要完成的工作写在了文本文件里。<br>在进行问答时有两种不同的模式，global和local，两者所适用的问题类型有所不同。<br>global模式适合回答全局性的问题，在对各个社区进行总结后得到结果，消耗的资源比较大；<br>local模式适合回答局域性的问题，消耗资源小。</p>
+<h2 id="2-Neo4j可视化知识图谱"><a href="#2-Neo4j可视化知识图谱" class="headerlink" title="2. Neo4j可视化知识图谱"></a>2. Neo4j可视化知识图谱</h2><h3 id="2-1-Neo4j部署"><a href="#2-1-Neo4j部署" class="headerlink" title="2.1 Neo4j部署"></a>2.1 Neo4j部署</h3><p>neo4j下载地址:<a target="_blank" rel="noopener" href="https://neo4j.com/deployment-center/#enterprise">https://neo4j.com/deployment-center/#enterprise</a><br>进入页面:<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/AI_project/KnowledgeGraph/4.png" alt="image">  </p>
+<p>往下翻到:<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/AI_project/KnowledgeGraph/5.png" alt="image">  </p>
+<p>注意选择不收费的COMMUNITY版本和Windows系统版本  </p>
+<p>点击Download后会下载压缩包neo4j-community-5.23.0-windows.zip  </p>
+<p>解压后得到文件夹neo4j-community-5.23.0-windows.zip  </p>
+<p>可以选择将其中的bin目录设置为环境变量，方便后续命令行输入  </p>
+<p>配置好环境变量后运行以下命令开启neo4j服务:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">neo4j.bat console</span><br></pre></td></tr></table></figure>
+<p>默认打开7474端口，在浏览器中搜索 <a target="_blank" rel="noopener" href="http://localhost:7474/">http://localhost:7474</a> 即可访问UI界面</p>
+<p>初始用户名和密码均为 <em><strong>neo4j</strong></em></p>
+<h3 id="2-2-将GraphRAG进行可视化操作"><a href="#2-2-将GraphRAG进行可视化操作" class="headerlink" title="2.2 将GraphRAG进行可视化操作"></a>2.2 将GraphRAG进行可视化操作</h3><ol>
+<li><p>经过索引构建后test&#x2F;output&#x2F;时间戳&#x2F;artifacts目录下会生成一系列.parquet文件，首先将这些文件转换成.csv文件<br>转换代码:</p>
+ <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">import pandas as pd</span><br><span class="line">import csv</span><br><span class="line"></span><br><span class="line">parquet_dir = &quot;./output_csv/test6/parquet&quot;   # .parquet文件所在目录</span><br><span class="line">csv_dir = &quot;./output_csv/test6/csv&quot;           # .csv文件的生成存放目录</span><br><span class="line"></span><br><span class="line">def clean_quote(value):</span><br><span class="line">    if isinstance(value, str):</span><br><span class="line">        value = value.strip().replace(&#x27;&quot;&quot;&#x27;, &#x27;&quot;&#x27;).replace(&#x27;&quot;&#x27;, &#x27;&#x27;)</span><br><span class="line">        if &#x27;,&#x27; in value or &#x27;&quot;&#x27; in value:</span><br><span class="line">            value = f&#x27;&quot;&#123;value&#125;&quot;&#x27;</span><br><span class="line">    return value</span><br><span class="line"></span><br><span class="line">for file_name in os.listdir(parquet_dir):</span><br><span class="line">    if file_name.endswith(&#x27;.parquet&#x27;):</span><br><span class="line">        parquet_file = os.path.join(parquet_dir, file_name)</span><br><span class="line">        csv_file = os.path.join(csv_dir, file_name.replace(&#x27;.parquet&#x27;, &#x27;.csv&#x27;))</span><br><span class="line"></span><br><span class="line">        df = pd.read_parquet(parquet_file)</span><br><span class="line"></span><br><span class="line">        for column in df.select_dtypes(include=[&#x27;object&#x27;]).columns:</span><br><span class="line">            df[column] = df[column].apply(clean_quote)</span><br><span class="line"></span><br><span class="line">        df.to_csv(csv_file, index=False, quoting=csv.QUOTE_NONNUMERIC)</span><br><span class="line">        print(f&quot;Converted &#123;parquet_file&#125; to &#123;csv_file&#125; successfully.&quot;)</span><br><span class="line"></span><br><span class="line">print(&quot;All Parquet files have been converted to CSV.&quot;)</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>将生成的csv文件复制到neo4j-community-5.23.0-windows&#x2F;import目录下  </p>
+</li>
+<li><p>开启neo4j服务并进入UI界面，在页面上方复制以下命令并运行命令:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br></pre></td><td class="code"><pre><span class="line">// 1. Import Documents</span><br><span class="line">LOAD CSV WITH HEADERS FROM &#x27;file:///create_final_documents.csv&#x27; AS row</span><br><span class="line">CREATE (d:Document &#123;</span><br><span class="line">    id: row.id,</span><br><span class="line">    title: row.title,</span><br><span class="line">    raw_content: row.raw_content,</span><br><span class="line">    text_unit_ids: row.text_unit_ids</span><br><span class="line">&#125;);</span><br><span class="line">    </span><br><span class="line">// 2. Import Text Units</span><br><span class="line">LOAD CSV WITH HEADERS FROM &#x27;file:///create_final_text_units.csv&#x27; AS row</span><br><span class="line">CREATE (t:TextUnit &#123;</span><br><span class="line">    id: row.id,</span><br><span class="line">    text: row.text,</span><br><span class="line">    n_tokens: toFloat(row.n_tokens),</span><br><span class="line">    document_ids: row.document_ids,</span><br><span class="line">    entity_ids: row.entity_ids,</span><br><span class="line">    relationship_ids: row.relationship_ids</span><br><span class="line">&#125;);</span><br><span class="line">    </span><br><span class="line">// 3. Import Entities</span><br><span class="line">LOAD CSV WITH HEADERS FROM &#x27;file:///create_final_entities.csv&#x27; AS row</span><br><span class="line">CREATE (e:Entity&#123;</span><br><span class="line">    id: row.id,</span><br><span class="line">    name: row.name,</span><br><span class="line">    type: row.type,</span><br><span class="line">    description: row.description,</span><br><span class="line">    human_readable_id: toInteger(row.human_readable_id),</span><br><span class="line">    text_unit_ids: row.text_unit_ids</span><br><span class="line">&#125;);</span><br><span class="line">    </span><br><span class="line">// 4. Import Relationships</span><br><span class="line">LOAD CSV WITH HEADERS FROM &#x27;file:///create_final_relationships.csv&#x27; AS row</span><br><span class="line">CREATE (r:Relationship &#123;</span><br><span class="line">    source: row.source,</span><br><span class="line">    target: row.target,</span><br><span class="line">    weight: toFloat(row.weight),</span><br><span class="line">    description: row.description,</span><br><span class="line">    id: row.id,</span><br><span class="line">    human_readable_id: row.human_readable_id,</span><br><span class="line">    source_degree: toInteger(row.source_degree),</span><br><span class="line">    target_degree: toInteger(row.target_degree),</span><br><span class="line">    rank: toInteger(row.rank),</span><br><span class="line">    text_unit_ids: row.text_unit_ids</span><br><span class="line">&#125;);</span><br><span class="line">    </span><br><span class="line">// 5. Import Nodes</span><br><span class="line">LOAD CSV WITH HEADERS FROM &#x27;file:///create_final_nodes.csv&#x27; AS row</span><br><span class="line">CREATE (n:Node &#123;</span><br><span class="line">    id: row.id,</span><br><span class="line">    level: toInteger(row.level),</span><br><span class="line">    title: row.title,</span><br><span class="line">    type: row.type,</span><br><span class="line">    description: row.description,</span><br><span class="line">    source_id: row.source_id,</span><br><span class="line">    community: row.community,</span><br><span class="line">    degree: toInteger(row.degree),</span><br><span class="line">    human_readable_id: row.human_readable_id,</span><br><span class="line">    size: toInteger(row.size),</span><br><span class="line">    entity_type: row.entity_type,</span><br><span class="line">    top_level_node_id: row.top_level_node_id,</span><br><span class="line">    x: toInteger(row.x),</span><br><span class="line">    y: toInteger(row.y)</span><br><span class="line">&#125;);</span><br><span class="line">    </span><br><span class="line">// 6. Import Communities</span><br><span class="line">LOAD CSV WITH HEADERS FROM &#x27;file:///create_final_communities.csv&#x27; AS row</span><br><span class="line">CREATE (c:Community &#123;</span><br><span class="line">    id: row.id,</span><br><span class="line">    title: row.title,</span><br><span class="line">    level: toInteger(row.level),</span><br><span class="line">    raw_community: row.raw_community,</span><br><span class="line">    relationship_ids: row.relationship_ids,</span><br><span class="line">    text_unit_ids: row.text_unit_ids</span><br><span class="line">&#125;);</span><br><span class="line">    </span><br><span class="line">// 7. Import Community Reports</span><br><span class="line">LOAD CSV WITH HEADERS FROM &#x27;file:///create_final_community_reports.csv&#x27; AS row</span><br><span class="line">CREATE (cr:CommunityReport &#123;</span><br><span class="line">    id: row.id,</span><br><span class="line">    community: row.community,</span><br><span class="line">    full_content: row.full_content,</span><br><span class="line">    level: toInteger(row.level),</span><br><span class="line">    rank: toFloat(row.rank),</span><br><span class="line">    title: row.title,</span><br><span class="line">    rank_explanation: row.rank_explanation,</span><br><span class="line">    summary: row.summary,</span><br><span class="line">    findings: row.findings,</span><br><span class="line">    full_content_json: row.full_content_json</span><br><span class="line">&#125;);</span><br><span class="line">    </span><br><span class="line">// 8. Create indexes for better performance</span><br><span class="line">CREATE INDEX FOR (d:Document) ON (d.id);</span><br><span class="line">CREATE INDEX FOR (t:TextUnit) ON (t.id);</span><br><span class="line">CREATE INDEX FOR (e:Entity) ON (e.id);</span><br><span class="line">CREATE INDEX FOR (r:Relationship) ON (r.id);</span><br><span class="line">CREATE INDEX FOR (n:Node) ON (n.id);</span><br><span class="line">CREATE INDEX FOR (c:Community) ON (c.id);</span><br><span class="line">CREATE INDEX FOR (cr:CommunityReport) ON (cr.id);</span><br><span class="line">    </span><br><span class="line">// 9. Create relationships after all nodes are imported</span><br><span class="line">MATCH (d:Document)</span><br><span class="line">UNWIND split(d.text_unit_ids, &#x27;,&#x27;) AS textUnitId</span><br><span class="line">MATCH (t:TextUnit &#123;id: trim(textUnitId)&#125;)</span><br><span class="line">CREATE (d)-[:HAS_TEXT_UNIT]-&gt;(t);</span><br><span class="line">    </span><br><span class="line">MATCH (t:TextUnit)</span><br><span class="line">UNWIND split(t.entity_ids, &#x27;,&#x27;) AS entityId</span><br><span class="line">MATCH (e:Entity &#123;id: trim(entityId)&#125;)</span><br><span class="line">CREATE (t)-[:HAS_ENTITY]-&gt;(e);</span><br><span class="line">    </span><br><span class="line">MATCH (t:TextUnit)</span><br><span class="line">UNWIND split(t.relationship_ids, &#x27;,&#x27;) AS relId</span><br><span class="line">MATCH (r:Relationship &#123;id: trim(relId)&#125;)</span><br><span class="line">CREATE (t)-[:HAS_RELATIONSHIP]-&gt;(r);</span><br><span class="line">    </span><br><span class="line">MATCH (e:Entity)</span><br><span class="line">UNWIND split(e.text_unit_ids, &#x27;,&#x27;) AS textUnitId</span><br><span class="line">MATCH (t:TextUnit &#123;id: trim(textUnitId)&#125;)</span><br><span class="line">CREATE (e)-[:MENTIONED_IN]-&gt;(t);</span><br><span class="line">    </span><br><span class="line">MATCH (r:Relationship)</span><br><span class="line">MATCH (source:Entity &#123;name: r.source&#125;)</span><br><span class="line">MATCH (target:Entity &#123;name: r.target&#125;)</span><br><span class="line">CREATE (source)-[:RELATES_TO]-&gt;(target);</span><br><span class="line">    </span><br><span class="line">MATCH (r:Relationship)</span><br><span class="line">UNWIND split(r.text_unit_ids, &#x27;,&#x27;) AS textUnitId</span><br><span class="line">MATCH (t:TextUnit &#123;id: trim(textUnitId)&#125;)</span><br><span class="line">CREATE (r)-[:MENTIONED_IN]-&gt;(t);</span><br><span class="line">    </span><br><span class="line">MATCH (c:Community)</span><br><span class="line">UNWIND split(c.relationship_ids, &#x27;,&#x27;) AS relId</span><br><span class="line">MATCH (r:Relationship &#123;id: trim(relId)&#125;)</span><br><span class="line">CREATE (c)-[:HAS_RELATIONSHIP]-&gt;(r);</span><br><span class="line">    </span><br><span class="line">MATCH (c:Community)</span><br><span class="line">UNWIND split(c.text_unit_ids, &#x27;,&#x27;) AS textUnitId</span><br><span class="line">MATCH (t:TextUnit &#123;id:trim(textUnitId)&#125;)</span><br><span class="line">CREATE (c)-[:HAS_TEXT_UNIT]-&gt;(t);</span><br><span class="line">    </span><br><span class="line">MATCH (cr:CommunityReport)</span><br><span class="line">MATCH (c:Community &#123;id: cr.community&#125;)</span><br><span class="line">CREATE (cr)-[:REPORTS_ON]-&gt;(c);</span><br></pre></td></tr></table></figure>
+<p>最好在运行这段命令之前nei4j数据库没有其他的节点数据，最好是一次性完成。</p>
+</li>
+</ol>
+<p>如果出现报错，最简单的方法是重新解压原来的压缩包，重新开一个新的数据库，然后重复之前的操作</p>
+<h3 id="2-3-自行创建简单图谱示例"><a href="#2-3-自行创建简单图谱示例" class="headerlink" title="2.3 自行创建简单图谱示例"></a>2.3 自行创建简单图谱示例</h3><p>安装依赖库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install py2neo</span><br></pre></td></tr></table></figure>
+
+<p>以下代码是一个简单的图谱生成示例:</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">import py2neo</span><br><span class="line">from py2neo import Graph, Node, Relationship, NodeMatcher</span><br><span class="line"></span><br><span class="line">g = Graph(&quot;neo4j://localhost:7687&quot;, user=&quot;neo4j&quot;, password=&quot;&quot;)  # 填入自己的用户名和密码</span><br><span class="line"></span><br><span class="line">g.run(&#x27;match (n) detach delete n&#x27;)  # 运行neo4j自己的命令，删除所有节点</span><br><span class="line"></span><br><span class="line"># 创建节点，指定标签并命名</span><br><span class="line">testnode1 = Node(&quot;Person&quot;, name=&quot;刘备&quot;)</span><br><span class="line">testnode2 = Node(&quot;Person&quot;, name=&quot;关羽&quot;)</span><br><span class="line">testnode3 = Node(&quot;Person&quot;, name=&quot;张飞&quot;)</span><br><span class="line"></span><br><span class="line"># 构建节点属性</span><br><span class="line"># 也可以在创建时设置，如testnode1 = Node(&quot;Person&quot;, name=&quot;刘备&quot;, country=&quot;蜀国&quot;, age=40, sex=&quot;男&quot;)</span><br><span class="line">testnode1[&#x27;country&#x27;] = &#x27;蜀国&#x27;</span><br><span class="line">testnode1[&#x27;age&#x27;] = 40</span><br><span class="line">testnode1[&#x27;sex&#x27;] = &#x27;男&#x27;</span><br><span class="line"></span><br><span class="line">testnode2[&#x27;country&#x27;] = &#x27;蜀国&#x27;</span><br><span class="line">testnode2[&#x27;age&#x27;] = 35</span><br><span class="line">testnode2[&#x27;sex&#x27;] = &#x27;男&#x27;</span><br><span class="line"></span><br><span class="line">testnode3[&#x27;country&#x27;] = &#x27;蜀国&#x27;</span><br><span class="line">testnode3[&#x27;age&#x27;] = 30</span><br><span class="line">testnode3[&#x27;sex&#x27;] = &#x27;男&#x27;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 无条件创建节点，必定会增加节点，不论是否与之前已有的节点重复</span><br><span class="line"># g.create(testnode1)</span><br><span class="line"># g.create(testnode2)</span><br><span class="line"># g.create(testnode3)</span><br><span class="line"></span><br><span class="line"># 覆盖式创建节点，根据给定条件进行覆盖创建</span><br><span class="line">g.merge(testnode1, &quot;People&quot;, &quot;name&quot;)</span><br><span class="line">g.merge(testnode2, &quot;People&quot;, &quot;name&quot;)</span><br><span class="line">g.merge(testnode3, &quot;People&quot;, &quot;name&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 构建关系</span><br><span class="line">friend1 = Relationship(testnode1, &quot;大哥&quot;, testnode2)</span><br><span class="line">friend2 = Relationship(testnode2, &quot;二弟&quot;, testnode1)</span><br><span class="line">friend3 = Relationship(testnode1, &quot;大哥&quot;, testnode3)</span><br><span class="line">friend4 = Relationship(testnode3, &quot;三弟&quot;, testnode1)</span><br><span class="line">friend5 = Relationship(testnode2, &quot;二哥&quot;, testnode3)</span><br><span class="line">friend6 = Relationship(testnode3, &quot;三弟&quot;, testnode2)</span><br><span class="line">g.merge(friend1, &quot;Person&quot;, &quot;name&quot;)</span><br><span class="line">g.merge(friend2, &quot;Person&quot;, &quot;name&quot;)</span><br><span class="line">g.merge(friend3, &quot;Person&quot;, &quot;name&quot;)</span><br><span class="line">g.merge(friend4, &quot;Person&quot;, &quot;name&quot;)</span><br><span class="line">g.merge(friend5, &quot;Person&quot;, &quot;name&quot;)</span><br><span class="line">g.merge(friend6, &quot;Person&quot;, &quot;name&quot;)</span><br><span class="line"></span><br><span class="line"># 查询相关属性</span><br><span class="line">matcher = NodeMatcher(g)</span><br><span class="line">print(matcher.match(&quot;Person&quot;, name=&quot;张飞&quot;).first())</span><br></pre></td></tr></table></figure>
+<p>生成效果:<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/AI_project/KnowledgeGraph/6.png" alt="image">  </p>
+<h3 id="2-4-知识图谱构建案例分析"><a href="#2-4-知识图谱构建案例分析" class="headerlink" title="2.4 知识图谱构建案例分析"></a>2.4 知识图谱构建案例分析</h3><h4 id="2-4-1-红楼梦人物关系图谱构建"><a href="#2-4-1-红楼梦人物关系图谱构建" class="headerlink" title="2.4.1 红楼梦人物关系图谱构建"></a>2.4.1 红楼梦人物关系图谱构建</h4><ol>
+<li>构建方法:通过已搜集好的人物关系表格构建知识图谱，表格样式如下:<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/AI_project/KnowledgeGraph/7.png" alt="image"><br>表格中已经非常明确的给出了各节点之间的关系。</li>
+<li>代码: <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import csv</span><br><span class="line">from py2neo import Graph,Node,Relationship,NodeMatcher</span><br><span class="line">#账号密码改为自己的即可</span><br><span class="line">g=Graph(&#x27;neo4j://localhost:7687&#x27;,user=&#x27;neo4j&#x27;,password=&#x27;&#x27;)</span><br><span class="line">g.run(&#x27;match (n) detach delete n&#x27;)</span><br><span class="line">with open(&#x27;hlm.txt&#x27;,&#x27;r&#x27;,encoding=&#x27;utf-8&#x27;) as f:</span><br><span class="line">    reader=csv.reader(f)</span><br><span class="line">    for item in reader:</span><br><span class="line">        if reader.line_num==1:</span><br><span class="line">            continue</span><br><span class="line">        print(&quot;当前行数：&quot;,reader.line_num,&quot;当前内容：&quot;,item)</span><br><span class="line">        start_node=Node(&quot;Person&quot;,name=item[0])</span><br><span class="line">        end_node=Node(&quot;Person&quot;,name=item[1])</span><br><span class="line">        relation=Relationship(start_node,item[3],end_node)</span><br><span class="line">        g.merge(start_node,&quot;Person&quot;,&quot;name&quot;)</span><br><span class="line">        g.merge(end_node,&quot;Person&quot;,&quot;name&quot;)</span><br><span class="line">        g.merge(relation,&quot;Person&quot;,&quot;name&quot;)</span><br><span class="line">print(&#x27;end&#x27;)</span><br></pre></td></tr></table></figure></li>
+<li>优劣性说明<br>这种方法来得最直接，不过需要费时间搜集或者自己整理出相关的关系数据，整理出这样一份表格。</li>
+</ol>
+<h4 id="2-4-2-借助AI大模型进行知识图谱构建"><a href="#2-4-2-借助AI大模型进行知识图谱构建" class="headerlink" title="2.4.2 借助AI大模型进行知识图谱构建"></a>2.4.2 借助AI大模型进行知识图谱构建</h4><p>这种方法非常类似GraphRAG，直接将文本输给gpt，然后提出类似“请抽取其中的实体和实体间的关系，并生成neo4j代码”的要求，剩下的工作便可交给gpt完成。<br>GraphRAG只不过是让这一过程自动化进行，其中真正来处理文本，抽取实体等工作还是交给了大模型。  </p>
+<h4 id="2-4-3-医疗知识图谱构建"><a href="#2-4-3-医疗知识图谱构建" class="headerlink" title="2.4.3 医疗知识图谱构建"></a>2.4.3 医疗知识图谱构建</h4><p><a target="_blank" rel="noopener" href="https://github.com/liuhuanyong/QASystemOnMedicalKG">项目源地址</a><br>与红楼梦人物知识图谱构建所需的数据格式类似，需要整理好的数据<br>不同的是项目还提供了爬虫模块，支持从指定的网站上爬取信息，并对信息进行数据整理以达到可以进行图谱构建的目的。<br>项目还有问答功能，不用api接口实现。</p>
+</article><div class="post-copyright"><div class="post-copyright__title"><span class="post-copyright-info"><h>知识图谱</h></span></div><div class="post-copyright__type"><span class="post-copyright-info"><a href="https://doraemonblogs.github.io/2024/09/11/Summary/">https://doraemonblogs.github.io/2024/09/11/Summary/</a></span></div><div class="post-copyright-m"><div class="post-copyright-m-info"><div class="post-copyright-a"><h>作者</h><div class="post-copyright-cc-info"><h>Doraemon</h></div></div><div class="post-copyright-c"><h>发布于</h><div class="post-copyright-cc-info"><h>2024-09-11</h></div></div><div class="post-copyright-u"><h>更新于</h><div class="post-copyright-cc-info"><h>2024-10-10</h></div></div><div class="post-copyright-c"><h>许可协议</h><div class="post-copyright-cc-info"><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a rel="noopener" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></div></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/GraphRAG/">GraphRAG</a><a class="post-meta__tags" href="/tags/Neo4j/">Neo4j</a><a class="post-meta__tags" href="/tags/%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1/">知识图谱</a></div><div class="post_share"><div class="social-share" data-image="/img/top_img/5.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>投喂作者</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/wechat.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/wechat.png" alt="微信"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/alipay.jpg" alt="支付宝"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2024/09/30/2024-10-3-list/" title="国庆"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/top_img/1.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">国庆</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/profile.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Doraemon</div><div class="author-info__description">保持热爱,奔赴山海</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">5</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">5</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/doraemonblogs"><i class="fab fa-github"></i><span>🚀前往小窝...</span></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/Doraemonblogs" target="_blank" title="Github"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-github"></use></svg></a><a class="social-icon faa-parent animated-hover" href="mailto:3090503843@qq.com" target="_blank" title="邮件"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-youjian"></use></svg></a><a class="social-icon faa-parent animated-hover" href="/img/QRCode.png" target="_blank" title="微信"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-weixin"></use></svg></a><a class="social-icon faa-parent animated-hover" href="/img/qq.jpg" target="_blank" title="QQ"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-QQ"></use></svg></a><a class="social-icon faa-parent animated-hover" href="https://space.bilibili.com/3494359538338457?spm_id_from=333.1007.0.0" target="_blank" title="B站"><svg class="icon faa-tada" aria-hidden="true"><use xlink:href="#icon-bilibili"></use></svg></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><a class="faa-parent animated-hover"><svg class="faa-tada icon" style="height:25px;width:25px;fill:currentColor;position:relative;top:5px" aria-hidden="true"><use xlink:href="#icon-xinwengonggao"></use></svg></a><span>公告栏</span></div><div class="announcement_content">欢迎来到我的博客！</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">工作总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-GraphRAG%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2"><span class="toc-number">1.1.</span> <span class="toc-text">1.GraphRAG本地部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1基础配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2%E4%BD%BF%E7%94%A8Ollama-llama%E8%BF%9B%E8%A1%8C%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2使用Ollama+llama进行本地部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3%E4%BD%BF%E7%94%A8deepseek%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%BF%9B%E8%A1%8C%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3使用deepseek大模型进行本地部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E5%AF%B9GraphRAG%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90"><span class="toc-number">1.1.4.</span> <span class="toc-text">1.4 对GraphRAG的工作流程简单分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Neo4j%E5%8F%AF%E8%A7%86%E5%8C%96%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1"><span class="toc-number">1.2.</span> <span class="toc-text">2. Neo4j可视化知识图谱</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Neo4j%E9%83%A8%E7%BD%B2"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 Neo4j部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%B0%86GraphRAG%E8%BF%9B%E8%A1%8C%E5%8F%AF%E8%A7%86%E5%8C%96%E6%93%8D%E4%BD%9C"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 将GraphRAG进行可视化操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E8%87%AA%E8%A1%8C%E5%88%9B%E5%BB%BA%E7%AE%80%E5%8D%95%E5%9B%BE%E8%B0%B1%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 自行创建简单图谱示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%9E%84%E5%BB%BA%E6%A1%88%E4%BE%8B%E5%88%86%E6%9E%90"><span class="toc-number">1.2.4.</span> <span class="toc-text">2.4 知识图谱构建案例分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-1-%E7%BA%A2%E6%A5%BC%E6%A2%A6%E4%BA%BA%E7%89%A9%E5%85%B3%E7%B3%BB%E5%9B%BE%E8%B0%B1%E6%9E%84%E5%BB%BA"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">2.4.1 红楼梦人物关系图谱构建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-2-%E5%80%9F%E5%8A%A9AI%E5%A4%A7%E6%A8%A1%E5%9E%8B%E8%BF%9B%E8%A1%8C%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%9E%84%E5%BB%BA"><span class="toc-number">1.2.4.2.</span> <span class="toc-text">2.4.2 借助AI大模型进行知识图谱构建</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-3-%E5%8C%BB%E7%96%97%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%E6%9E%84%E5%BB%BA"><span class="toc-number">1.2.4.3.</span> <span class="toc-text">2.4.3 医疗知识图谱构建</span></a></li></ol></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">&copy;2024 By Doraemon</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page@5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.8.8/dist/lazyload.iife.min.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"></div><canvas id="universe"></canvas><script defer src="/js/universe.js"></script><script defer src="/js/cursor.js"></script><script async src="//at.alicdn.com/t/c/font_4701216_bqybv098814.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-heart.min.js" async="async" mobile="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"]):not([href="/music/"]):not([href="/no-pjax/"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_swiper_injector_config(){
+    var parent_div_git = document.getElementById('recent-posts');
+    var item_html = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms;"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/09/11/Summary/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="img/top_img/5.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-09-11</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/09/11/Summary/&quot;);" href="javascript:void(0);" alt="">知识图谱</a><div class="blog-slider__text">知识图谱工作总结</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/09/11/Summary/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/09/30/2024-10-3-list/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="img/top_img/1.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-09-30</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/09/30/2024-10-3-list/&quot;);" href="javascript:void(0);" alt="">国庆</a><div class="blog-slider__text">国庆安排</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/09/30/2024-10-3-list/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/10/07/2024-10-7/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="img/top_img/4.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-10-07</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/10/07/2024-10-7/&quot;);" href="javascript:void(0);" alt="">计算机网络实验</a><div class="blog-slider__text">tftp套接字编程</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/10/07/2024-10-7/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/10/06/2024-10-6-mysql/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="img/top_img/3.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-10-06</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/10/06/2024-10-6-mysql/&quot;);" href="javascript:void(0);" alt="">数据库系统概论实验（一）</a><div class="blog-slider__text">数据库系统实验</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/10/06/2024-10-6-mysql/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;"><a class="blog-slider__img" onclick="pjax.loadUrl(&quot;2024/10/01/2024-10-3-firstpage/&quot;);" href="javascript:void(0);" alt=""><img width="48" height="48" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="img/top_img/7.jpg" alt="" onerror="this.src=https://unpkg.zhimg.com/akilar-candyassets/image/loading.gif; this.onerror = null;"/></a><div class="blog-slider__content"><span class="blog-slider__code">2024-10-01</span><a class="blog-slider__title" onclick="pjax.loadUrl(&quot;2024/10/01/2024-10-3-firstpage/&quot;);" href="javascript:void(0);" alt="">Hello Blog</a><div class="blog-slider__text">博客简介</div><a class="blog-slider__button" onclick="pjax.loadUrl(&quot;2024/10/01/2024-10-3-firstpage/&quot;);" href="javascript:void(0);" alt="">详情       </a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载butterfly_swiper')
+    parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  var elist = 'undefined'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_swiper_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_swiper_injector_config();
+  }
+  </script><script defer src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper.min.js"></script><script defer data-pjax src="https://npm.elemecdn.com/hexo-butterfly-swiper/lib/swiper_init.js"></script><script async src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v6.2.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v4.3.1" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://vercel.com/" style="margin-inline:5px" data-title="本站采用多线部署，主线路托管于Vercel" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Hosted-Vercel-brightgreen?style=flat&amp;logo=Vercel" alt=""/></a><a class="github-badge" target="_blank" href="https://dashboard.4everland.org/" style="margin-inline:5px" data-title="本站采用多线部署，备用线路托管于4EVERLAND" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Hosted-4EVERLAND-22DDDD?style=flat&amp;logo=IPFS" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="/js/runtime.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__bounceInLeft');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '500ms');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('pagination');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__bounceInLeft');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body></html>
