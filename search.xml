@@ -4,6 +4,56 @@
   
     
     <entry>
+      <title>L3HSec</title>
+      <link href="/2024/10/12/ctf/"/>
+      <url>/2024/10/12/ctf/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="超级侦探"><a href="#超级侦探" class="headerlink" title="超级侦探"></a>超级侦探</h3><p>根据题目提示,<strong>Flag为拍摄点背后的停车场电话,flag格式为L3HSEC{}</strong><br><img src="/doraemonblogs/themes/butterfly/source/img/CTF/search-3.png"><br>通过google搜图，对比图片中的关键信息，查找到该位置大概位于日本某博物馆附近<br><img src="/doraemonblogs/themes/butterfly/source/img/CTF/search-4.jpg"><br>再通过google earth查看近景图，找到附近停车场的信息，找到flag<br><img src="/doraemonblogs/themes/butterfly/source/img/CTF/search-1.jpg"><br><img src="/doraemonblogs/themes/butterfly/source/img/CTF/search-2.png"></p><h3 id="ft8"><a href="#ft8" class="headerlink" title="ft8"></a>ft8</h3><p>题目给出一段循环播放的音频，猜测是音频内容中隐藏信息<br>根据题目<strong>WebSDR - FT8</strong>,搜索tf8了解到</p><blockquote><p>FT8是一种专为业余无线电台之间进行快速、准确通信而设计的数字协议，尤其在弱信号条件下表现出色。FT8协议只占用50Hz的带宽，可以解码人耳难以辨别的微弱信号。即使在高楼林立的社区，使用普通的手持天线也可以与欧洲等地进行通信。</p></blockquote><p><img src="/doraemonblogs/themes/butterfly/source/img/CTF/ft8-1.png"></p><p>再查询ft8解码的工具，使用<strong>jtdx</strong>进行解码，得到flag<br><img src="/doraemonblogs/themes/butterfly/source/img/CTF/ft8-2.jpg"></p><h3 id="ZipZip"><a href="#ZipZip" class="headerlink" title="ZipZip"></a>ZipZip</h3><p>通过WinRAR解压时发现提示信息<strong>L3HSEC??????L3HSEC</strong>,猜测可能为解码的口令<br><img src="/doraemonblogs/themes/butterfly/source/img/CTF/zipzip-1.png"><br>使用<strong>achpr</strong>工具尝试强行爆破失败后，利用<strong>L3HSEC??????L3HSEC</strong>作为掩码进行掩码攻击，<br>最后在范围为（0-9）之间时成功恢复口令<br><img src="/doraemonblogs/themes/butterfly/source/img/CTF/zipzip-2.png"><br>利用口令打开ZipZip压缩包，里面包含gift.zip和secret.zip两个压缩包，且都需要密钥才能解开<br>观察到两个压缩包内容相似，且secret.zip内多一个secret.txt文件，猜测flag藏于其中<br>再次尝试强行爆破secret.zip失败后，考虑到gift.zip可能有有用信息，于是对gitf.zip采用明文攻击，最终得到口令，成功打开secret.zip压缩包<br><img src="/doraemonblogs/themes/butterfly/source/img/CTF/zipzip-3.png"><br>观察secret.txt文件猜测为JSFuck编码<br><img src="/doraemonblogs/themes/butterfly/source/img/CTF/zipzip-4.png"><br>使用在线工具进行JSFuck解码，观察解码猜测为摩斯密码<br><img src="/doraemonblogs/themes/butterfly/source/img/CTF/zipzip-6.png"><br>使用在线工具进行摩斯密码解码后得到与flag<strong>高度相似</strong>的字符串<br><img src="/doraemonblogs/themes/butterfly/source/img/CTF/zipzip-5.png"><br>最后猜测 flag为<strong>L3HSEC{WOW_U@RE_FUCKING_SM4RT!}</strong></p><h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="ezphp"><a href="#ezphp" class="headerlink" title="ezphp"></a>ezphp</h3><p>由题意得，flag被切分为两段，前一段要求传入参数为L3HSEC,即可返回前半部分flag,后一段要求传入参数为’我是大牛’,且每次传参字符串的长度不得大于1，才会返回后半部分flag<br><img src="/doraemonblogs/themes/butterfly/source/img/CTF/php-1.png"></p><p>对于前半段考察变量和变量名的知识，在cmd中输入</p><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://f4721935-<span class="number">26</span>b6-<span class="number">414</span>f-<span class="number">9</span>a62-<span class="number">791</span>cda2b3c30.ctf.l3hsec.com/challenge.php -d &quot;_=a&amp;a=b&amp;b=L3HSEC</span><br></pre></td></tr></table></figure><p><img src="/doraemonblogs/themes/butterfly/source/img/CTF/php-2.png"><br>对于后半段考察php中字符串拼接问题，一个中文字符通过URL编码后转换为3个UTF-8编码的字符，将’我是大牛’通过URL编码后，再一个字节一个字节地传递参数，php自动拼接后形成’我是大牛’,巧妙解决了字符串长度不大于1的问题<br><img src="/doraemonblogs/themes/butterfly/source/img/CTF/php-3.png"><br><img src="/doraemonblogs/themes/butterfly/source/img/CTF/php-4.png"><br>前后拼接后成功得到flag</p><h2 id="Reverse"><a href="#Reverse" class="headerlink" title="Reverse"></a>Reverse</h2><h3 id="听说你是pvz高手"><a href="#听说你是pvz高手" class="headerlink" title="听说你是pvz高手"></a>听说你是pvz高手</h3><p>题目要求收集10000阳光即可获得flag<br>使用 <strong>Cheat Engine (CEx修改器)</strong> 找到程序进程，再尝试扫描当前的阳光数，找到阳光所占有的内存，通过修改内存中阳光数，成功得到flag<br><img src="/doraemonblogs/themes/butterfly/source/img/CTF/pvz-1.png"><br><img src="/doraemonblogs/themes/butterfly/source/img/CTF/pvz-2.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Flag </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>题解</title>
+      <link href="/2024/10/12/wp/"/>
+      <url>/2024/10/12/wp/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="超级侦探"><a href="#超级侦探" class="headerlink" title="超级侦探"></a>超级侦探</h3><p>根据题目提示,<strong>Flag为拍摄点背后的停车场电话,flag格式为L3HSEC{}</strong><br><img src="/img/CTF/search-3.png"><br>通过google搜图，对比图片中的关键信息，查找到该位置大概位于日本某博物馆附近<br><img src="/img/CTF/search-4.jpg"><br>再通过google earth查看近景图，找到附近停车场的信息，找到flag<br><img src="/img/CTF/search-1.jpg"><br><img src="/img/CTF/search-2.png"></p><h3 id="ft8"><a href="#ft8" class="headerlink" title="ft8"></a>ft8</h3><p>题目给出一段循环播放的音频，猜测是音频内容中隐藏信息<br>根据题目<strong>WebSDR - FT8</strong>,搜索tf8了解到</p><blockquote><p>FT8是一种专为业余无线电台之间进行快速、准确通信而设计的数字协议，尤其在弱信号条件下表现出色。FT8协议只占用50Hz的带宽，可以解码人耳难以辨别的微弱信号。即使在高楼林立的社区，使用普通的手持天线也可以与欧洲等地进行通信。</p></blockquote><p><img src="/img/CTF/ft8-1.png"></p><p>再查询ft8解码的工具，使用<strong>jtdx</strong>进行解码，得到flag<br><img src="/img/CTF/ft8-2.jpg"></p><h3 id="ZipZip"><a href="#ZipZip" class="headerlink" title="ZipZip"></a>ZipZip</h3><p>通过WinRAR解压时发现提示信息<strong>L3HSEC??????L3HSEC</strong>,猜测可能为解码的口令<br><img src="/img/CTF/zipzip-1.png"><br>使用<strong>achpr</strong>工具尝试强行爆破失败后，利用<strong>L3HSEC??????L3HSEC</strong>作为掩码进行掩码攻击，<br>最后在范围为（0-9）之间时成功恢复口令<br><img src="/img/CTF/zipzip-2.png"><br>利用口令打开ZipZip压缩包，里面包含gift.zip和secret.zip两个压缩包，且都需要密钥才能解开<br>观察到两个压缩包内容相似，且secret.zip内多一个secret.txt文件，猜测flag藏于其中<br>再次尝试强行爆破secret.zip失败后，考虑到gift.zip可能有有用信息，于是对gitf.zip采用明文攻击，最终得到口令，成功打开secret.zip压缩包<br><img src="/img/CTF/zipzip-3.png"><br>观察secret.txt文件猜测为JSFuck编码<br><img src="/img/CTF/zipzip-4.png"><br>使用在线工具进行JSFuck解码，观察解码猜测为摩斯密码<br><img src="/img/CTF/zipzip-6.png"><br>使用在线工具进行摩斯密码解码后得到与flag<strong>高度相似</strong>的字符串<br><img src="/img/CTF/zipzip-5.png"><br>最后猜测 flag为<strong>L3HSEC{WOW_U@RE_FUCKING_SM4RT!}</strong></p><h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="ezphp"><a href="#ezphp" class="headerlink" title="ezphp"></a>ezphp</h3><p>由题意得，flag被切分为两段，前一段要求传入参数为L3HSEC,即可返回前半部分flag,后一段要求传入参数为’我是大牛’,且每次传参字符串的长度不得大于1，才会返回后半部分flag<br><img src="/img/CTF/php-1.png"></p><p>对于前半段考察变量和变量名的知识，在cmd中输入</p><figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://f4721935-<span class="number">26</span>b6-<span class="number">414</span>f-<span class="number">9</span>a62-<span class="number">791</span>cda2b3c30.ctf.l3hsec.com/challenge.php -d &quot;_=a&amp;a=b&amp;b=L3HSEC</span><br></pre></td></tr></table></figure><p><img src="/img/CTF/php-2.png"><br>对于后半段考察php中字符串拼接问题，一个中文字符通过URL编码后转换为3个UTF-8编码的字符，将’我是大牛’通过URL编码后，再一个字节一个字节地传递参数，php自动拼接后形成’我是大牛’,巧妙解决了字符串长度不大于1的问题<br><img src="/img/CTF/php-3.png"><br><img src="/img/CTF/php-4.png"><br>前后拼接后成功得到flag</p><h2 id="Reverse"><a href="#Reverse" class="headerlink" title="Reverse"></a>Reverse</h2><h3 id="听说你是pvz高手"><a href="#听说你是pvz高手" class="headerlink" title="听说你是pvz高手"></a>听说你是pvz高手</h3><p>题目要求收集10000阳光即可获得flag<br>使用 <strong>Cheat Engine (CEx修改器)</strong> 找到程序进程，再尝试扫描当前的阳光数，找到阳光所占有的内存，通过修改内存中阳光数，成功得到flag<br><img src="/img/CTF/pvz-1.png"><br><img src="/img/CTF/pvz-2.png"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> CTF </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Flag </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>知识图谱</title>
       <link href="/2024/10/10/Summary/"/>
       <url>/2024/10/10/Summary/</url>
