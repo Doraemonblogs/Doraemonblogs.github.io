@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>固定虚拟机ip地址</title>
+      <link href="/2024/10/19/netset/"/>
+      <url>/2024/10/19/netset/</url>
+      
+        <content type="html"><![CDATA[<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>使用xshell远程连接虚拟机时发现ip地址时常发生变化，为了简便配置，故考虑将ip地址固定下来。本文提供了两种方法，分别对应Ubuntu系统和CentOS系统</p><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>不论是Ubuntu系统还是CentOS系统，以下操作均适用</p><ul><li><p>打开VMware Workstation,点击左上角 <strong>编辑(E)</strong> -&gt; <strong>虚拟网络编辑器(N)</strong><br><img src="/doraemonblogs/themes/butterfly/source/img/linux/netset-1.png"></p></li><li><p>点击更改设置，以管理员身份打开虚拟网络编辑器<br><img src="/doraemonblogs/themes/butterfly/source/img/linux/netset-2.png"></p></li><li><p>选择 <strong>VMnet8</strong>，按图示操作<br><img src="/doraemonblogs/themes/butterfly/source/img/linux/netset-3.png"></p></li><li><p>点击 <strong>NAT设置</strong><br><img src="/doraemonblogs/themes/butterfly/source/img/linux/netset-4.png"></p></li></ul><h3 id="Ubuntu"><a href="#Ubuntu" class="headerlink" title="Ubuntu"></a><strong>Ubuntu</strong></h3><ul><li>ubuntu 20.04</li><li>通过nat设置静态ip</li></ul><h4 id="1-修改文件配置"><a href="#1-修改文件配置" class="headerlink" title="1. 修改文件配置"></a>1. 修改文件配置</h4><p>复制以下命令</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/netplan</span><br></pre></td></tr></table></figure><p>进入netplan文件夹下执行<code>ls</code>命令查看当前文件夹下的文件<br><strong>这里可能会有所不同</strong>，笔者执行<code>ls</code>命令后显示当前文件夹下有一个<code>01-network-manager-all.yaml</code>文件，使用vim修改该文件</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim 01-network-manager-all.yaml</span><br></pre></td></tr></table></figure><p>将以下代码复制到<code>01-network-manager-all.yaml</code>文件内</p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># Let NetworkManager manage all devices on this system</span><br><span class="line"></span><br><span class="line">network:</span><br><span class="line">  ethernets:</span><br><span class="line">    ens33:</span><br><span class="line">      addresses: [192.168.226.130/24]  # 这里是你要固定的ip地址和掩码</span><br><span class="line">      dhcp4: no</span><br><span class="line">      optional: true</span><br><span class="line">      gateway4: 192.168.226.2       # 这是网关地址</span><br><span class="line">      nameservers:</span><br><span class="line">         addresses: [8.8.8.8,8.8.4.4] </span><br><span class="line">  version: 2</span><br><span class="line">  renderer: networkd </span><br></pre></td></tr></table></figure><p><img src="/doraemonblogs/themes/butterfly/source/img/linux/netset-5.png"><br><strong>注意:</strong> 这里的 <strong>addresses</strong> 请参考准备工作阶段你自己的ip地址, <strong>gateway4</strong>请参考你自己地网关地址，<strong>保存</strong>文件后退出</p><h4 id="2-让配置生效"><a href="#2-让配置生效" class="headerlink" title="2. 让配置生效"></a>2. 让配置生效</h4><p>  输入下面命令</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> netplan apply</span><br></pre></td></tr></table></figure><h4 id="3-检验是否成功"><a href="#3-检验是否成功" class="headerlink" title="3. 检验是否成功"></a>3. 检验是否成功</h4><p>打开Terminel,执行以下命令</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig</span><br></pre></td></tr></table></figure><p>笔者以<code>192.168.226.130</code>为固定IP，若显示如下则配置成功<br><img src="/doraemonblogs/themes/butterfly/source/img/linux/netset-6.png"></p><h3 id="CentOS"><a href="#CentOS" class="headerlink" title="CentOS"></a><strong>CentOS</strong></h3><p>详细方法可参考<a href="https://www.bilibili.com/video/BV1n84y1i7td?spm_id_from=333.788.videopod.episodes&vd_source=1046cf6b20b652e0071d6a870e3b9fdb&p=6">该视频</a></p><h4 id="1-修改配置文件"><a href="#1-修改配置文件" class="headerlink" title="1.修改配置文件"></a>1.<strong>修改配置文件</strong></h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/network-scripts/ifcfg-ens33</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> Linux </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Linux </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>大模型部署工作总结</title>
       <link href="/2024/10/16/Bigmodels/"/>
       <url>/2024/10/16/Bigmodels/</url>
