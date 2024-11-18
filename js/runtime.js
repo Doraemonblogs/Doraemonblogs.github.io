@@ -8,7 +8,7 @@ function createtime() {
     let unit = (dis / 149600000).toFixed(6); // 天文单位
 
     // 网站诞生时间
-    let grt = new Date("09/30/2024 00:00:00");
+    let grt = new Date("08/01/2024 00:00:00");
     let days = (now - grt) / 1e3 / 60 / 60 / 24;
     let dnum = Math.floor(days);
     let hours = (now - grt) / 1e3 / 60 / 60 - 24 * dnum;
@@ -22,7 +22,7 @@ function createtime() {
     currentTimeHtml = `<div style="font-size:13px;font-weight:bold">
         本站居然运行了 ${dnum} 天 ${hnum} 小时 ${mnum} 分 ${snum} 秒 
         <i id="heartbeat" class="fas fa-heartbeat"></i><br>
-        旅行者 1 号当前距离地球 ${dis} 千米，约为 ${unit} 个天文单位 🚀</div>
+        旅行者 1 号当前距离地球 ${dis} 千米,约为 ${unit} 个天文单位 🚀</div>
         <font size=2px>再看看那个光点,它就在这里,这是家园,这是我们—— 
         你所爱的每一个人,你认识的每一个人,你听说过的每一个人<br>曾经有过的每一个人,
         都在它上面度过他们的一生⭐</font>`;
