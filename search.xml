@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>DeepSeek使用指北</title>
+      <link href="/2025/02/02/2025-2-2-deepseek/"/>
+      <url>/2025/02/02/2025-2-2-deepseek/</url>
+      
+        <content type="html"><![CDATA[<h3 id="本地部署DeepSeek"><a href="#本地部署DeepSeek" class="headerlink" title="本地部署DeepSeek"></a>本地部署DeepSeek</h3><h4 id="方法一-LM-Studio"><a href="#方法一-LM-Studio" class="headerlink" title="方法一 LM Studio"></a><strong>方法一 LM Studio</strong></h4><ol><li>下载安装LM Studio<br> <img src="/img/deepseek/1.png"></li><li>拉取模型<br> Huggingface(需要魔法)<br> <img src="/img/deepseek/5.png"><br> ModelScope(不需要魔法)<br> <img src="/img/deepseek/6.png"></li><li>修改默认模型路径<br> <img src="/img/deepseek/11.png"><br> <img src="/img/deepseek/10.png"></li><li>配置主题，调整参数<br> <img src="/img/deepseek/2.png"><br> <img src="/img/deepseek/12.png"><br> <img src="/img/deepseek/13.png"></li><li>测试效果<br> <img src="/img/deepseek/14.png"></li></ol><h4 id="方法二-Ollama-Page-Assist（适合新手小白）"><a href="#方法二-Ollama-Page-Assist（适合新手小白）" class="headerlink" title="方法二 Ollama+Page Assist（适合新手小白）"></a><strong>方法二</strong> <strong>Ollama+Page Assist（适合新手小白）</strong></h4><ol><li>下载安装Ollama<br>  <img src="/img/deepseek/8.png"><br> <img src="/img/deepseek/15.png"></li><li>拉取模型<br> 以下为可选择模型<br> <img src="/img/deepseek/9.png"><br> <img src="/img/deepseek/18.png"></li><li>安装Page Assist插件<br> <img src="/img/deepseek/16.png"><br> <img src="/img/deepseek/19.png"></li><li>测试效果<br> <img src="/img/deepseek/20.png"></li></ol><h3 id="DeepSeek搭建本地知识库"><a href="#DeepSeek搭建本地知识库" class="headerlink" title="DeepSeek搭建本地知识库"></a>DeepSeek搭建本地知识库</h3><h4 id="方法一-AnythigLLM-Ollama（适合新手小白）"><a href="#方法一-AnythigLLM-Ollama（适合新手小白）" class="headerlink" title="方法一 AnythigLLM+Ollama（适合新手小白）"></a><strong>方法一 AnythigLLM+Ollama（适合新手小白）</strong></h4><ol><li>下载安装AnythingLLM和Ollama<br> <img src="/img/deepseek/28.png"><br> <img src="/img/deepseek/8.png"></li><li>拉取模型</li><li>投喂数据</li><li>测试效果</li></ol><h4 id="方法二-cherry-studio"><a href="#方法二-cherry-studio" class="headerlink" title="方法二 cherry-studio"></a><strong>方法二 cherry-studio</strong></h4><ol><li>Github搜索cherry-studio，下载安装</li><li>在DeepSeek官网申请API</li><li>模型服务选择深度求索，并填写APIKEY</li><li>在硅基流动官网申请嵌入模型</li><li>模型服务选择硅基流动，并填写APIKEY</li></ol><h3 id="DeepSeek-API使用场景"><a href="#DeepSeek-API使用场景" class="headerlink" title="DeepSeek API使用场景"></a>DeepSeek API使用场景</h3><h4 id="AI翻译"><a href="#AI翻译" class="headerlink" title="- AI翻译"></a>- <strong>AI翻译</strong></h4><ol><li>在DeepSeek官网申请API</li><li>配合沉浸式翻译插件，设置DeepSeek API<br> <img src="/img/deepseek/21.png"><br> <img src="/img/deepseek/22.png"></li></ol><h4 id="AI编程"><a href="#AI编程" class="headerlink" title="- AI编程"></a>- <strong>AI编程</strong></h4><ol><li>在DeepSeek官网申请API</li><li><strong>VSCode</strong>安装插件 <strong>Roo Code</strong><br> <img src="/img/deepseek/23.png"></li><li>配置provider和APIKEY<br> <img src="/img/deepseek/24.png"></li></ol><h4 id="Python调用"><a href="#Python调用" class="headerlink" title="- Python调用"></a>- <strong>Python调用</strong></h4><p> 请参考官网<strong>API Platform</strong></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> DeepSeek </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> DeepSeek </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>预备知识</title>
       <link href="/2024/12/07/2024-12-7-chapter2/"/>
       <url>/2024/12/07/2024-12-7-chapter2/</url>
@@ -256,31 +281,6 @@
     
     
     <entry>
-      <title>你好,博客</title>
-      <link href="/2024/10/01/2024-10-3-firstpage/"/>
-      <url>/2024/10/01/2024-10-3-firstpage/</url>
-      
-        <content type="html"><![CDATA[<h2 id="Welcome-to-my-blog"><a href="#Welcome-to-my-blog" class="headerlink" title="Welcome to my blog"></a><em><strong>Welcome to my blog</strong></em></h2><blockquote><p><strong>This is the first blog, as well as the first step.</strong><br>记录学习，记录生活</p></blockquote><hr><h3 id="Special-function"><a href="#Special-function" class="headerlink" title="Special function"></a>Special function</h3><ul><li>主页菜单栏<br>增加<strong>首页</strong>、<strong>归档</strong>、<strong>标签</strong>、<strong>分类</strong>、<strong>列表</strong>、<strong>留言板</strong>、<strong>友链</strong>、<strong>关于</strong><br><strong>个性化icon&#x2F;图标</strong><br><strong>文章搜索</strong>功能<br><img src="/img/intro/1.png"></li><li>主页页面<br><strong>动态</strong>标语，<strong>美文</strong>一则<br>每次刷新页面自动更新美文<br><img src="/img/intro/2.png"></li><li>可爱玩偶<br>左下角的小玩偶会<strong>跟随鼠标移动</strong><br><strong>小白</strong>和<strong>小女孩</strong>形象随机不定时切换<br> <img src="/img/intro/3.png"><br> <img src="/img/intro/4.png"></li><li>day &amp; night<br>右下角设置栏切换白天和黑夜<br>夜间模式下自动启动霓虹灯，标题会<strong>sparkling</strong>🌟🌟🌟<br>夜间模式背景出现<strong>流星雨</strong>🌠🌠🌠</li><li>计时器<br>新增<strong>建站计时器</strong>，页脚新增<strong>个性化Logo</strong><br><img src="/img/intro/5.png"></li><li>个人简介栏<br><strong>个性签名</strong><br><strong>渐变</strong>背景颜色，黑夜模式自适背景<br>联系方式新增<strong>github</strong>,<strong>e-mail</strong>,<strong>wechat</strong>,<strong>qq</strong>,<strong>bilibili</strong></li><li>侧滑栏<br>新增📢<strong>公告栏</strong> 🗂️<strong>分类</strong> 🔖<strong>标签</strong>、✉️<strong>小站资讯</strong></li><li>一图流<br>背景<strong>一图流</strong>，<strong>页面美化</strong></li><li>鼠标点击效果<br>点击鼠标可以<strong>触发爱心</strong>❤️<br>鼠标停留会<strong>聚集彩色飘带</strong>，点击会<strong>释放飘带</strong>🎗️</li><li>协议<br>新增<strong>转载协议</strong><br><strong>渐变色</strong>背景框<br><img src="/img/intro/6.png"></li><li>投喂作者<br>娱乐功能🥰🥰🥰（如果你愿意也可以试试投喂功能🚀耶）<br><img src="/img/intro/7.png"></li><li>音乐🎶电影🎞️<br>功能仍在开发中🚲</li><li>友链<br>欢迎联系我，欢迎<strong>互换友链</strong>💕</li></ul><p>更多有趣的功能等待你来探索哟🚀</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> life </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> blog </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>CTF&#39;s wp</title>
       <link href="/2024/10/01/wp/"/>
       <url>/2024/10/01/wp/</url>
@@ -298,6 +298,31 @@
         <tags>
             
             <tag> CTF </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>你好,博客</title>
+      <link href="/2024/10/01/2024-10-3-firstpage/"/>
+      <url>/2024/10/01/2024-10-3-firstpage/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Welcome-to-my-blog"><a href="#Welcome-to-my-blog" class="headerlink" title="Welcome to my blog"></a><em><strong>Welcome to my blog</strong></em></h2><blockquote><p><strong>This is the first blog, as well as the first step.</strong><br>记录学习，记录生活</p></blockquote><hr><h3 id="Special-function"><a href="#Special-function" class="headerlink" title="Special function"></a>Special function</h3><ul><li>主页菜单栏<br>增加<strong>首页</strong>、<strong>归档</strong>、<strong>标签</strong>、<strong>分类</strong>、<strong>列表</strong>、<strong>留言板</strong>、<strong>友链</strong>、<strong>关于</strong><br><strong>个性化icon&#x2F;图标</strong><br><strong>文章搜索</strong>功能<br><img src="/img/intro/1.png"></li><li>主页页面<br><strong>动态</strong>标语，<strong>美文</strong>一则<br>每次刷新页面自动更新美文<br><img src="/img/intro/2.png"></li><li>可爱玩偶<br>左下角的小玩偶会<strong>跟随鼠标移动</strong><br><strong>小白</strong>和<strong>小女孩</strong>形象随机不定时切换<br> <img src="/img/intro/3.png"><br> <img src="/img/intro/4.png"></li><li>day &amp; night<br>右下角设置栏切换白天和黑夜<br>夜间模式下自动启动霓虹灯，标题会<strong>sparkling</strong>🌟🌟🌟<br>夜间模式背景出现<strong>流星雨</strong>🌠🌠🌠</li><li>计时器<br>新增<strong>建站计时器</strong>，页脚新增<strong>个性化Logo</strong><br><img src="/img/intro/5.png"></li><li>个人简介栏<br><strong>个性签名</strong><br><strong>渐变</strong>背景颜色，黑夜模式自适背景<br>联系方式新增<strong>github</strong>,<strong>e-mail</strong>,<strong>wechat</strong>,<strong>qq</strong>,<strong>bilibili</strong></li><li>侧滑栏<br>新增📢<strong>公告栏</strong> 🗂️<strong>分类</strong> 🔖<strong>标签</strong>、✉️<strong>小站资讯</strong></li><li>一图流<br>背景<strong>一图流</strong>，<strong>页面美化</strong></li><li>鼠标点击效果<br>点击鼠标可以<strong>触发爱心</strong>❤️<br>鼠标停留会<strong>聚集彩色飘带</strong>，点击会<strong>释放飘带</strong>🎗️</li><li>协议<br>新增<strong>转载协议</strong><br><strong>渐变色</strong>背景框<br><img src="/img/intro/6.png"></li><li>投喂作者<br>娱乐功能🥰🥰🥰（如果你愿意也可以试试投喂功能🚀耶）<br><img src="/img/intro/7.png"></li><li>音乐🎶电影🎞️<br>功能仍在开发中🚲</li><li>友链<br>欢迎联系我，欢迎<strong>互换友链</strong>💕</li></ul><p>更多有趣的功能等待你来探索哟🚀</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> life </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> blog </tag>
             
         </tags>
       
