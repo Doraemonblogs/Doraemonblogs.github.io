@@ -1,5 +1,5 @@
 // 配置你的图片总数
-const bgAmount = 8; // 根据实际图片数量修改
+const bgAmount = 39; // 根据实际图片数量修改
 const randomIndex = Math.floor(Math.random() * bgAmount) + 1;
 const bgUrl = `/img/background/${randomIndex}.webp`;
 
