@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>AI助教/智能体</title>
+      <link href="/2025/04/19/2025-4-19-aiAssistant/"/>
+      <url>/2025/04/19/2025-4-19-aiAssistant/</url>
+      
+        <content type="html"><![CDATA[<h3 id="一、任务要求"><a href="#一、任务要求" class="headerlink" title="一、任务要求"></a>一、任务要求</h3><p>智能问答（AI助教）</p><p>这里的ai助教需要对我们的课程问题进行回答，帮助同学答疑解惑。传统的通用大模型可能会胡说，所以你需要针对我们的课程去制作一个更加专业的大模型/智能体。这里可以选择自己手搓一个（如果你比较擅长，有把握），也可以利用智普清言这样的平台去DIY一个智能体，你可以通过上传一些学习资料（如课本），对你的智能体进行一些“调教”，来使你的“助教”更加专业。</p><h3 id="二、技术实现"><a href="#二、技术实现" class="headerlink" title="二、技术实现"></a>二、技术实现</h3><p>根据要求打造<strong>专业大模型/智能体</strong>，我采取以下四种技术路线分别实现</p><h4 id="1-智普清言—AI智能体"><a href="#1-智普清言—AI智能体" class="headerlink" title="1.智普清言—AI智能体"></a>1.<strong>智普清言—AI智能体</strong></h4><ul><li><strong>设计提示词</strong></li></ul><p>你是一个专为<strong>网络安全专业课程</strong>设计的智能助教，核心目标是通过结构化输出帮助学生理解复杂概念，同时提供学习方法建议。</p><ul><li><p><strong>配置信息</strong></p><ul><li><strong>角色信息配置</strong></li></ul><p><img src="https://cloudsources.pages.dev/img/AI_project/aiAssistant/2.png" alt="2"></p><ul><li><strong>检索配置（RAG模式）</strong></li></ul><p>可动态调整知识库与联网搜索占比    </p><p><img src="https://cloudsources.pages.dev/img/AI_project/aiAssistant/4.png" alt="2"></p></li><li><p><strong>效果演示</strong></p><p><img src="https://cloudsources.pages.dev/img/AI_project/aiAssistant/1.png" alt="2"></p><p><img src="https://cloudsources.pages.dev/img/AI_project/aiAssistant/3.png" alt="2"></p></li><li><p><strong>优点</strong></p><ul><li><strong>操作简单，界面友好</strong></li><li><strong>可配置知识库，支持多种格式文件解析</strong></li><li><strong>回答准确，优先检索知识库，后联网搜索</strong></li><li><strong>可外部访问，支持接口</strong></li></ul></li><li><strong>缺点</strong><ul><li><strong>知识库非本地部署，存在重要资料泄露问题（安全性）</strong></li><li><strong>不是自主设计的平台，可操作性不多，可移植性弱（局限性）</strong></li><li><strong>普通用户存在文件上传限制，整体知识库最多支持1000个文件（每个100MB），知</strong><br><strong>识库总字数不超过1亿字</strong></li></ul></li></ul><h4 id="2-coze"><a href="#2-coze" class="headerlink" title="2.coze"></a>2.coze</h4><ul><li><strong>提示词设计</strong></li></ul><p><img src="https://cloudsources.pages.dev/img/AI_project/aiAssistant/5.png" alt="2"></p><ul><li><strong>知识库配置</strong></li></ul><p><img src="https://cloudsources.pages.dev/img/AI_project/aiAssistant/6.png" alt="2"></p><ul><li><strong>效果演示</strong></li></ul><p><img src="https://cloudsources.pages.dev/img/AI_project/aiAssistant/7.png" alt="2"></p><ul><li><p><strong>优点</strong></p><ul><li><p><strong>操作简单，界面友好</strong></p></li><li><p><strong>可配置知识库，支持多种格式文件解析</strong></p></li><li><p><strong>回答准确，优先检索知识库，后联网搜索</strong></p></li><li><strong>可自由切换LLM</strong></li></ul></li><li><p><strong>缺点</strong></p><ul><li><strong>知识库非本地部署，存在重要资料泄露问题（安全性）</strong></li><li><strong>非自主设计，可移植性差</strong></li><li><strong>支持外部访问，但需要个人身份令牌操作复杂，不方便嵌入自己的程序</strong></li></ul></li></ul><h4 id="3-直接调用API"><a href="#3-直接调用API" class="headerlink" title="3.直接调用API"></a>3.直接调用API</h4><p><strong>自主设计UI界面，调用LLM的API，通过返回数据为用户提供服务</strong>（做套壳）</p><ul><li><strong>我的想法</strong></li></ul><p><strong>1.如果不使用已有的平台搭建智能体（如智普清言、coze），可以使用华科大已有的Deepseek，或者调用其他LLM的API</strong></p><p><strong>2.已有的语言大模型参数量级非常庞大，微调的效果甚至比不上原有模型，其次没有可支撑训练的硬件（以往尝试过对小模型如LLama3 7b微调，但是效果显然比不上现在的Deepseek 617b大模型）所以自己训练模型或对已有的模型微调效果并不一定会更好。</strong></p><h4 id="4-LLama3-7b本地部署-Lora微调"><a href="#4-LLama3-7b本地部署-Lora微调" class="headerlink" title="4.LLama3 7b本地部署+Lora微调"></a>4.LLama3 7b本地部署+Lora微调</h4><ul><li><strong>效果演示</strong></li></ul><p><img src="https://cloudsources.pages.dev/img/AI_project/aiAssistant/8.png" alt="2"></p><p><img src="https://cloudsources.pages.dev/img/AI_project/aiAssistant/9.png" alt="2"></p><p><strong>详细部署流程可参考我的博客</strong> <a href="https://doraemonblogs.github.io/2024/10/15/2024-10-15-LLMsummary/">https://doraemonblogs.github.io/2024/10/15/2024-10-15-LLMsummary/</a></p><p><img src="https://cloudsources.pages.dev/img/AI_project/aiAssistant/10.png" alt="2"></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 人工智能 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> 智能体 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ARP缓存中毒</title>
       <link href="/2025/04/07/2025-4-8-arp/"/>
       <url>/2025/04/07/2025-4-8-arp/</url>
@@ -108,33 +133,6 @@
     
     
     <entry>
-      <title>离散数学</title>
-      <link href="/2025/03/26/2025-3-26-DiscreteMathematics/"/>
-      <url>/2025/03/26/2025-3-26-DiscreteMathematics/</url>
-      
-        <content type="html"><![CDATA[<div class="row">    <embed src="https://cloudsources.pages.dev/pdf/离散数学.pdf" width="100%" height="550" type="application/pdf"></div>]]></content>
-      
-      
-      <categories>
-          
-          <category> 笔记 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> course </tag>
-            
-            <tag> maths </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>概率论与数理统计</title>
       <link href="/2025/03/26/2025-3-26-ProbabilityTheoryandMathematicalStatistics/"/>
       <url>/2025/03/26/2025-3-26-ProbabilityTheoryandMathematicalStatistics/</url>
@@ -181,6 +179,33 @@
             <tag> course </tag>
             
             <tag> physics </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>离散数学</title>
+      <link href="/2025/03/26/2025-3-26-DiscreteMathematics/"/>
+      <url>/2025/03/26/2025-3-26-DiscreteMathematics/</url>
+      
+        <content type="html"><![CDATA[<div class="row">    <embed src="https://cloudsources.pages.dev/pdf/离散数学.pdf" width="100%" height="550" type="application/pdf"></div>]]></content>
+      
+      
+      <categories>
+          
+          <category> 笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> course </tag>
+            
+            <tag> maths </tag>
             
         </tags>
       
