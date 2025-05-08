@@ -8,7 +8,7 @@
       <link href="/2025/05/08/2025-05-08-llamafactory/"/>
       <url>/2025/05/08/2025-05-08-llamafactory/</url>
       
-        <content type="html"><![CDATA[<h3 id="1-LLama微调"><a href="#1-LLama微调" class="headerlink" title="1.LLama微调"></a>1.LLama微调</h3><ul><li>准备数据集</li></ul><p><img src="https://cloudsources.pages.dev/img/AI_project/llamafactory/1.png" alt="1"></p><ul><li>导入数据集，调整训练参数</li></ul><p><img src="https://cloudsources.pages.dev/img/AI_project/llamafactory/2.png" alt="1"></p><ul><li><p>指令预览</p><p>模型设置，进程数，微调方式，数据集，学习率，批次大小等</p></li></ul><p><img src="https://cloudsources.pages.dev/img/AI_project/llamafactory/3.png" alt="1"></p><ul><li>开始训练，训练过程</li></ul><p><img src="https://cloudsources.pages.dev/img/AI_project/llamafactory/9.png" alt="1"></p><ul><li>损失呈现，模型保存路径</li></ul><p><img src="https://cloudsources.pages.dev/img/AI_project/llamafactory/5.png" alt="1"></p><ul><li>载入训练好的模型权重</li></ul><p><img src="https://cloudsources.pages.dev/img/AI_project/llamafactory/6.png" alt=""></p><ul><li>效果演示</li></ul><p><img src="https://cloudsources.pages.dev/img/AI_project/llamafactory/7.png" alt="1"></p><p><img src="https://cloudsources.pages.dev/img/AI_project/llamafactory/8.png" alt="1"></p><h3 id="2-设计思路"><a href="#2-设计思路" class="headerlink" title="2.设计思路"></a>2.设计思路</h3><p><img src="https://cloudsources.pages.dev/img/AI_project/llamafactory/10.png" alt="1"></p><h3 id="3-知识库搭建"><a href="#3-知识库搭建" class="headerlink" title="3.知识库搭建"></a>3.知识库搭建</h3><ul><li>本地知识库</li></ul><p>AnythingLLM + 本地模型/API</p><p>Langchain+ChatGLM</p><p>Cherry Studio + API</p><p>以上方式我均尝试过，如果个人使用效果可以，但是大型效果其实不太理想，原因是本地跑LLama模型推理速度太慢，嵌入模型和LLM推理能力不够</p><ul><li>云知识库</li></ul><p>Dify</p><p>Coze</p><p>智谱清言</p><p>Cloudflare云知识库 CloudRAG</p>]]></content>
+        <content type="html"><![CDATA[<h3 id="1-LLama微调"><a href="#1-LLama微调" class="headerlink" title="1.LLama微调"></a>1.LLama微调</h3><ul><li>准备数据集</li></ul><p><img src="https://cloudsources.pages.dev/img/AI_project/llamafactory/1.png" alt="1"></p><ul><li>导入数据集，调整训练参数</li></ul><p><img src="https://cloudsources.pages.dev/img/AI_project/llamafactory/2.png" alt="1"></p><ul><li><p>指令预览</p><p>模型设置，进程数，微调方式，数据集，学习率，批次大小等</p></li></ul><p><img src="https://cloudsources.pages.dev/img/AI_project/llamafactory/3.png" alt="1"></p><ul><li>开始训练，训练过程</li></ul><p><img src="https://cloudsources.pages.dev/img/AI_project/llamafactory/9.png" alt="1"></p><ul><li>损失呈现，模型保存路径</li></ul><p><img src="https://cloudsources.pages.dev/img/AI_project/llamafactory/5.png" alt="1"></p><ul><li>载入训练好的模型权重</li></ul><p><img src="https://cloudsources.pages.dev/img/AI_project/llamafactory/6.png" alt=""></p><ul><li>效果演示</li></ul><p><img src="https://cloudsources.pages.dev/img/AI_project/llamafactory/7.png" alt="1"></p><p><img src="https://cloudsources.pages.dev/img/AI_project/llamafactory/8.png" alt="1"></p><h3 id="2-设计思路"><a href="#2-设计思路" class="headerlink" title="2.设计思路"></a>2.设计思路</h3><p><img src="https://cloudsources.pages.dev/img/AI_project/llamafactory/10.png" alt="1"></p><h3 id="3-知识库搭建"><a href="#3-知识库搭建" class="headerlink" title="3.知识库搭建"></a>3.知识库搭建</h3><ul><li>本地知识库</li></ul><p>AnythingLLM + 本地模型/API</p><p>Langchain+ChatGLM</p><p>Cherry Studio + API</p><p>以上方式我均尝试过，其实效果不太理想，原因是本地跑LLama模型推理速度太慢，嵌入模型和LLM推理能力不够</p><ul><li>云知识库</li></ul><p>Dify</p><p>Coze</p><p>智谱清言</p><p>Cloudflare云知识库 CloudRAG</p>]]></content>
       
       
       <categories>
@@ -264,33 +264,6 @@
     
     
     <entry>
-      <title>大学物理</title>
-      <link href="/2025/03/26/2025-3-26-physics/"/>
-      <url>/2025/03/26/2025-3-26-physics/</url>
-      
-        <content type="html"><![CDATA[<div class="row">    <embed src="https://cloudsources.pages.dev/pdf/大学物理1.pdf" width="100%" height="550" type="application/pdf"></div><div class="row">    <embed src="https://cloudsources.pages.dev/pdf/大学物理2.pdf" width="100%" height="550" type="application/pdf"></div><div class="row">    <embed src="https://cloudsources.pages.dev/pdf/大学物理3.pdf" width="100%" height="550" type="application/pdf"></div><div class="row">    <embed src="https://cloudsources.pages.dev/pdf/大学物理4.pdf" width="100%" height="550" type="application/pdf"></div><div class="row">    <embed src="https://cloudsources.pages.dev/pdf/大学物理5.pdf" width="100%" height="550" type="application/pdf"></div>]]></content>
-      
-      
-      <categories>
-          
-          <category> 笔记 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> course </tag>
-            
-            <tag> physics </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>概率论与数理统计</title>
       <link href="/2025/03/26/2025-3-26-ProbabilityTheoryandMathematicalStatistics/"/>
       <url>/2025/03/26/2025-3-26-ProbabilityTheoryandMathematicalStatistics/</url>
@@ -310,6 +283,33 @@
             <tag> course </tag>
             
             <tag> maths </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>大学物理</title>
+      <link href="/2025/03/26/2025-3-26-physics/"/>
+      <url>/2025/03/26/2025-3-26-physics/</url>
+      
+        <content type="html"><![CDATA[<div class="row">    <embed src="https://cloudsources.pages.dev/pdf/大学物理1.pdf" width="100%" height="550" type="application/pdf"></div><div class="row">    <embed src="https://cloudsources.pages.dev/pdf/大学物理2.pdf" width="100%" height="550" type="application/pdf"></div><div class="row">    <embed src="https://cloudsources.pages.dev/pdf/大学物理3.pdf" width="100%" height="550" type="application/pdf"></div><div class="row">    <embed src="https://cloudsources.pages.dev/pdf/大学物理4.pdf" width="100%" height="550" type="application/pdf"></div><div class="row">    <embed src="https://cloudsources.pages.dev/pdf/大学物理5.pdf" width="100%" height="550" type="application/pdf"></div>]]></content>
+      
+      
+      <categories>
+          
+          <category> 笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> course </tag>
+            
+            <tag> physics </tag>
             
         </tags>
       
