@@ -295,6 +295,33 @@
     
     
     <entry>
+      <title>概率论与数理统计</title>
+      <link href="/2025/03/26/2025-3-26-ProbabilityTheoryandMathematicalStatistics/"/>
+      <url>/2025/03/26/2025-3-26-ProbabilityTheoryandMathematicalStatistics/</url>
+      
+        <content type="html"><![CDATA[<div class="row">    <embed src="https://cloudsources.pages.dev/pdf/概率论与数理统计.pdf" width="100%" height="550" type="application/pdf"></div>]]></content>
+      
+      
+      <categories>
+          
+          <category> 笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> course </tag>
+            
+            <tag> maths </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>离散数学</title>
       <link href="/2025/03/26/2025-3-26-DiscreteMathematics/"/>
       <url>/2025/03/26/2025-3-26-DiscreteMathematics/</url>
@@ -341,33 +368,6 @@
             <tag> course </tag>
             
             <tag> physics </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>概率论与数理统计</title>
-      <link href="/2025/03/26/2025-3-26-ProbabilityTheoryandMathematicalStatistics/"/>
-      <url>/2025/03/26/2025-3-26-ProbabilityTheoryandMathematicalStatistics/</url>
-      
-        <content type="html"><![CDATA[<div class="row">    <embed src="https://cloudsources.pages.dev/pdf/概率论与数理统计.pdf" width="100%" height="550" type="application/pdf"></div>]]></content>
-      
-      
-      <categories>
-          
-          <category> 笔记 </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> course </tag>
-            
-            <tag> maths </tag>
             
         </tags>
       
