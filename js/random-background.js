@@ -1,15 +1,32 @@
-// 配置你的图片总数
-const bgAmount = 39; // 根据实际图片数量修改
-const randomIndex = Math.floor(Math.random() * bgAmount) + 1;
+// 简单，避免视觉重复，每次刷新都有变化
+let lastIndex = -1;
+const bgAmount = 36;
+
+function getRandomIndex() {
+    let index;
+    do {
+        index = Math.floor(Math.random() * bgAmount) + 1;
+    } while (index === lastIndex); // 避免和上次相同
+    lastIndex = index;
+    return index;
+}
+
+const randomIndex = getRandomIndex();
 const bgUrl = `/img/background/${randomIndex}.webp`;
 
-
-// 应用背景到指定元素（根据主题结构可能需要调整选择器）
-document.addEventListener('DOMContentLoaded', function() {
-    const bgElement = document.getElementById('web_bg'); // Butterfly主题的背景容器
+document.addEventListener('DOMContentLoaded', function () {
+    const bgElement = document.getElementById('web_bg');
     if (bgElement) {
         bgElement.style.backgroundImage = `url(${bgUrl})`;
     } else {
         document.body.style.backgroundImage = `url(${bgUrl})`;
     }
 });
+
+
+// 按小时、日动态改变
+// const bgAmount = 36;
+// const date = new Date();
+// const hour = date.getHours();
+// const randomIndex = (hour % bgAmount) + 1; // 每小时变化
+// const bgUrl = `/img/background/${randomIndex}.webp`;
