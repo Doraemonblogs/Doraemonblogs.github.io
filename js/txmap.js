@@ -27,7 +27,7 @@ function getDistance(e1, n1, e2, n2) {
     return Math.round(r);
 }
 
-function showWelcome() {
+function showWelcome() {        // 网安基地图书馆
     let dist = getDistance(114.136978,30.675353, ipLoacation.result.location.lng, ipLoacation.result.location.lat); //这里换成自己的经纬度
     let pos = ipLoacation.result.ad_info.nation;
     let ip;
