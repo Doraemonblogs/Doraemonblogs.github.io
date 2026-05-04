@@ -1,0 +1,884 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>面试笔记整理 | Doraemonblog</title><meta name="author" content="Doraemon"><meta name="copyright" content="Doraemon"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="注意力MHA、MQA、GQA 到底有什么区别？一期动画彻底讲透MHA (Muti-head Attention)MHA 核心思想是将输入映射到多个子空间，分别计算注意力权重并聚合结果，从而增强模型对复杂模式的捕捉能力。 MQA (Muti-Query Attention)MQA 核心思想是共享键（Key）和值（Value）的投影参数，仅对查询（Query）使用独立的头参数。 GQA (Groupe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试笔记整理">
+<meta property="og:url" content="https://www.doraemonqwq.cn/2026/05/04/2026-05-04-notes/index.html">
+<meta property="og:site_name" content="Doraemonblog">
+<meta property="og:description" content="注意力MHA、MQA、GQA 到底有什么区别？一期动画彻底讲透MHA (Muti-head Attention)MHA 核心思想是将输入映射到多个子空间，分别计算注意力权重并聚合结果，从而增强模型对复杂模式的捕捉能力。 MQA (Muti-Query Attention)MQA 核心思想是共享键（Key）和值（Value）的投影参数，仅对查询（Query）使用独立的头参数。 GQA (Groupe">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cloudsources.pages.dev/img/top_img/60.jpg">
+<meta property="article:published_time" content="2026-05-04T11:00:00.000Z">
+<meta property="article:modified_time" content="2026-05-04T12:00:00.000Z">
+<meta property="article:author" content="Doraemon">
+<meta property="article:tag" content="career">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cloudsources.pages.dev/img/top_img/60.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "面试笔记整理",
+  "url": "https://www.doraemonqwq.cn/2026/05/04/2026-05-04-notes/",
+  "image": "https://cloudsources.pages.dev/img/top_img/60.jpg",
+  "datePublished": "2026-05-04T11:00:00.000Z",
+  "dateModified": "2026-05-04T12:00:00.000Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Doraemon",
+      "url": "https://www.doraemonqwq.cn/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/icon/2.png"><link rel="canonical" href="https://www.doraemonqwq.cn/2026/05/04/2026-05-04-notes/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const hour = new Date().getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (theme === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else theme === 'light' ? activateLightMode() : activateDarkMode()
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":230,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '面试笔记整理',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/categorybar.css"><link rel="stylesheet" href="/css/universe.css"><link rel="stylesheet" href="/css/progress_bar.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/readPercent.css"><link rel="stylesheet" href="/css/fontawesome.css"><div id="myscoll"></div><!-- hexo injector head_end start --><link rel="stylesheet" href="/css/categorybar.css"><link rel="stylesheet" href="/css/runtime.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://npm.elemecdn.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><div class="loading-img"></div><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><div id="web_bg" style="background-image: url(/img/background/1.webp);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">64</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/journal/"><i class="fa-fw fas fa-tree"></i><span> 智慧树</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heartbeat"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://cloudsources.pages.dev/img/top_img/60.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">Doraemonblog</span></a><a class="nav-page-title" href="/"><span class="site-name">面试笔记整理</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/journal/"><i class="fa-fw fas fa-tree"></i><span> 智慧树</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heartbeat"></i><span> 关于</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">面试笔记整理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-05-04T11:00:00.000Z" title="发表于 2026-05-04 19:00:00">2026-05-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-05-04T12:00:00.000Z" title="更新于 2026-05-04 20:00:00">2026-05-04</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">13k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>42分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h3 id="注意力"><a href="#注意力" class="headerlink" title="注意力"></a>注意力</h3><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1xVwezbEZj/?spm_id_from=333.337.search-card.all.click&amp;vd_source=1046cf6b20b652e0071d6a870e3b9fdb">MHA、MQA、GQA 到底有什么区别？一期动画彻底讲透</a><br>MHA (Muti-head Attention)<br>MHA 核心思想是将输入映射到多个子空间，分别计算注意力权重并聚合结果，从而增强模型对复杂模式的捕捉能力。</p>
+<p>MQA (Muti-Query Attention)<br>MQA 核心思想是共享键（Key）和值（Value）的投影参数，仅对查询（Query）使用独立的头参数。</p>
+<p>GQA (Grouped-Query Attention)<br>GQA 是对多头注意力（MHA）和多头潜在注意力（MQA）的折中优化方案。</p>
+<p>MLA(Multi-head Latent Attention)<br>MLA 核心思想是通过低秩投影压缩查询（Q）、键（K）、值（V）的维度，并在注意力计算中解耦内容与位置信息，从而减少计算复杂度，同时保留长距离依赖建模能力。</p>
+<h3 id="Temperature-amp-Top-p"><a href="#Temperature-amp-Top-p" class="headerlink" title="Temperature &amp; Top-p"></a>Temperature &amp; Top-p</h3><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1taSFBNEG4/?spm_id_from=333.337.search-card.all.click&amp;vd_source=1046cf6b20b652e0071d6a870e3b9fdb">Temperature &amp; Top-p：掌控大模型的创造力开关</a><br>低温稳定、高温活跃</p>
+<p>top-p 采样是一种动态截断概率分布的方法。它会将候选词按概率从高到低排序，并累加它们的概率，当累加值达到设定的阈值 $p$（例如 0.9）时，截断后面的词，然后在这个高概率候选集合（Nucleus）中进行随机采样。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743149.png" alt=""></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743142.png" alt=""></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743146.png" alt=""></p>
+<h3 id="Lora-amp-QLora"><a href="#Lora-amp-QLora" class="headerlink" title="Lora &amp; QLora"></a>Lora &amp; QLora</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743172.png" alt=""></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743174.png" alt=""><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743207.png" alt="697"></p>
+<h3 id="位置编码（正余弦位置编码-RoPE旋转位置编码）"><a href="#位置编码（正余弦位置编码-RoPE旋转位置编码）" class="headerlink" title="位置编码（正余弦位置编码 | RoPE旋转位置编码）"></a>位置编码（正余弦位置编码 | RoPE旋转位置编码）</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743180.png" alt=""><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743181.png" alt=""></p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743183.png" alt=""><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743182.png" alt=""></p>
+<h3 id="分词器（Tokenizer）"><a href="#分词器（Tokenizer）" class="headerlink" title="分词器（Tokenizer）"></a>分词器（Tokenizer）</h3><p>按“词”切问题是：</p>
+<ul>
+<li>词表会非常大</li>
+<li>会有大量 OOV（未登录词）</li>
+<li>拼写变化、新词、人名、代码变量名都很麻烦</li>
+</ul>
+<p>按“字符”切问题是：</p>
+<ul>
+<li>序列太长</li>
+<li>token 语义太弱</li>
+<li>训练和推理成本高</li>
+</ul>
+<p>所以现代方法通常取中间路线：<strong>使用子词（subword）作为基本单位。</strong></p>
+<ul>
+<li>BPE（Byte Pair Encoding）<br>迭代重复以下步骤：</li>
+</ul>
+<ol>
+<li>统计当前语料中所有相邻符号对出现次数</li>
+<li>找到频率最高的 pair</li>
+<li>把这个 pair 合并为一个新 token</li>
+<li>更新语料表示</li>
+<li>记录这次 merge 规则</li>
+</ol>
+<ul>
+<li><p>WordPiece<br>WordPiece 训练时，也从较小单位开始，例如字符。但它在选择合并对象时，不只是看频率，而是看一种类似下面的收益：合并后是否能提高训练语料的似然 / 概率<br>虽然具体实现细节可能因系统不同而略有差别，但核心思想是：<strong>选那个最能提升整体分词建模质量的候选子词。</strong></p>
+</li>
+<li><p>Unigram<br>Unigram 假设：<br>一个词或句子可以被切分成若干 token，而每个 token 有自己的概率。<br>一个切分方案的概率，可以由各 token 的概率乘起来（或 log 概率相加）得到。<br>模型的目标是：找到一个 token 集合，使得训练语料在这个 token 集合下的总体概率最大。<br>这也是为什么它叫 <strong>Unigram Language Model</strong>。</p>
+</li>
+<li><p>BBPE（Byte-level Byte Pair Encoding）<br>先把文本表示成字节序列，再在字节层面上执行 BPE。注意它和普通 BPE 的核心区别不在“是否做 BPE”，而在于：</p>
+</li>
+<li><strong>普通 BPE 的基础单位通常是字符</strong></li>
+<li><strong>BBPE 的基础单位是字节（byte）</strong></li>
+</ul>
+<h3 id="Layer-Normalization（LN）-amp-BN-amp-RMSNorm"><a href="#Layer-Normalization（LN）-amp-BN-amp-RMSNorm" class="headerlink" title="Layer Normalization（LN） &amp; BN &amp; RMSNorm"></a>Layer Normalization（LN） &amp; BN &amp; RMSNorm</h3><p>Batch Normalization 最早提出，在卷积神经网络（CNN）中取得了巨大成功。它的核心思想是：<strong>对同一个特征（Channel）在整个 Batch 的所有样本上进行归一化。</strong></p>
+<p>为了解决 BN 在小 Batch Size 和变长序列上的缺陷，Layer Normalization 被提出，并成为了 Transformer 架构的标配。它的核心思想是：<strong>对同一个样本的所有特征进行归一化。</strong></p>
+<p>在 Layer Normalization 中，<strong>均值中心化（减去均值 $\mu$）这一步对模型性能的贡献微乎其微，真正起作用的是缩放（除以方差）</strong>。RMSNorm 放弃了计算均值，假设均值始终为 0，直接使用**均方根（Root Mean Square）来进行归一化。</p>
+<h3 id="奇异值分解"><a href="#奇异值分解" class="headerlink" title="奇异值分解"></a>奇异值分解</h3><p>奇异值分解（Singular Value Decomposition，简称 SVD）被誉为线性代数中的“瑞士军刀”。无论是数据压缩、降维（如 PCA），还是推荐系统和自然语言处理，SVD 都有着极其重要的应用。</p>
+<p>一、 SVD 的数学定义：拆解矩阵</p>
+<p>在数学上，SVD 告诉我们一个极其优雅的结论：<strong>任何一个矩阵都可以被分解为三个结构简单的矩阵的乘积</strong>。<br>假设我们有一个大小为 $m \times n$ 的实数矩阵 $A$（不必是方阵），SVD 可以将其分解为：</p>
+<script type="math/tex; mode=display">A = U \Sigma V^T</script><p>我们来逐一拆解这三个部分：</p>
+<ul>
+<li><p><strong>$V^T$ (右奇异矩阵的转置)：</strong> 这是一个 $n \times n$ 的正交矩阵（Orthogonal Matrix）。正交矩阵有一个非常好的性质：它的行向量和列向量彼此垂直且长度为 1。</p>
+</li>
+<li><p><strong>$\Sigma$ (奇异值矩阵)：</strong> 这是一个 $m \times n$ 的对角矩阵（Diagonal Matrix）。除了对角线上的元素外，其他全为 0。对角线上的值被称为<strong>奇异值（Singular Values）</strong>，通常记为 $\sigma_1, \sigma_2, \dots$，并且按照从大到小的顺序排列（$\sigma_1 \ge \sigma_2 \ge \dots \ge 0$）。奇异值代表了数据在对应方向上的“重要程度”或“能量”。</p>
+</li>
+<li><p><strong>$U$ (左奇异矩阵)：</strong> 这是一个 $m \times m$ 的正交矩阵。</p>
+</li>
+</ul>
+<p>二、 SVD 的几何直觉：旋转与拉伸<br>一堆数学符号可能有些抽象。如果把矩阵看作是对空间的一种<strong>线性变换</strong>（比如把一个向量变成另一个向量），那么 SVD 的几何意义就是：<strong>任何复杂的线性变换，都可以分解为“旋转 -&gt; 拉伸 -&gt; 旋转”三个连续的简单动作。</strong></p>
+<p>假设我们在二维平面上有一个单位圆，当我们用矩阵 $A$ 对这个圆进行变换时，它会变成一个倾斜的椭圆。SVD 揭示了这个变形的本质：</p>
+<ol>
+<li><p><strong>第一步 ($V^T$)：旋转。</strong> 首先，正交矩阵 $V^T$ 对空间进行旋转（或镜像翻转），圆的形状不变。</p>
+</li>
+<li><p><strong>第二步 ($\Sigma$)：拉伸。</strong> 对角矩阵 $\Sigma$ 沿着坐标轴对空间进行拉伸或压缩。圆在这个阶段变成了一个椭圆，拉伸的比例就是<strong>奇异值</strong>。</p>
+</li>
+<li><p><strong>第三步 ($U$)：再次旋转。</strong> 最后，正交矩阵 $U$ 将这个椭圆再次旋转到最终的位置。</p>
+</li>
+</ol>
+<p><strong>小结：</strong> $V$ 找到了原空间中相互正交的基向量，$\Sigma$ 告诉我们这些基向量被拉伸了多少（也就是有多重要），$U$ 则决定了拉伸后的向量在新空间中的最终方向。</p>
+<p>为了让你亲眼看到这个“旋转-拉伸-旋转”的过程，我为你构建了下面的交互式探索工具。你可以尝试改变矩阵 $A$ 的值，观察 SVD 是如何一步步将单位圆变成最终的椭圆的。</p>
+<p>三、 奇异值分解的实际应用</p>
+<p>为什么我们要在乎奇异值（$\Sigma$）？因为奇异值衰减得非常快。在很多实际数据中，前 10% 的奇异值可能就占据了所有奇异值总和的 90% 以上。</p>
+<p>这意味着，我们可以<strong>忽略掉那些较小的奇异值</strong>（把它们当作噪声或不重要的细节），只用最大的几个奇异值来重构原矩阵，这就是所谓的数据截断或降维：</p>
+<script type="math/tex; mode=display">A \approx U_k \Sigma_k V_k^T</script><p>_(其中 $k$ 是我们保留的最大的奇异值数量)</p>
+<p>这种思想直接催生了以下经典应用：</p>
+<p><strong>1. 图像压缩</strong><br>一张黑白图片可以看作是一个巨大的矩阵。如果你对这个矩阵进行 SVD，并只保留前几十个最大的奇异值，你会发现虽然扔掉了绝大部分数据，重构出来的图片依然能看清轮廓。保留的奇异值越多，图像越清晰，但这提供了一种极高压缩比的方法。</p>
+<p><strong>2. 降维与特征提取（PCA 的亲兄弟）</strong><br>在机器学习中，当我们面临特征维度过高的问题时（也就是“维度灾难”），我们可以利用 SVD 提取出数据中最重要的“主成分”。事实上，主成分分析（PCA）的底层实现往往就是通过对数据矩阵进行 SVD 来完成的，因为直接计算协方差矩阵的特征值在数值上不够稳定。</p>
+<p><strong>3. 推荐系统（协同过滤）</strong><br>如果你有一个庞大的矩阵，行是用户，列是电影，矩阵里的值是评分。这个矩阵往往是极度稀疏的（大多数人没看过大多数电影）。通过隐语义模型（Latent Factor Model），基于 SVD 的变体可以将这个稀疏矩阵分解，提取出“用户的潜在偏好向量”和“电影的潜在特征向量”，从而预测用户未看过的电影评分，实现精准推荐。</p>
+<h3 id="大数定律"><a href="#大数定律" class="headerlink" title="大数定律"></a>大数定律</h3><p>大数定律告诉我们：<strong>在试验条件不变的情况下，重复试验多次，随机事件的频率会无限趋近于它的概率；样本的平均值会无限趋近于总体的期望值。</strong></p>
+<h3 id="交叉熵损失与KL散度"><a href="#交叉熵损失与KL散度" class="headerlink" title="交叉熵损失与KL散度"></a>交叉熵损失与KL散度</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743175.png" alt=""></p>
+<h3 id="深度学习"><a href="#深度学习" class="headerlink" title="深度学习"></a>深度学习</h3><ul>
+<li><p>损失函数<br>  回归 ： MSE<br>  分类 ： 交叉熵</p>
+</li>
+<li><p>梯度下降<br>  损失函数关于参数求偏导数得到梯度</p>
+</li>
+<li><p>激活函数<br>  目标是引入非线性，让模型拟合更复杂的特征<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743176.png" alt=""></p>
+</li>
+<li><p>梯度下降<br>  全量梯度下降 Batch Gradient Descent（BGD）<br>  每一次参数更新，都使用<strong>全部训练数据</strong>来计算梯度<br>  随机梯度下降 Stochastic Gradient Descent（SGD）<br>  每次只用<strong>一个样本</strong>来更新参数<br>  批量梯度下降 Mini-batch Gradient Descent（MBGD）<br>  每次用**一小批数据（batch）来更新参数</p>
+</li>
+<li><p>梯度下降优化过程<br>动量法 | RMSProp<br>动量法：不用当前的梯度来更新参数，而是用梯度的指数加权平均来更新参数，减小模型训练过程的震荡<br>RMSProp：用梯度平方的指数加权平均来更新参数<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743179.png" alt=""><br>Adam<br>Adam就是动量法和RSMProp的结合，并将指数加权平均进行修正<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743178.png" alt=""><br>AdamW<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743179%201.png" alt=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743184.png" alt=""></p>
+</li>
+</ul>
+<h3 id="vllm-amp-Page-Attention"><a href="#vllm-amp-Page-Attention" class="headerlink" title="vllm &amp; Page Attention"></a>vllm &amp; Page Attention</h3><ul>
+<li>Page Attention<br>按需分配，不提前预分配。<br>按Block分配，减少碎片大小。<br>虚拟内存，方便实现调用。<br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743205%201.png" alt=""><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743206.png" alt=""><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743205.png" alt=""></li>
+</ul>
+<p>一、 传统 KV Cache 的致命痛点：显存碎片化</p>
+<p>在 PagedAttention 出现之前，主流的推理框架（如早期的 HuggingFace Transformers）在管理 KV Cache 时，采用的是<strong>连续内存分配</strong>策略。</p>
+<p>因为模型在生成文本之前，并不知道用户最终会生成多长的句子，为了防止生成一半时显存溢出，系统会<strong>提前为每个请求分配一段最大可能的连续显存空间</strong>（例如预留 2048 个 Token 的位置）。</p>
+<p>这就像你去餐厅吃饭：</p>
+<ul>
+<li><p><strong>内部碎片（占着茅坑不拉屎）：</strong> 你一个人去吃饭，但不确定会不会有朋友来，于是餐厅直接给你留了一张 20 人的大圆桌。结果最后只有你一个人吃，剩下的 19 个座位（显存）全部被浪费了。据 vLLM 论文统计，这种预分配机制会导致 <strong>60% - 80%</strong> 的显存被浪费。</p>
+</li>
+<li><p><strong>外部碎片（有空位但坐不下）：</strong> 随着请求的加入和退出，显存中会出现很多零碎的空闲空间。当一个新的长请求到来时，虽然总空闲空间足够，但因为<strong>不连续</strong>，系统无法分配，只能拒绝服务。</p>
+</li>
+</ul>
+<p>显存被大量浪费，导致 GPU 能够同时处理的请求数量（Batch Size）上不去，推理吞吐量自然就低得可怜。</p>
+<p>二、 PagedAttention 的灵感来源：操作系统的虚拟内存</p>
+<p>为了解决这个问题，PagedAttention 借用了计算机操作系统中非常成熟的概念：<strong>虚拟内存与分页（Paging）机制</strong>。</p>
+<p>在操作系统中，程序认为自己拥有一块连续的内存（逻辑内存），但实际上，这块内存在物理上是被切分成一个个固定大小的“页（Page）”，散落在内存条的各个角落（物理内存）。操作系统通过一张<strong>页表（Page Table）</strong>来记录逻辑地址和物理地址的映射关系。</p>
+<p>PagedAttention 完美复刻了这一思想，将其应用到了大模型的 KV Cache 管理中。</p>
+<p>三、 PagedAttention 的核心运作机制</p>
+<ol>
+<li><p><strong>切块（Blocks）：</strong></p>
+<p> 它不再为每个请求预分配一大段连续空间，而是将物理显存切分成一个个固定大小的 KV 块（KV Blocks）**。例如，每个块固定只能装 16 个 Token 的 K 和 V 矩阵。</p>
+</li>
+<li><p><strong>按需分配（动态扩展）：</strong></p>
+<p> 当用户发送 Prompt 时，系统计算出 Prompt 的长度，然后分配刚好够用的几个 KV 块。</p>
+<p> 在后续生成（Decode）新 Token 的阶段，每生成一个 Token，就塞进当前的块里。<strong>当前块塞满后，系统才会在物理显存中随便找一个空闲的新块分配给它。</strong> 这种方式彻底消除了大规模的预分配浪费。</p>
+</li>
+<li><p><strong>块表映射（Block Table）：</strong></p>
+<p> 模型在计算注意力机制时，需要按顺序读取历史 Token。既然物理内存是被打散的，模型怎么找到它们呢？</p>
+<p> PagedAttention 维护了一个 <strong>Block Table（块表）</strong>。它记录了“逻辑上的连续 Token”对应的“物理上的零散 Block”。当模型需要计算 Attention 时，底层 CUDA 算子会通过查这张表，精准地把打散的物理块拼凑起来参与计算。</p>
+</li>
+</ol>
+<p>四、 PagedAttention 带来的额外红利：内存共享</p>
+<p>除了解决碎片化问题，将显存“分页”还带来了一个意想不到的杀手级优势——<strong>内存共享（Memory Sharing）</strong>。</p>
+<p>在很多高级的推理场景中，我们经常遇到需要共享上下文的情况。例如：</p>
+<ul>
+<li><strong>并行采样（Parallel Sampling）：</strong> 给定一个相同的 Prompt，让模型同时生成 3 个不同的回答供用户挑选。</li>
+<li><strong>Beam Search：</strong> 在解码过程中，保留多个得分较高的分支路径。</li>
+</ul>
+<p>在传统方式下，就算 Prompt 是一模一样的，系统也必须为这 3 个回答<strong>各自复制一份</strong>完整的 Prompt KV Cache。</p>
+<p>而在 PagedAttention 中，系统只需要在 Block Table 中将这 3 个回答的物理块<strong>指针指向同一块存储 Prompt 的物理块</strong>即可。只有当它们开始生成各自不同的回答时，才会采用“写时复制（Copy-on-Write）”机制分配新的块。</p>
+<p>这种共享机制使得复杂采样算法下的显存占用锐减，进一步释放了算力。</p>
+<h3 id="Flash-Attention"><a href="#Flash-Attention" class="headerlink" title="Flash Attention"></a>Flash Attention</h3><p><strong>Flash Attention</strong> 是由 Tri Dao 等人在 2022 年提出的一种针对 Transformer 模型中注意力机制（Attention Mechanism）的硬件感知（Hardware-aware）优化算法。它的核心贡献在于：<strong>在数学上等价于标准 Attention 的前提下，大幅降低了显存访问开销，将显存复杂度从 $O(N^2)$ 降到了 $O(N)$，并显著提升了计算速度。</strong></p>
+<p>一. 痛点：标准 Attention 的“内存墙”瓶颈</p>
+<p>在标准的 Transformer 中，Self-Attention 的计算公式为：</p>
+<script type="math/tex; mode=display">\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d}}\right)V</script><p>假设序列长度为 $N$，特征维度为 $d$。标准计算过程包含以下步骤：</p>
+<ol>
+<li><p>计算 $S = QK^T$，得到一个 $N \times N$ 的中间矩阵。</p>
+</li>
+<li><p>对 $S$ 进行缩放并计算 $P = \text{softmax}(S)$，得到一个 $N \times N$ 的注意力分数矩阵。</p>
+</li>
+<li><p>计算输出 $O = PV$，得到最终的 $N \times d$ 矩阵。</p>
+</li>
+</ol>
+<p><strong>问题在哪里？</strong></p>
+<p>GPU 的算力（FLOPs）增长极快，但显存带宽（Memory Bandwidth）的增长却相对缓慢。GPU 的存储分为两层：</p>
+<ul>
+<li><p><strong>HBM (高带宽内存)</strong>：也就是我们常说的显存（如 80GB 的 A100），容量大但读写速度相对较慢。</p>
+</li>
+<li><p><strong>SRAM (静态随机存取存储器)</strong>：GPU 计算单元旁边的高速缓存，速度极快但容量极小（单块 GPU 上通常只有十几 MB）。</p>
+</li>
+</ul>
+<p>在标准 Attention 中，生成 $N \times N$ 的中间矩阵 $S$ 和 $P$ 时，GPU 必须将庞大的数据从 HBM 读到 SRAM，计算完毕后再写回 HBM。当序列长度 $N$ 变大（例如达到 $32k$ 或 $100k$）时，$N \times N$ 的矩阵会变得异常庞大。<strong>频繁地在 HBM 和 SRAM 之间读写这些庞大的中间矩阵，导致了严重的 IO 瓶颈（即“内存墙”）。</strong> 大部分时间 GPU 都在等数据传输，而不是在做计算。</p>
+<p>二. Flash Attention 的核心机制</p>
+<p>Flash Attention 的核心思路是 <strong>IO-Aware（感知输入输出）</strong>，即尽可能减少 HBM 的读写次数。它主要通过两个核心技术实现：<strong>Tiling（分块计算）</strong> 和 <strong>Recomputation（重计算）</strong>。</p>
+<p>A. Tiling（分块计算与 Online Softmax）</p>
+<p>为了避免生成庞大的 $N \times N$ 中间矩阵，Flash Attention 将输入矩阵 $Q, K, V$ 切分成多个小块（Blocks）。</p>
+<ul>
+<li><p>它将这些小块从慢速的 HBM 加载到快速的 SRAM 中。</p>
+</li>
+<li><p>在 SRAM 内部直接完成 Attention 的前向计算，并直接将最终结果（$N \times d$ 大小）写回 HBM。</p>
+</li>
+</ul>
+<p><strong>数学上的难点：Softmax 的分块计算</strong></p>
+<p>标准的 Softmax 需要知道全局的信息。计算 Softmax 时，需要计算所有元素的指数和作为分母：$f(x<em>i) = \frac{e^{x_i}}{\sum</em>{j=1}^{N} e^{x_j}}$。如果只加载一部分数据，怎么计算 Softmax？</p>
+<p>Flash Attention 引入了 <strong>Online Softmax</strong> 的思想。通过维护两个局部变量（局部的最大值 $m$ 和局部的指数和 $l$），算法可以在处理下一个块时，利用简单的数学公式对之前的分母和最大值进行更新（Rescaling）。这样就可以<strong>在不读取完整行的情况下，一边分块加载数据，一边计算出全局精确的 Softmax 结果</strong>。</p>
+<p>B. Recomputation（重计算节省显存）</p>
+<p>在神经网络的训练过程中，反向传播（Backward Pass）计算梯度时，通常需要用到前向传播时保存的中间激活值（Activation）。对于标准 Attention，这意味着必须在显存（HBM）中保存那个庞大的 $N \times N$ 矩阵 $P$。</p>
+<p>Flash Attention 为了把空间复杂度降到 $O(N)$，<strong>丢弃了前向传播阶段的 $N \times N$ 中间矩阵</strong>。</p>
+<ul>
+<li>取而代之的是，它只保存了分块计算 Softmax 时的归一化常数（即前向传播中的局部最大值 $m$ 和指数和 $l$）。</li>
+<li>在反向传播时，利用保存的这些常数和输入的 $Q, K, V$（只有 $O(N)$ 复杂度），在快速的 SRAM 中<strong>重新计算</strong>出注意力矩阵并立刻用于梯度计算。</li>
+</ul>
+<p>由于在 SRAM 中的计算速度极快，这种“以计算换显存”的做法，不仅大幅降低了显存占用，实际上总体速度也因为省去了 HBM 的读写时间而变快了。</p>
+<p>三. Flash Attention 的演进</p>
+<ul>
+<li><strong>Flash Attention (v1)</strong>：证明了 IO-aware 优化的有效性，解决了长序列 Attention 的 $O(N^2)$ 显存和耗时问题，带来了 2-4 倍的加速。</li>
+<li><strong>Flash Attention-2 (2023)</strong>：针对矩阵乘法（MatMul）和非矩阵乘法（Softmax、Rescale）的计算分配进行了深度优化。它改进了 GPU 内部 Thread block (线程块) 和 Warp (线程束) 的任务分配，大幅减少了同步开销，使计算效率接近了 GPU 的理论极限（达到算力利用率的 70% 左右）。</li>
+<li><strong>Flash Attention-3 (2024)</strong>：专门针对 NVIDIA 的最新架构（如 Hopper H100）进行了优化。利用了 Hopper 架构的新特性，如异步执行（Asynchronous Execution）、Warp Group 级别的指令以及对 FP8 数据格式的原生支持，进一步提升了性能。</li>
+</ul>
+<h3 id="KV-Cache"><a href="#KV-Cache" class="headerlink" title="KV Cache"></a>KV Cache</h3><p>KV Cache（Key-Value Cache）是大型语言模型（LLM）推理加速中最核心、最基础的技术之一。简单来说，它是一种“空间换时间”的策略，用来解决 Transformer 模型在生成文本时大量重复计算的问题。</p>
+<p>一、 为什么需要 KV Cache？（背景与痛点）</p>
+<p>目前主流的大语言模型（如 GPT-4, LLaMA, Qwen）大多采用基于 Transformer Decoder-only 的架构，它们的文本生成方式是<strong>自回归（Autoregressive）</strong> 的。也就是说，模型每次只能预测并生成<strong>下一个</strong> Token。</p>
+<p>假设我们要让模型输出句子：“我喜欢人工智能”。</p>
+<ol>
+<li><p>输入 <code>[我]</code>，模型预测出 <code>[喜]</code>。</p>
+</li>
+<li><p>输入 <code>[我, 喜]</code>，模型预测出 <code>[欢]</code>。</p>
+</li>
+<li><p>输入 <code>[我, 喜, 欢]</code>，模型预测出 <code>[人]</code>。</p>
+</li>
+</ol>
+<p>在没有 KV Cache 的情况下，当模型预测 <code>[人]</code> 时，它需要把前面的 <code>[我]</code>, <code>[喜]</code>, <code>[欢]</code> 重新过一遍 Transformer 的每一层，重新计算它们的 Query (Q), Key (K) 和 Value (V) 矩阵。随着生成序列越来越长，这种<strong>历史数据的重复计算量会呈指数级增长</strong>，导致推理速度越来越慢。</p>
+<p>二、 KV Cache 的工作原理（解决方案）</p>
+<p>在 Transformer 的注意力机制（Self-Attention）中，注意力分数的计算公式为：</p>
+<script type="math/tex; mode=display">Attention(Q, K, V) = softmax(\frac{QK^T}{\sqrt{d_k}})V</script><p>我们发现，在预测新 Token 时，历史 Token 的 K 和 V 矩阵是固定的，只有最新一个 Token 的 Q 需要和所有历史 Token 的 K 去计算注意力分数。</p>
+<p>因此，<strong>KV Cache 的核心思想就是：把过去生成的 Token 对应的 Key (K) 和 Value (V) 张量保存在显存中。</strong></p>
+<p>推理过程被划分为了两个截然不同的阶段：</p>
+<ol>
+<li><p><strong>Prefill（预填充阶段）：</strong></p>
+<ul>
+<li><p>这是模型处理用户输入的 Prompt（提示词）的阶段。</p>
+</li>
+<li><p>模型会并行处理所有的输入 Token，一次性计算出它们所有的 Q、K、V。</p>
+</li>
+<li><p>在这个阶段，系统会将这些初始 Token 的 <strong>K 和 V 存入缓存（Cache）</strong>中。</p>
+</li>
+<li><p>此阶段计算密集，但只发生一次。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Decode（解码阶段）：</strong></p>
+<ul>
+<li><p>这是模型逐个生成新 Token 的阶段。</p>
+</li>
+<li><p>当需要生成第 $N$ 个 Token 时，模型<strong>只计算第 $N-1$ 个 Token 的 Q、K、V</strong>。</p>
+</li>
+<li><p>模型从缓存中取出之前 $1$ 到 $N-2$ 个 Token 的 K 和 V，与当前新的 K、V 拼接（Concatenate）。</p>
+</li>
+<li><p>利用拼接后的完整 K、V 和当前的 Q 计算注意力机制，得出下一个 Token。</p>
+</li>
+<li><p><strong>将新生成的 K 和 V 写入缓存</strong>，供下一步使用。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>通过这种方式，时间复杂度从 $O(N^2)$ 降到了 $O(N)$，极大地提高了生成速度。</p>
+<p>三、 KV Cache 的代价</p>
+<p>虽然省了时间，但 KV Cache 需要消耗大量的显存。很多时候，<strong>LLM 推理的瓶颈不在算力，而在显存的容量和带宽。</strong></p>
+<p>计算一个 Token 在模型中产生的 KV Cache 大小的基础公式为：</p>
+<script type="math/tex; mode=display">2 \times \text{层数 (Layers)} \times \text{隐藏层维度 (Hidden Size)} \times \text{数据精度字节数}</script><p><em>(注：乘以 2 是因为要存 K 和 V 两个矩阵)</em></p>
+<p>以 LLaMA-2-7B 为例（32层，Hidden Size 4096，使用 FP16 精度即2字节）：</p>
+<ul>
+<li><p>单 Token 的 KV Cache = $2 \times 32 \times 4096 \times 2 = 524,288$ 字节 $\approx 512$ KB。</p>
+</li>
+<li><p>如果上下文长度达到 4096，且 Batch Size 为 1，则 KV Cache 大小 = $512 \text{ KB} \times 4096 \approx 2$ GB。</p>
+</li>
+<li><p>如果是高并发场景，Batch Size 达到 32，光是 KV Cache 就会吃掉 64 GB 的显存！</p>
+</li>
+</ul>
+<p>四、 针对 KV Cache 的前沿优化技术</p>
+<p>为了缓解 KV Cache 带来的显存压力，业界提出了多种架构和工程上的优化：</p>
+<ul>
+<li><p><strong>MQA (Multi-Query Attention) / GQA (Grouped-Query Attention)：</strong> 在模型架构层面，让多个 Query 头共享同一组 Key 和 Value 头，从而在物理上将 KV Cache 的大小缩减几倍甚至十几倍（LLaMA-2 70B 和 LLaMA-3 都采用了 GQA）。</p>
+</li>
+<li><p><strong>PagedAttention (vLLM框架的核心)：</strong> 借鉴操作系统的虚拟内存和分页机制，将 KV Cache 划分为固定大小的块（Blocks），解决传统连续内存分配导致的显存碎片化问题，极大提升了 GPU 的并发吞吐量。</p>
+</li>
+<li><p><strong>KV Cache quantization (量化)：</strong> 将 K 和 V 矩阵从 FP16（16位）压缩到 INT8 甚至 INT4（8位或4位），用极少的精度损失换取显存占用减半或减少 75%。</p>
+</li>
+</ul>
+<h3 id="Qwen系列"><a href="#Qwen系列" class="headerlink" title="Qwen系列"></a>Qwen系列</h3><p>Qwen 是阿里开源的大模型体系，采用 Transformer + GQA + RoPE + RMSNorm，覆盖文本、多模态和 Agent，具有强中文能力和工程落地优势，是当前最主流的开源大模型之一。</p>
+<p>Qwen（通义千问）系列是目前开源社区中最活跃、进化速度最快的大模型家族之一。研究它的演进路线，实际上也是在宏观地梳理近两年大语言模型（LLM）以及多模态大模型架构的通用发展趋势。</p>
+<p>以下是 Qwen 系列从初代至今的核心演进与变化详解：</p>
+<p>一、 版本迭代与核心里程碑</p>
+<p><strong>1. Qwen (V1)：奠定基础与多模态的早期探索</strong></p>
+<p>初代 Qwen 确立了其扎实的底层基础。它采用了标准的 Transformer 架构，并引入了当时业界验证最有效的技术：RoPE（旋转位置编码）、SwiGLU 激活函数、RMSNorm 以及 FlashAttention。</p>
+<ul>
+<li><strong>语言能力：</strong> 重点深耕中英双语，使用了高达 3T tokens 的高质量预训练数据。</li>
+<li><strong>多模态试水：</strong> 在这阶段同步推出了 <strong>Qwen-VL</strong>（视觉-语言）和 <strong>Qwen-Audio</strong>（音频-语言）。这是非常关键的一步，展现了其向多模态领域拓展的野心，采用了将视觉/音频编码器与 LLM 基座拼接的经典范式。</li>
+</ul>
+<p><strong>2. Qwen1.5：生态对齐与架构微调</strong></p>
+<p>Qwen1.5 并非简单的过渡版本，而是一次重大的“底层重构”和开源生态的全面拥抱。</p>
+<ul>
+<li><strong>Hugging Face 原生支持：</strong> 彻底放弃了原先自定义的 <code>modeling_qwen.py</code> 代码，完全整合进 Transformers 库，极大地降低了开发者的部署和微调门槛。</li>
+<li><strong>全面引入 GQA（分组查询注意力）：</strong> 为了提升推理效率和降低显存占用，Qwen1.5 在所有尺寸的模型（从 0.5B 到 72B）中都应用了 GQA，而不再局限于传统的 MHA（多头注意力）。</li>
+<li><strong>探索 MoE 架构：</strong> 推出了 Qwen1.5-MoE，开始在稠密模型（Dense）之外，利用混合专家架构来平衡参数规模与推理成本。</li>
+</ul>
+<p><strong>3. Qwen2：全面升级与多语言扩展</strong></p>
+<p>Qwen2 是一次全方位的跨越，模型在各项榜单上开始对标甚至超越部分闭源头部模型。</p>
+<ul>
+<li><strong>架构微调（Tie Embeddings）：</strong> Qwen2 引入了 Tie word embeddings（绑定词嵌入）技术，让输入和输出层共享参数，在不牺牲性能的前提下减少了模型参数量。</li>
+<li><strong>上下文长度暴增：</strong> 从前代的 8K/32K 级别，全面提升至支持 128K tokens 的超长上下文。</li>
+<li><strong>多语言语料大爆发：</strong> 不再局限于中英双语，预训练数据中大幅增加了额外 27 种语言的数据，真正走向国际化。</li>
+<li><strong>多模态的深度进化：</strong> 推出了 <strong>Qwen2-VL</strong>。与初代 VL 不同，Qwen2-VL 引入了动态分辨率支持（无需将图片缩放到固定尺寸）以及强大的视频理解能力，多模态融合的深度和效果有了质的飞跃。</li>
+</ul>
+<p><strong>4. Qwen2.5：数据标度律的极致压榨与领域专家</strong></p>
+<p>这是目前最新的主力版本，其核心变化在于<strong>数据规模的爆炸式增长</strong>和<strong>垂直领域的极致强化</strong>。</p>
+<ul>
+<li><strong>18T Tokens 的预训练：</strong> 训练数据量从前代的几 T 直接跃升至 18T tokens。这证明了在架构相对稳定的情况下，极其庞大且高质量的数据依然能带来显著的性能提升（Scaling Law 的延续）。</li>
+<li><strong>代码与数学的突破：</strong> 推出了专门的 <strong>Qwen2.5-Coder</strong> 和 <strong>Qwen2.5-Math</strong>。它们不再是简单的微调版本，而是在预训练阶段就注入了海量的垂直领域数据，使其在复杂逻辑推理、代码生成上达到了开源界的顶尖水平。</li>
+</ul>
+<p>二、 核心架构与策略的演变趋势总结</p>
+<p>纵观整个 Qwen 系列的发展，我们可以提炼出几个清晰的技术演变主线：</p>
+<ul>
+<li><strong>注意力机制的降本增效：</strong> 从 MHA（多头注意力）全面转向 GQA（分组查询注意力），这是为了在模型规模不断扩大的同时，保证长文本推理时的 KV Cache 显存占用处于可控范围内。</li>
+<li><strong>多模态融合从“插件”走向“原生”：</strong> 早期的多模态模型更多是“视觉编码器 + LLM”的生硬拼接。而到了 Qwen2-VL，模型对图像分辨率的动态适应能力增强，视觉特征与语言特征的对齐更加深层，多模态理解变得更加原生和自然。</li>
+<li><strong>模型范式的多元化：</strong> 形成了“Dense（稠密模型） + MoE（混合专家模型）”双线并行的格局。同时，在通用基座之外，越来越重视 Math 和 Coder 这类能够大幅提升模型底层“System 2（慢思考/逻辑推理）”能力的垂直专家模型。</li>
+<li><strong>Token 词表的优化：</strong> 随着版本的迭代，其 Tokenizer 的词表大小和分词效率也在不断优化，以更高效地压缩多语言代码和复杂符号。</li>
+</ul>
+<h3 id="LangChain-Workflow-Function-call-MCP-Skill-Sub-Agent-Harness"><a href="#LangChain-Workflow-Function-call-MCP-Skill-Sub-Agent-Harness" class="headerlink" title="LangChain | Workflow | Function call | MCP | Skill | Sub Agent | Harness"></a>LangChain | Workflow | Function call | MCP | Skill | Sub Agent | Harness</h3><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743203.png" alt=""><br><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/career/file-20260421195743204.png" alt=""></p>
+<h3 id="MOE"><a href="#MOE" class="headerlink" title="MOE"></a>MOE</h3><p>混合专家架构（Mixture of Experts, MoE）是当前大语言模型（LLM）和多模态大模型突破算力瓶颈、实现参数规模指数级扩张的核心技术路径。与传统的稠密（Dense）模型不同，MoE 是一种<strong>稀疏激活（Sparse Activation）</strong> 架构，它能够在保持计算浮点运算次数（FLOPs）基本不变的前提下，大幅增加模型的总参数量。</p>
+<p>以下是 MoE 架构的核心技术细节及工程实现剖析。</p>
+<p>一. 架构核心组件与数学表达</p>
+<p>在主流的 Transformer 架构中，MoE 通常用于替换标准 Transformer 块中的前馈神经网络（FFN）层。因为在 Dense 模型中，FFN 层占据了约 2/3 的参数量。<br>MoE 层主要由两个部分组成：</p>
+<ul>
+<li><strong>专家网络（Experts）：</strong> $N$ 个结构相同但权重独立的神经网络（通常是 FFN）。记为 $E_1, E_2, …, E_N$。</li>
+<li><strong>门控网络 / 路由网络（Gating Network / Router）：</strong> 决定将当前输入的 Token 分配给哪几个专家进行处理。<br>对于输入 $x$，MoE 层的输出 $y$ 是各个专家输出的加权和：<script type="math/tex; mode=display">y = \sum_{i=1}^{N} g_i(x) E_i(x)</script>其中，$g<em>i(x)$ 是门控网络输出的第 $i$ 个专家的路由权重，且满足 $\sum</em>{i=1}^{N} g_i(x) = 1$。</li>
+</ul>
+<p>二. 稀疏路由机制 (Sparse Routing)<br>如果让所有的 $g_i(x)$ 都大于 0，那就是对所有专家进行密集计算，这违背了 MoE 节省算力的初衷。因此，现代大模型（如 Mixtral 8x7B、DeepSeek-V2 等）通常采用 <strong>Top-K 路由</strong>机制：</p>
+<script type="math/tex; mode=display">g(x) = \text{Softmax}(\text{TopK}(x \cdot W_g))</script><p>门控网络通过一个线性层 $W_g$ 计算出当前 Token 对所有专家的偏好分数。$\text{TopK}$ 函数会将得分最高的 $K$ 个专家的分数保留，其余置为 $-\infty$。经过 Softmax 后，只有这 $K$ 个专家的权重为非零值。</p>
+<ul>
+<li>通常 $K \ll N$（例如 $N=8, K=2$）。这意味着对于每一个 Token，只有 2 个专家被激活并参与前向和反向传播运算。</li>
+</ul>
+<p>三. 模型训练与负载均衡 (Load Balancing)<br>MoE 架构在训练时面临的一个致命问题是<strong>路由崩塌（Routing Collapse）</strong>：门控网络可能会倾向于把绝大多数 Token 都发送给少数几个“训练得更好”的专家，导致这些专家过载，而其他专家“饿死”（得不到更新）。<br>为了解决这个问题，需要在总损失函数中引入<strong>负载均衡损失（Load Balancing Loss）</strong>：</p>
+<script type="math/tex; mode=display">L_{aux} = \alpha \cdot N \sum_{i=1}^{N} f_i \cdot P_i</script><ul>
+<li>$f_i$：在一个 Batch 中，路由到第 $i$ 个专家的 Token 比例。</li>
+<li>$P_i$：门控网络分配给第 $i$ 个专家的平均路由权重。</li>
+<li>$\alpha$：乘法系数，用于调节辅助损失的权重。</li>
+</ul>
+<p>通过最小化 $L_{aux}$，可以强迫模型将 Token 尽可能均匀地分配给所有专家。</p>
+<p>四 部署与系统的挑战 (系统级视角)<br>对于专注于底层推理优化和框架（如 vLLM）的开发者来说，MoE 带来了与 Dense 模型截然不同的系统级挑战：</p>
+<ul>
+<li><strong>专家容量 (Expert Capacity) 与 Token Dropping：</strong><br>  在硬件实现中，张量的大小必须是静态的。因此，需要预先设定每个专家能够接收的最大 Token 数量（Capacity）。 <script type="math/tex">\text{Expert Capacity} = \left( \frac{\text{Tokens per Batch}}{\text{Number of Experts}} \right) \times \text{Capacity Factor}</script>如果路由到某专家的 Token 数超过了容量上限，多余的 Token 就会被丢弃（Token Dropping）或者通过残差连接直接跳过该层（具体取决于模型设计）。</li>
+<li><strong>显存带宽瓶颈 (Memory Bandwidth Bound)：</strong><br>  MoE 模型在推理（特别是 Decoding 阶段）时，Batch Size 通常较小（例如单用户对话）。此时，为了处理极少量的 Token，仍然需要将庞大的专家权重从 GPU 的 HBM 加载到 SRAM 中。这使得 MoE 推理往往是<strong>内存带宽受限（Memory-bound）</strong>的，而非计算受限。这也是为什么在 vLLM 等框架中，针对 MoE 的 PagedAttention 优化和显存管理尤为重要。</li>
+<li><strong>专家并行 (Expert Parallelism, EP) 与 All-to-All 通信：</strong><br>  在分布式训练和多卡推理时，由于参数量巨大，通常会采用专家并行（EP），将不同的专家放置在不同的 GPU 上。这引入了昂贵的跨节点/跨卡 <strong>All-to-All 通信</strong>开销（Token 需要被分发到拥有对应专家的 GPU 上，计算完后再汇聚回来）。</li>
+</ul>
+<h3 id="PPO-GRPO-DPO"><a href="#PPO-GRPO-DPO" class="headerlink" title="PPO/GRPO/DPO"></a>PPO/GRPO/DPO</h3><p>深入研究大模型的对齐与强化学习（RL）阶段，确实是目前把握核心大模型（尤其是向多模态大模型演进时）最关键、也最具挑战性的部分。这个领域迭代极快，从最初复杂的基于人类反馈的强化学习（RLHF），到现在的直接偏好优化（DPO）及其变体，核心目标都是<strong>在稳定性和显存开销之间寻找最优解</strong>。</p>
+<p>一、 经典阵营：基于奖励模型的 RLHF (以 PPO 为代表)</p>
+<p>这是 OpenAI 在 InstructGPT 和 ChatGPT 中使用的经典范式。它严格遵循三个步骤：监督微调 (SFT) $\rightarrow$ 训练奖励模型 (RM) $\rightarrow$ 强化学习优化。</p>
+<ul>
+<li><p><strong>核心算法：PPO (Proximal Policy Optimization)</strong></p>
+<ul>
+<li><p><strong>原理</strong>：PPO 是一种策略梯度算法。在这一阶段，大模型本身充当“Actor（策略）”，它生成回复，然后由事先训练好的奖励模型（Reward Model）给出评分。为了防止模型为了骗取高分而生成毫无逻辑的乱码（Reward Hacking），PPO 引入了 KL 散度惩罚项。</p>
+</li>
+<li><p><strong>核心目标函数</strong>：</p>
+<script type="math/tex; mode=display">\max_{\pi_\theta} \mathbb{E}_{x \sim \mathcal{D}, y \sim \pi_\theta}[R(x, y)] - \beta \mathbb{D}_{KL}[\pi_\theta(y|x) || \pi_{ref}(y|x)]</script><p>  <em>(注：$\pi</em>\theta$ 是当前训练的模型，$\pi<em>{ref}$ 是冻结的 SFT 初始模型，$R$ 是奖励模型，$\beta$ 是控制 KL 惩罚力度的超参数。)</em></p>
+</li>
+<li><p><strong>工程痛点</strong>：极其消耗显存。标准的 PPO 在训练时需要同时在显存中加载 <strong>4个模型</strong>：Actor 模型（训练中）、Reference 模型（冻结，用于算 KL 散度）、Reward 模型（冻结，用于打分）、Critic 模型（训练中，用于估计 Value Function）。即使配合 PyTorch 和 DeepSpeed，集群配置门槛也极高。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>二、 革命阵营：直接偏好优化 (Direct Alignment)</p>
+<p>因为 PPO 的工程落地难度太大，斯坦福在 2023 年提出了 DPO。DPO 彻底改变了游戏规则，<strong>直接干掉了奖励模型 (RM)</strong>。</p>
+<ul>
+<li><p><strong>1. DPO (Direct Preference Optimization)</strong></p>
+<ul>
+<li><p><strong>原理</strong>：DPO 利用了一个数学上的等价替换。它证明了在最优策略下，奖励函数可以被表示为最优策略与参考策略概率之比的对数。因此，我们可以直接用偏好数据（一个好回答 $y_w$，一个坏回答 $y_l$）去优化语言模型本身，把 LLM 当作自己的奖励模型。</p>
+</li>
+<li><p><strong>DPO 损失函数</strong>：</p>
+<script type="math/tex; mode=display">\mathcal{L}_{DPO} = - \mathbb{E}_{(x, y_w, y_l)} \left[ \log \sigma \left( \beta \log \frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \beta \log \frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)} \right) \right]</script></li>
+<li><p><strong>优势</strong>：只需要加载 <strong>2个模型</strong>（Actor 和 Reference），训练极其稳定，没有 PPO 那种复杂的超参数调优，目前在 HuggingFace <code>trl</code> 库中支持得非常完善，是目前开源界对齐模型的首选。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>2. KTO (Kahneman-Tversky Optimization)</strong></p>
+<ul>
+<li><p><strong>演进背景</strong>：DPO 虽然好，但它需要严格的“成对数据”（同一个问题，必须有一个好回答和一个坏回答）。而在现实中，我们往往只有“点赞（👍）”或“踩（👎）”的独立数据。</p>
+</li>
+<li><p><strong>原理</strong>：结合了行为经济学中的前景理论。它不依赖成对的偏好，只需要知道一条数据是“被渴望的”还是“不被渴望的”，就能最大化模型的效用。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>3. ORPO (Odds Ratio Preference Optimization)</strong></p>
+<ul>
+<li><p><strong>演进背景</strong>：DPO 还需要加载一个 Reference 模型，显存还是有点大。并且 DPO 通常需要在一个已经 SFT 过的模型上进行。</p>
+</li>
+<li><p><strong>原理</strong>：ORPO 更进一步，<strong>把 SFT 和对齐训练合并成了一步</strong>。它甚至不需要 Reference 模型。它通过在标准交叉熵损失（SFT 的损失）上加上一个“优势比（Odds Ratio）”惩罚项，在微调的同时拉开好回答和坏回答的概率差距。这对于算力有限的实验室环境非常友好。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>GRPO (Group Relative Policy Optimization，组内相对策略优化)</strong> 是由 DeepSeek 团队（在 DeepSeekMath 以及近期爆火的 DeepSeek-R1 中）提出并发扬光大的强化学习算法。它本质上是 <strong>PPO 的一种极简、高效变体</strong>，专门为了解决 PPO 显存开销过大和训练复杂的问题而生。</p>
+<p>要理解 GRPO 有多巧妙，我们需要先看看它到底“砍掉”了 PPO 里的什么东西。</p>
+<p>一、 PPO 的痛点：庞大的 Critic 模型</p>
+<p>我们在前面提到，标准的 PPO 需要同时加载 4 个模型。其中最让人头疼的是 <strong>Critic 模型（价值模型 Value Model）</strong>。</p>
+<ul>
+<li><p>在 PPO 中，为了判断一个动作（生成的词）好不好，我们需要一个“基准线（Baseline）”。</p>
+</li>
+<li><p>Critic 模型的作用就是预测这个状态下“本来应该得多少分”。如果实际得分高于 Critic 的预测，说明表现超常（Advantage &gt; 0），就鼓励；反之则抑制。</p>
+</li>
+<li><p><strong>痛点</strong>：Critic 模型通常和正在训练的 Actor 模型一样大！为了算一个基准线，搭进去了一倍的显存和计算量。</p>
+</li>
+</ul>
+<p>二、 GRPO 的核心魔法：用“组内比较”替代 Critic</p>
+<p>GRPO 的核心思想就藏在它的名字里：<strong>组内相对（Group Relative）</strong>。它直接<strong>彻底抛弃了 Critic 模型</strong>，转而用统计学的方法在一个批次内部自己生成基准线。</p>
+<p>它的运行机制非常直观：</p>
+<ol>
+<li><p><strong>分组生成</strong>：对于同一个输入问题（Prompt），让当前模型（Actor）一次性生成 $G$ 个不同的回答（比如生成 4 个或 8 个答案）。</p>
+</li>
+<li><p><strong>独立打分</strong>：用奖励模型（或规则）给这 $G$ 个回答分别打分，得到一组原始分数 $r_1, r_2, \dots, r_G$。</p>
+</li>
+<li><p><strong>计算基准</strong>：计算这组分数的平均值 $\mu$ 和标准差 $\sigma$。</p>
+</li>
+<li><p><strong>相对优势（Advantage）计算</strong>：对每个回答的得分进行标准化（Z-score），得到它的相对优势：</p>
+<script type="math/tex; mode=display">A_i = \frac{r_i - \mu}{\sigma}</script></li>
+<li><strong>策略更新</strong>：用这个相对优势 $A_i$ 去更新模型权重。在这一组里，比平均分高的回答（$A_i &gt; 0$）概率会被提升，比平均分低的回答概率会被降低。</li>
+</ol>
+<p>三、 为什么 GRPO 是游戏规则的改变者？</p>
+<ol>
+<li><p><strong>极致的显存节省</strong><br> 因为它砍掉了 Critic 模型，显存压力骤降。这意味着在同样的硬件下，你可以训练参数量大得多的模型，或者把 Batch Size 和 Context Length 拉得更长。</p>
+</li>
+<li><p><strong>天然契合“长思考”与推理（Reasoning）任务</strong><br> 像数学题和代码生成，对错是非常明确的。在 GRPO 框架下，你甚至<strong>不需要训练一个神经网络作为奖励模型（Reward Model）</strong>。你可以直接用基于规则的验证器（Rule-based Verifier）：</p>
+<ul>
+<li><p>答案对了给 1 分，格式符合 <code>&lt;think&gt;</code> 标签要求给 0.5 分，编译报错给 0 分。</p>
+</li>
+<li><p>Actor 模型 + 冻结的 Reference 模型 + 规则打分脚本 $\rightarrow$ 就能让模型在无数次“自己和自己比”中左脚踩右脚上天，这就是 DeepSeek-R1 涌现出强大推理能力的核心密码。 </p>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="模型量化、剪枝、蒸馏"><a href="#模型量化、剪枝、蒸馏" class="headerlink" title="模型量化、剪枝、蒸馏"></a>模型量化、剪枝、蒸馏</h3><h3 id="面试关键问题"><a href="#面试关键问题" class="headerlink" title="面试关键问题"></a>面试关键问题</h3><h4 id="1-奖励函数是如何设计的"><a href="#1-奖励函数是如何设计的" class="headerlink" title="1.奖励函数是如何设计的"></a>1.奖励函数是如何设计的</h4><p><strong>【面试官视角】：</strong> 他想知道你是否真的懂 RL，还是只是调了个包；更想知道你是如何把业务目标（查出代码漏洞）转化为模型可以学习的数学梯度的。</p>
+<p><strong>【答题话术建议】：</strong> “在设计 GRPO 的奖励函数时，我没有采用传统 RLHF 里那种单独训练一个神经网络作为判分器（Reward Model）的做法，而是<strong>根据密码 API 检测任务的严谨性，设计了一套完全可编程、离散化、基于规则的组合奖励函数</strong> 。</p>
+<p>具体来说，我们将总奖励分解为四个维度 ：</p>
+<script type="math/tex; mode=display">R(x,y) = r_{corr}(x,y) + r_{etype}(x,y) + r_{evid}(x,y) + r_{struct}(x,y)</script><ol>
+<li><p><strong>结构合规奖励 ($r_{struct}$)</strong>：为了保证系统能解析大模型的输出，模型必须严格遵循 JSON Schema 。如果格式全对，给基础分；有残缺，直接给 0 分或负分。这用 KL 散度正则限制在 SFT 模型附近，防止奖励黑客（Reward Hacking） 。</p>
+</li>
+<li><p><strong>主判决奖励 ($r_{corr}$)</strong>：也就是模型判断这段代码到底‘有没有错’（True/False），这是最核心的监督信号 。</p>
+</li>
+<li><p><strong>误用分型奖励 ($r_{etype}$)</strong>：如果判定有错，模型给出的具体错误类型（比如是‘静态盐值’还是‘弱随机数’）是否与标准答案一致 。</p>
+</li>
+<li><p><strong>证据一致性奖励 ($r_{evid}$)</strong>：这是防幻觉的关键。模型不能只说有错，还必须准确框出漏洞在第几行（证据行）。只有当提取的证据行能支撑前面的判定时，才给分 。</p>
+</li>
+</ol>
+<p><strong>总结亮点：</strong> 这种基于规则的组合奖励，在 GRPO 组内相对优势（$A_i = R_i - \overline{R}$）的计算下，能够非常明确地告诉模型‘哪种回答是完美的’，既避免了训练 Critic 模型的显存开销，又彻底消除了神经网络判分器常见的‘看图说话’式的幻觉 。”</p>
+<h4 id="2-对-LangChain-的理解与设计？-LangChain-Architecture"><a href="#2-对-LangChain-的理解与设计？-LangChain-Architecture" class="headerlink" title="2. 对 LangChain 的理解与设计？(LangChain Architecture)"></a>2. 对 LangChain 的理解与设计？(LangChain Architecture)</h4><p><strong>【面试官视角】：</strong> 他想考察你对大模型应用架构（Agentic Workflow）的理解，是不是把 LLM 当成了一个简单的 API 调用，还是深刻理解了“大模型作为大脑，工具作为手脚”的理念。</p>
+<p><strong>【答题话术建议】：</strong> “在我们的系统中，我并没有把大模型当成一个简单的黑盒接口，而是<strong>把 LangChain 作为整个系统的‘智能中枢（Agent）和工作流编排引擎’</strong> 。</p>
+<p>我使用 LangChain 将原本碎片的流程固化成了一个可追溯的有向无环图（DAG） ：</p>
+<ol>
+<li><p><strong>调度与路由</strong>：当用户上传代码后，LangChain 首先调度‘代码切片器 Tool’，调用 Tree-sitter 提取 AST/CFG，把几千行的代码浓缩成包含控制流的‘最小证据上下文’ 。</p>
+</li>
+<li><p><strong>检索增强（RAG）融合</strong>：然后，LangChain 驱动嵌入模型和向量数据库 ，去检索国密规范知识库，把相关的合规要求注入到 Prompt 中 。</p>
+</li>
+<li><p><strong>决策与验证闭环</strong>：最后，大模型根据上下文做出判决。如果输出格式不对，或者证据链不完整，LangChain 会拦截并要求大模型进行自我反思和修正 。</p>
+</li>
+</ol>
+<p><strong>总结亮点：</strong> 对我来说，LangChain 的设计哲学在于<strong>解耦与编排</strong>。它把确定性的程序分析（静态切片）和概率性的大模型推理无缝结合 ，实现了‘取证 $\rightarrow$ 切片 $\rightarrow$ 判别 $\rightarrow$ 验证 $\rightarrow$ 报告’的端到端自动化 。”</p>
+<h4 id="3-基于-vLLM-部署-PagedAttention-是如何实现的？-vLLM-amp-PagedAttention"><a href="#3-基于-vLLM-部署-PagedAttention-是如何实现的？-vLLM-amp-PagedAttention" class="headerlink" title="3. 基于 vLLM 部署 PagedAttention 是如何实现的？(vLLM &amp; PagedAttention)"></a>3. 基于 vLLM 部署 PagedAttention 是如何实现的？(vLLM &amp; PagedAttention)</h4><p><strong>【面试官视角】：</strong> 重点考察底层 Infra 能力。如果你只会用 <code>transformers</code> 的 <code>generate</code> 跑推理，是过不了大模型算法岗面试的。你需要讲清楚 PagedAttention 到底解决了什么物理内存问题。</p>
+<p><strong>【答题话术建议】：</strong></p>
+<p>“在项目初期，我们遇到了严重的推理瓶颈。在处理长代码切片时，自回归解码带来的 KV Cache 会迅速吃满显存，且存在极大的内存碎片，导致吞吐量极低。</p>
+<p>为了解决这个问题，我引入了 vLLM 框架，并深入应用了它的 PagedAttention 机制。它的核心实现原理借用了操作系统中‘虚拟内存分页’的思想 ：</p>
+<ol>
+<li><p><strong>打散与分页</strong>：传统的注意力机制需要把一个请求的 KV Cache 存放在连续的物理显存中。PagedAttention 将 KV Cache 切分成固定大小的块（Blocks/Pages） 。</p>
+</li>
+<li><p><strong>动态映射</strong>：它维护了一个类似页表的结构，将逻辑上连续的 Token 映射到物理显存中离散的页上。这样不仅将显存碎片率降到了极低，还允许动态增长 。</p>
+</li>
+<li><p><strong>Continuous Batching（连续批处理）</strong>：配合分页管理，我们不再需要等待整个 Batch 里最长的那条代码生成完毕。只要有请求结束释放了显存页，新的请求就能立刻插进来（细粒度调度），极大提升了 GPU 利用率 。</p>
+</li>
+</ol>
+<p><strong>总结亮点：</strong> 除了部署 vLLM，我们这个项目的杀手锏在于：我们将 PagedAttention 的长上下文管理能力，与我们自己做的 <strong>Jacobi 一致性蒸馏（JCD）</strong>结合在了一起 。我们让蒸馏后的模型学习并行解码的收敛分布，在 vLLM 的后端上实现了单步增量解码，最终让系统的推理速度飙升到了 83.58 samples/s，而准确率几乎没有损耗 。”</p>
+<h4 id="4-LoRA微调的原理是什么？Rank-r-和-Alpha-alpha-是如何设置的，理由是什么？"><a href="#4-LoRA微调的原理是什么？Rank-r-和-Alpha-alpha-是如何设置的，理由是什么？" class="headerlink" title="4. LoRA微调的原理是什么？Rank (r) 和 Alpha ($\alpha$) 是如何设置的，理由是什么？"></a>4. LoRA微调的原理是什么？Rank (r) 和 Alpha ($\alpha$) 是如何设置的，理由是什么？</h4><p><strong>【面试官视角】：</strong> 他想甄别你是真正理解了“低秩本征空间”的数学原理，还是仅仅在 LLaMA-Factory 的界面上盲目地调参。</p>
+<p><strong>【答题话术建议】：</strong></p>
+<p>“关于 LoRA 的原理，它的核心思想可以用一句话概括：<strong>‘大模型的参数虽然极其庞大，但它们在特定下游任务上的学习更新，其实发生在一个内在的低维度空间里（低秩）。’</strong></p>
+<p>因此，我们在微调时，<strong>冻结住原始基座模型的所有权重 ($W_0$)</strong>，在旁边旁路增加两个降维和升维的可训练矩阵（$A$ 和 $B$）。前向传播时，原本的输出变成了 $h = W_0x + BAx$。这样我们只需要训练极少量的参数（$A$ 和 $B$），就能达到全量微调（Full Fine-Tuning）相近的效果，极大节省了显存。</p>
+<p>在我们的项目中，关于参数的设置我是这样考量的：</p>
+<ul>
+<li><p><strong>关于 Rank ($r$) 的设置：</strong> $r$ 决定了这两个矩阵的中间维度（也就是秩）。</p>
+<ul>
+<li><p><strong>常规场景：</strong> 如果只是让模型学个语气或者做简单的指令对齐（比如变成客服），$r$ 设置为 8 甚至 4 就足够了。</p>
+</li>
+<li><p><strong>我们项目的理由：</strong> 但在我的项目中，大模型需要学习两样非常硬核的东西：<strong>一个是网安领域的专业知识库，另一个是严谨的 VSDL 脚本语法规范。</strong> 这涉及深层的逻辑和知识注入，低秩空间太小会发生信息瓶颈。因此我经过对比实验，<strong>将 $r$ 设置得相对较高（通常在 16 到 32 之间）</strong>，在这个数值下，模型既能有效记住 VSDL 的语法规则，又不会引入过多的参数导致过拟合。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>关于 Alpha ($\alpha$) 的设置：</strong> $\alpha$ 是一个缩放因子（Scaling Factor）。</p>
+<ul>
+<li><p>在 LoRA 的公式中，旁路矩阵的输出会乘以 $\frac{\alpha}{r}$ 然后加到原权重上。</p>
+</li>
+<li><p><strong>设置理由：</strong> 业界的一个标准工程经验是<strong>将 $\alpha$ 设置为 $r$ 的两倍（比如 $r=16, \alpha=32$）或者与 $r$ 保持一致</strong>。我通常采用 $\alpha = 2r$。这样做的数学直觉是：当我们在调参时改变 $r$ 的大小，$\frac{\alpha}{r}$ 的比例保持不变，这保证了 LoRA 旁路的梯度更新幅度与原模型权重的量级保持相对稳定，不需要每次改了 $r$ 就去重新痛苦地调整 Learning Rate（学习率）。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>【总结亮点】：</strong> 这样回答，你不仅讲清楚了公式 ($W_0 + BA$)，还说出了 $r$ 和业务复杂度的关系，以及 $\alpha$ 在工程上稳定梯度的作用，完美展现了你的算法体感（Intuition）。</p>
+<h4 id="5-推荐系统是怎么设计的？知识图谱（KG）在里面的作用是什么？"><a href="#5-推荐系统是怎么设计的？知识图谱（KG）在里面的作用是什么？" class="headerlink" title="5. 推荐系统是怎么设计的？知识图谱（KG）在里面的作用是什么？"></a>5. 推荐系统是怎么设计的？知识图谱（KG）在里面的作用是什么？</h4><p><strong>【面试官视角】：</strong> 面试官想知道你为什么不用传统的推荐算法（比如协同过滤），而是大费周章去搞知识图谱。你需要凸显出教育/网安场景的特殊性。</p>
+<p><strong>【答题话术建议】：</strong></p>
+<p>“针对我们平台的推荐系统，我<strong>放弃了传统的协同过滤（Collaborative Filtering）等主流推荐算法，而是采用了基于知识图谱（KG）和图神经网络（GNN）的架构。</strong></p>
+<p><strong>知识图谱在这里扮演了‘大脑逻辑地图’的作用，它的核心价值是为了解决两个传统算法无法解决的痛点：</strong></p>
+<ol>
+<li><p><strong>解决‘冷启动’与‘数据稀疏’问题：</strong> 传统算法是基于‘用户相似度’的（比如张三和李四都看了 A 题，所以把 B 题也推给李四）。但教育平台天然数据稀疏，一个新生刚进来，根本没有交互历史。而知识图谱里固化了专家经验（比如‘SQL注入’是‘数据库提权’的前置条件）。即便学生是新来的，只要他在这一个前置节点上做错了，系统立刻就能顺着图谱的边（Relation），精准推荐基础理论课程。</p>
+</li>
+<li><p><strong>打破‘信息茧房’，实现严格的前置依赖推荐：</strong> 学习和买东西不一样，买东西推荐相似商品就行，但学习有严格的<strong>拓扑依赖</strong>。如果学生不会‘计算机网络’，强行推荐‘跨站脚本攻击(XSS)’毫无意义。</p>
+</li>
+</ol>
+<p><strong>具体的设计与落地路线是这样的：</strong></p>
+<ul>
+<li><p><strong>第一步（图构建）：</strong> 我使用 Neo4j 搭建了底层图谱，里面包含了三类实体节点：‘学生’、‘知识点/能力标签’、‘靶场课程资源’。</p>
+</li>
+<li><p><strong>第二步（图嵌入与特征提取）：</strong> 我使用了 <strong>TransE 算法</strong>，将这些实体和关系（比如 <em>Student-Mastered-&gt;Knowledge</em>）映射到低维向量空间。为了让表示更丰富，我还会把大模型提取的文本特征（Text Embedding）融入进去。</p>
+</li>
+<li><p><strong>第三步（GNN 推荐）：</strong> 将这些 Embedding 喂给图神经网络（GNN）。GNN 通过消息传递机制（Message Passing），可以把一个学生周围关联的‘未掌握知识点’和‘适合的靶场资源’进行聚合打分。</p>
+</li>
+<li><p><strong>最终结果：</strong> 比如大模型在上一环节判定某个学生‘静态盐值配置错误’，GNN 就会在图谱中定位到这个知识点，向外跳跃（Multi-hop），计算出当前最适合填补他这个漏洞的靶场实验，从而实现了从‘静态分析漏洞’到‘动态推送学习路径’的完整闭环。</p>
+</li>
+</ul>
+<p><strong>【总结亮点】：</strong> 这段话清晰地勾勒了<strong>‘为什么不用传统算法 $\rightarrow$ KG 的核心优势（逻辑依赖） $\rightarrow$ TransE+GNN 的落地 Pipeline’</strong>。这证明了你具备从 0 到 1 架构复杂 AI 应用的能力，而不是只会调 API。</p>
+</article><div class="post-copyright"><div class="post-copyright__title"><span class="post-copyright-info"><h>面试笔记整理</h></span></div><div class="post-copyright__type"><span class="post-copyright-info"><a href="https://www.doraemonqwq.cn/2026/05/04/2026-05-04-notes/">https://www.doraemonqwq.cn/2026/05/04/2026-05-04-notes/</a></span></div><div class="post-copyright-m"><div class="post-copyright-m-info"><div class="post-copyright-a"><h>作者</h><div class="post-copyright-cc-info"><h>Doraemon</h></div></div><div class="post-copyright-c"><h>发布于</h><div class="post-copyright-cc-info"><h>2026-05-04</h></div></div><div class="post-copyright-u"><h>更新于</h><div class="post-copyright-cc-info"><h>2026-05-04</h></div></div><div class="post-copyright-c"><h>许可协议</h><div class="post-copyright-cc-info"><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a rel="noopener" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></div></div></div></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/career/">career</a><a class="post-meta__tags" href="/tags/%E7%AC%94%E8%AE%B0/">笔记</a></div><div class="post-share"><div class="social-share" data-image="https://cloudsources.pages.dev/img/top_img/60.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>投喂作者</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="https://cloudsources.pages.dev/img/wechat.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/wechat.png" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="https://cloudsources.pages.dev/img/alipay.jpg" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/alipay.jpg" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/04/30/2026-04-30-interview/" title="面试经"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/top_img/59.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">面试经</div></div><div class="info-2"><div class="info-item-1">timeline：华为：4.15 笔试4.22 上午技术面，下午主管面（符合1145 25定律）4.23 成功入池 蚂蚁：4.8 笔试4.21 一面（1h后通过）4.25 二面（3h后通过）4.28 hr面4.30 oc + 意向书 如果除去简历筛选和笔试时间，华为和蚂蚁面试基本上一周之内都可以结束，个人还是非常幸运参加的所有面试都能顺利通过。华为面试给到顶级，蚂蚁面试给到夯，两个公司面试整体体验感非常好，面试官也非常nice。目前华为和蚂蚁均入池，蚂蚁已发意向书，想将自己的一些实习心得通过文字的方式传递给大家，由于篇幅限制，该面试经分为上下两篇。 简历：1.第一眼看上去一定要干净整齐，无过多留白2.项目经历 &gt;= 实习经历 &gt;&gt;...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/favicon.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Doraemon</div><div class="author-info-description">你若盛开，清风自来</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">58</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">64</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonblog"><i class="fab fa-github"></i><span>🛴前往小家...</span></a><div class="card-info-social-icons"><a class="social-icon" href="https://github.com/Doraemonblogs" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:doraemonqwq798@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a><a class="social-icon" href="https://www.douyin.com/user/self?from_tab_name=main&amp;showTab=post" target="_blank" title="抖音"><i class="fab fa-tiktok" style="color: #24292e;"></i></a><a class="social-icon" href="https://space.bilibili.com/3494359538338457?spm_id_from=333.1007.0.0" target="_blank" title="Bilibili"><i class="fab fa-bilibili" style="color: #00a1d6;"></i></a><a class="social-icon" href="https://www.xiaohongshu.com/user/profile/648546d2000000002a037319" target="_blank" title="小红书"><i class="fab fa-instagram" style="color: #ff5a5f;"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><b>欢迎来到我的小窝☘️☘️☘️<br><center>主域名：<br><a target="_blank" rel="noopener" href="https://doraemonblogs.github.io/"><b><font color="#5ea6e5">doraemonblogs.github.io</font></b></a>&nbsp;<br>备用域名：<br><a href="https://www.doraemonqwq.cn/"><b><font color="#5ea6e5">doraemonqwq.cn</font></b></a>&nbsp;</div><div id="welcome-info"></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E5%8A%9B"><span class="toc-text">注意力</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Temperature-amp-Top-p"><span class="toc-text">Temperature &amp; Top-p</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lora-amp-QLora"><span class="toc-text">Lora &amp; QLora</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%8D%E7%BD%AE%E7%BC%96%E7%A0%81%EF%BC%88%E6%AD%A3%E4%BD%99%E5%BC%A6%E4%BD%8D%E7%BD%AE%E7%BC%96%E7%A0%81-RoPE%E6%97%8B%E8%BD%AC%E4%BD%8D%E7%BD%AE%E7%BC%96%E7%A0%81%EF%BC%89"><span class="toc-text">位置编码（正余弦位置编码 | RoPE旋转位置编码）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E8%AF%8D%E5%99%A8%EF%BC%88Tokenizer%EF%BC%89"><span class="toc-text">分词器（Tokenizer）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Layer-Normalization%EF%BC%88LN%EF%BC%89-amp-BN-amp-RMSNorm"><span class="toc-text">Layer Normalization（LN） &amp; BN &amp; RMSNorm</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3"><span class="toc-text">奇异值分解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E6%95%B0%E5%AE%9A%E5%BE%8B"><span class="toc-text">大数定律</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%A4%E5%8F%89%E7%86%B5%E6%8D%9F%E5%A4%B1%E4%B8%8EKL%E6%95%A3%E5%BA%A6"><span class="toc-text">交叉熵损失与KL散度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0"><span class="toc-text">深度学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vllm-amp-Page-Attention"><span class="toc-text">vllm &amp; Page Attention</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flash-Attention"><span class="toc-text">Flash Attention</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#KV-Cache"><span class="toc-text">KV Cache</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Qwen%E7%B3%BB%E5%88%97"><span class="toc-text">Qwen系列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LangChain-Workflow-Function-call-MCP-Skill-Sub-Agent-Harness"><span class="toc-text">LangChain | Workflow | Function call | MCP | Skill | Sub Agent | Harness</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MOE"><span class="toc-text">MOE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PPO-GRPO-DPO"><span class="toc-text">PPO&#x2F;GRPO&#x2F;DPO</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E9%87%8F%E5%8C%96%E3%80%81%E5%89%AA%E6%9E%9D%E3%80%81%E8%92%B8%E9%A6%8F"><span class="toc-text">模型量化、剪枝、蒸馏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%A2%E8%AF%95%E5%85%B3%E9%94%AE%E9%97%AE%E9%A2%98"><span class="toc-text">面试关键问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%A5%96%E5%8A%B1%E5%87%BD%E6%95%B0%E6%98%AF%E5%A6%82%E4%BD%95%E8%AE%BE%E8%AE%A1%E7%9A%84"><span class="toc-text">1.奖励函数是如何设计的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%AF%B9-LangChain-%E7%9A%84%E7%90%86%E8%A7%A3%E4%B8%8E%E8%AE%BE%E8%AE%A1%EF%BC%9F-LangChain-Architecture"><span class="toc-text">2. 对 LangChain 的理解与设计？(LangChain Architecture)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%9F%BA%E4%BA%8E-vLLM-%E9%83%A8%E7%BD%B2-PagedAttention-%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84%EF%BC%9F-vLLM-amp-PagedAttention"><span class="toc-text">3. 基于 vLLM 部署 PagedAttention 是如何实现的？(vLLM &amp; PagedAttention)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-LoRA%E5%BE%AE%E8%B0%83%E7%9A%84%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9FRank-r-%E5%92%8C-Alpha-alpha-%E6%98%AF%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE%E7%9A%84%EF%BC%8C%E7%90%86%E7%94%B1%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">4. LoRA微调的原理是什么？Rank (r) 和 Alpha ($\alpha$) 是如何设置的，理由是什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F%E6%98%AF%E6%80%8E%E4%B9%88%E8%AE%BE%E8%AE%A1%E7%9A%84%EF%BC%9F%E7%9F%A5%E8%AF%86%E5%9B%BE%E8%B0%B1%EF%BC%88KG%EF%BC%89%E5%9C%A8%E9%87%8C%E9%9D%A2%E7%9A%84%E4%BD%9C%E7%94%A8%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">5. 推荐系统是怎么设计的？知识图谱（KG）在里面的作用是什么？</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 - 2026 By Doraemon<span class="footer-separator" style="margin: 0 0.4em;">|</span><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cloudsources.pages.dev/img/icon/icp.png">
+<a href="https://beian.miit.gov.cn/#/Integrated/index" style="color:#f72b07" target="_blank">鄂ICP备2024070152号-2</a></div><div class="footer_custom_text">I wish you to become your own sun, no need to rely on who's light.</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i><span id="percent"> <span>0</span><span>%</span></span></button><button id="go-down" type="button" title="直达底部" onclick="btf.scrollToDest(document.body.scrollHeight, 500)"><i class="fas fa-arrow-down"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://www.doraemonblogs.site/',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = (el = document, path = location.pathname) => {
+    twikoo.init({
+      el: el.querySelector('#twikoo-wrap'),
+      envId: 'https://www.doraemonblogs.site/',
+      region: '',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      },
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    
+
+    isShuoshuo && (window.shuoshuoComment.destroyTwikoo = () => {
+      if (el.children.length) {
+        el.innerHTML = ''
+        el.classList.add('no-comment')
+      }
+    })
+  }
+
+  const loadTwikoo = (el, path) => {
+    if (typeof twikoo === 'object') setTimeout(() => init(el, path), 0)
+    else btf.getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(() => init(el, path))
+  }
+
+  if (isShuoshuo) {
+    'Twikoo' === 'Twikoo'
+      ? window.shuoshuoComment = { loadComment: loadTwikoo }
+      : window.loadOtherComment = loadTwikoo
+    return
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><canvas id="universe"></canvas><script defer src="/js/universe.js"></script><script defer src="/js/cursor.js"></script><div class="aplayer no-destroy" data-id="60198" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><script async src="//npm.elemecdn.com/pace-js@1.2.4/pace.min.js"></script><script defer data-pjax src="/js/readPercent.js"></script><script src="https://npm.elemecdn.com/jquery@latest/dist/jquery.min.js"></script><script async data-pjax src="/js/txmap.js"></script><script async src="/js/title.js"></script><script defer src="/js/random-background.js"></script><script defer type="text/javascript" src="https://cdn1.tianli0.top/npm/sweetalert2@8.19.0/dist/sweetalert2.all.js"></script><script defer src="/js/lunar.js"></script><script defer src="/js/day.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = true;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="true"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>(() => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => fn())
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      pjax.loadUrl('/404.html')
+    }
+  })
+})()</script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+    function butterfly_categories_card_injector_config(){
+      var parent_div_git = document.getElementById('recent-posts');
+      var item_html = '<style>li.categoryBar-list-item{width:32.3%;}.categoryBar-list{max-height: 380px;overflow:auto;}.categoryBar-list::-webkit-scrollbar{width:0!important}@media screen and (max-width: 650px){.categoryBar-list{max-height: 320px;}}</style><div class="recent-post-item" style="height:auto;width:100%;padding:0px;"><div id="categoryBar"><ul class="categoryBar-list"><li class="categoryBar-list-item" style="background:url(https://cloudsources.pages.dev/img/category-cover/1.jpg);"> <a class="categoryBar-list-link" onclick="pjax.loadUrl(&quot;categories/life/&quot;);" href="javascript:void(0);">life</a><span class="categoryBar-list-count">6</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(https://cloudsources.pages.dev/img/category-cover/2.jpg);"> <a class="categoryBar-list-link" onclick="pjax.loadUrl(&quot;categories/人工智能/&quot;);" href="javascript:void(0);">人工智能</a><span class="categoryBar-list-count">9</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(https://cloudsources.pages.dev/img/category-cover/3.jpg);"> <a class="categoryBar-list-link" onclick="pjax.loadUrl(&quot;categories/网安/&quot;);" href="javascript:void(0);">网安</a><span class="categoryBar-list-count">7</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(https://cloudsources.pages.dev/img/category-cover/4.jpg);"> <a class="categoryBar-list-link" onclick="pjax.loadUrl(&quot;categories/blog/&quot;);" href="javascript:void(0);">blog</a><span class="categoryBar-list-count">2</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(https://cloudsources.pages.dev/img/category-cover/5.jpg);"> <a class="categoryBar-list-link" onclick="pjax.loadUrl(&quot;categories/计算机网络/&quot;);" href="javascript:void(0);">计算机网络</a><span class="categoryBar-list-count">2</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(https://cloudsources.pages.dev/img/category-cover/6.jpg);"> <a class="categoryBar-list-link" onclick="pjax.loadUrl(&quot;categories/程序设计实验/&quot;);" href="javascript:void(0);">程序设计实验</a><span class="categoryBar-list-count">3</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(https://cloudsources.pages.dev/img/category-cover/7.jpg);"> <a class="categoryBar-list-link" onclick="pjax.loadUrl(&quot;categories/TAI/&quot;);" href="javascript:void(0);">TAI</a><span class="categoryBar-list-count">15</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(https://cloudsources.pages.dev/img/category-cover/8.jpg);"> <a class="categoryBar-list-link" onclick="pjax.loadUrl(&quot;categories/笔记/&quot;);" href="javascript:void(0);">笔记</a><span class="categoryBar-list-count">8</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(https://cloudsources.pages.dev/img/category-cover/9.jpg);"> <a class="categoryBar-list-link" onclick="pjax.loadUrl(&quot;categories/网安综合实践/&quot;);" href="javascript:void(0);">网安综合实践</a><span class="categoryBar-list-count">3</span><span class="categoryBar-list-descr"></span></li><li class="categoryBar-list-item" style="background:url(https://cloudsources.pages.dev/img/category-cover/10.jpg);"> <a class="categoryBar-list-link" onclick="pjax.loadUrl(&quot;categories/竞赛/&quot;);" href="javascript:void(0);">竞赛</a><span class="categoryBar-list-count">1</span><span class="categoryBar-list-descr"></span></li></ul></div></div>';
+      console.log('已挂载butterfly_categories_card')
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+      }
+    if( document.getElementById('recent-posts') && (location.pathname ==='/'|| '/' ==='all')){
+    butterfly_categories_card_injector_config()
+    }
+  </script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v6.2.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v4.3.1" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://vercel.com/" style="margin-inline:5px" data-title="本站采用多线部署，主线路托管于Vercel" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Hosted-Vercel-brightgreen?style=flat&amp;logo=Vercel" alt=""/></a><a class="github-badge" target="_blank" href="https://dashboard.4everland.org/" style="margin-inline:5px" data-title="本站采用多线部署，备用线路托管于4EVERLAND" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Hosted-4EVERLAND-22DDDD?style=flat&amp;logo=IPFS" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="/js/runtime.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__backInLeft');
+    arr[i].setAttribute('data-wow-duration', '2s');
+    arr[i].setAttribute('data-wow-delay', '700ms');
+    arr[i].setAttribute('data-wow-offset', '100');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__backInRight');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('page-number current');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__backInLeft');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://npm.elemecdn.com/hexo-butterfly-wowjs/lib/wow_init.js"></script><script async src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body></html>
